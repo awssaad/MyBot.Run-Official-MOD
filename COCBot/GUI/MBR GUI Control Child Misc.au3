@@ -46,6 +46,9 @@ Func btnAddConfirm()
 			GUICtrlSetState($g_hBtnCancelProfileChange, $GUI_SHOW)
 			GUICtrlSetState($g_hBtnConfirmRenameProfile, $GUI_HIDE)
 			GUICtrlSetState($g_hBtnRenameProfile, $GUI_HIDE)
+
+			SaveConfig_SwitchAcc()	;	SwitchAcc - Demen
+
 		Case $g_hBtnConfirmAddProfile
 			Local $newProfileName = StringRegExpReplace(GUICtrlRead($g_hTxtVillageName), '[/:*?"<>|]', '_')
 			If FileExists($g_sProfilePath & "\" & $newProfileName) Then
@@ -69,6 +72,23 @@ Func btnAddConfirm()
 
 			If GUICtrlGetState($g_hBtnDeleteProfile) <> $GUI_ENABLE Then GUICtrlSetState($g_hBtnDeleteProfile, $GUI_ENABLE)
 			If GUICtrlGetState($g_hBtnRenameProfile) <> $GUI_ENABLE Then GUICtrlSetState($g_hBtnRenameProfile, $GUI_ENABLE)
+
+;====== SwitchAcc - DEMEN ==============
+			Local $iNewProfile = _GUICtrlCombobox_GetCurSel($g_hCmbProfile)
+			Local $UpdatedProfileList = _GUICtrlComboBox_GetListArray($g_hCmbProfile)
+			Local $nUpdatedTotalProfile = _GUICtrlComboBox_GetCount($g_hCmbProfile)
+
+			If $iNewProfile <= 7 Then
+				_GUICtrlComboBox_SetCurSel($cmbAccountNo[$iNewProfile], -1)		; clear config of new profile
+				_GUICtrlComboBox_SetCurSel($cmbProfileType[$iNewProfile], -1)
+				For $i = 7 To $iNewProfile+1  Step -1
+					_GUICtrlComboBox_SetCurSel($cmbAccountNo[$i], $aMatchProfileAcc[$i-1]-1)	; push config up 1 level. -1 because $aMatchProfileAcc is saved from 1 to 8
+					_GUICtrlComboBox_SetCurSel($cmbProfileType[$i], $aProfileType[$i-1]-1)
+				Next
+			EndIf
+			btnUpdateProfile()
+;====== SwitchAcc - DEMEN ==============
+
 		Case Else
 			SetLog("If you are seeing this log message there is something wrong.", $COLOR_ERROR)
 	EndSwitch
@@ -77,6 +97,10 @@ EndFunc   ;==>btnAddConfirm
 Func btnDeleteCancel()
 	Switch @GUI_CtrlId
 		Case $g_hBtnDeleteProfile
+
+			SaveConfig_SwitchAcc()		; SwitchAcc - Demen
+			Local $iDeleteProfile = _GUICtrlCombobox_GetCurSel($g_hCmbProfile)		; SwitchAcc - Demen
+
 			Local $msgboxAnswer = MsgBox($MB_ICONWARNING + $MB_OKCANCEL, GetTranslated(637, 8, "Delete Profile"), GetTranslated(637, 14, "Are you sure you really want to delete the profile?\r\nThis action can not be undone."))
 			If $msgboxAnswer = $IDOK Then
 				; Confirmed profile deletion so delete it.
@@ -91,8 +115,27 @@ Func btnDeleteCancel()
 					; create new default profile
 					createProfile(True)
 				EndIf
+
+				;====== SwitchAcc - DEMEN ==============
+				Local $UpdatedProfileList = _GUICtrlComboBox_GetListArray($g_hCmbProfile)
+				Local $nUpdatedTotalProfile = _GUICtrlComboBox_GetCount($g_hCmbProfile)
+
+				If $iDeleteProfile <= 7 Then
+					For $i = $iDeleteProfile To 7
+						If $i <=6 Then
+							_GUICtrlComboBox_SetCurSel($cmbAccountNo[$i], $aMatchProfileAcc[$i+1]-1)
+							_GUICtrlComboBox_SetCurSel($cmbProfileType[$i], $aProfileType[$i+1]-1)
+						Else
+							_GUICtrlComboBox_SetCurSel($cmbAccountNo[$i], -1)
+							_GUICtrlComboBox_SetCurSel($cmbProfileType[$i], -1)
+						EndIf
+					Next
+				EndIf
+				btnUpdateProfile()
+				;====== SwitchAcc - DEMEN ==============
+
 			EndIf
-		Case $g_hBtnCancelProfileChange
+			Case $g_hBtnCancelProfileChange
 			GUICtrlSetState($g_hTxtVillageName, $GUI_HIDE)
 			GUICtrlSetState($g_hCmbProfile, $GUI_SHOW)
 			GUICtrlSetState($g_hBtnConfirmAddProfile, $GUI_HIDE)

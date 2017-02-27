@@ -18,7 +18,7 @@ Global $g_hGUI_TRAINARMY = 0
 Global $g_hGUI_TRAINARMY_TAB = 0, $g_hGUI_TRAINARMY_TAB_ITEM1 = 0, $g_hGUI_TRAINARMY_TAB_ITEM2 = 0, $g_hGUI_TRAINARMY_TAB_ITEM3 = 0, $g_hGUI_TRAINARMY_TAB_ITEM4 = 0
 
 ; Troops/Spells sub-tab
-Global $g_hChkUseQuickTrain = 0, $g_ahChkArmy[3]			; QuickTrainCombo (check box) - Demen
+Global $g_hChkUseQuickTrain = 0, $g_ahChkArmy[3] = [0,0,0]			; QuickTrainCombo (check box) - Demen
 Global $g_ahTxtTrainArmyTroopCount[$eTroopCount] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 Global $g_ahLblTrainArmyTroopLevel[$eTroopCount] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 Global $g_ahTxtTrainArmySpellCount[$eSpellCount] = [0,0,0,0,0,0,0,0,0,0]

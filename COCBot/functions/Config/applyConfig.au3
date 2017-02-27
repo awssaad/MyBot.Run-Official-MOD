@@ -109,6 +109,7 @@ Func applyConfig($bRedrawAtExit = True, $TypeReadSave = "Read") ;Applies the dat
 ; <<< nothing here >>>
 
     ; <><><><> Bot / Profiles <><><><>
+	ApplyConfig_SwitchAcc()	;	SwitchAcc - Demen
 	PopulatePresetComboBox()
 	MakeSavePresetMessage()
 	GUICtrlSetState($g_hLblLoadPresetMessage, $GUI_SHOW)
@@ -1901,3 +1902,36 @@ Func ApplyConfig_641_1($TypeReadSave)
 	EndSwitch
 EndFunc
 
+Func ApplyConfig_SwitchAcc()	;	SwitchAcc - Demen
+ 	If $ichkSwitchAcc = 1 Then
+ 		GUICtrlSetState($chkSwitchAcc, $GUI_CHECKED)
+ 	Else
+ 		GUICtrlSetState($chkSwitchAcc, $GUI_UNCHECKED)
+ 	EndIf
+
+	If $ichkSmartSwitch = 1 Then
+	   GUICtrlSetState($radSmartSwitch, $GUI_CHECKED)
+ 	Else
+	   GUICtrlSetState($radNormalSwitch, $GUI_CHECKED)
+	EndIf
+
+	radNormalSwitch()
+
+	_GUICtrlCombobox_SetCurSel($cmbTotalAccount, $icmbTotalCoCAcc - 1)
+
+	If $ichkCloseTraining >= 1 Then
+		GUICtrlSetState($chkUseTrainingClose, $GUI_CHECKED)
+		If $ichkCloseTraining = 1 Then
+			GUICtrlSetState($radCloseCoC, $GUI_CHECKED)
+		Else
+			GUICtrlSetState($radCloseAndroid, $GUI_CHECKED)
+		EndIf
+	Else
+		GUICtrlSetState($chkUseTrainingClose, $GUI_UNCHECKED)
+	EndIf
+
+	For $i = 0 to 7
+		_GUICtrlCombobox_SetCurSel($cmbAccountNo[$i], $aMatchProfileAcc[$i]-1)
+		_GUICtrlCombobox_SetCurSel($cmbProfileType[$i], $aProfileType[$i]-1)
+	Next
+EndFunc

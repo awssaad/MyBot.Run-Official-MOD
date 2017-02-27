@@ -278,6 +278,10 @@
 #include "functions\Other\Api.au3"
 #include "functions\Other\ApiClient.au3"
 
+#include "functions\SwitchAcc\SwitchAcc.au3"
+#include "functions\SwitchAcc\UpdateProfileStats.au3"
+
+
 ; OLD CODE
 
 ;#include "functions\Image Search\checkWall.au3"

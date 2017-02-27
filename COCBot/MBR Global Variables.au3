@@ -1325,3 +1325,19 @@ Global $hBitmapFirst
 Global $g_hCmbCSVSpeed[2] = [$LB, $DB]
 Global $g_iCmbCSVSpeed[2] = [$LB, $DB]
 Global $g_hDivider
+
+;=========================== Demen's new variables =================
+; SwitchAcc
+Global $profile = $g_sProfilePath & "\Profile.ini"
+Global $ichkSwitchAcc = 0, $icmbTotalCoCAcc, $nTotalCoCAcc = 8, $ichkSmartSwitch, $ichkCloseTraining
+Global $nTotalProfile = 1, $nCurProfile = 1, $NextProfile
+Global $ProfileList
+Global $aProfileType[8]		; Type of the all Profiles, 1 = active, 2 = donate, 3 = idle
+Global $aMatchProfileAcc[8]	; Accounts match with All Profiles
+Global $aDonateProfile, $aActiveProfile
+Global $iAttackedCountSwitch, $ActiveSwitchCounter = 0, $DonateSwitchCounter = 0
+Global $bReMatchAcc = False
+Global $aTimerStart[8], $aTimerEnd[8]
+Global $aRemainTrainTime[8], $aUpdateRemainTrainTime[8], $nMinRemainTrain
+Global $aLocateAccConfig[8], $aAccPosY[8]
+

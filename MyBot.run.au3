@@ -475,6 +475,8 @@ Func FinalInitialization(Const $hBLT, Const $sAI)
 
    CheckDisplay() ; verify display size and DPI (Dots Per Inch) setting
 
+   btnUpdateProfile()	; update profiles & StatsProfile - SwitchAcc - Demen
+
    LoadAmountOfResourcesImages()
 
    ;~ InitializeVariables();initialize variables used in extrawindows
@@ -530,6 +532,13 @@ EndFunc   ;==>MainLoop
 
 Func runBot() ;Bot that runs everything in order
 	Local $iWaitTime
+
+	If $ichkSwitchAcc = 1 And $bReMatchAcc = True Then ; SwitchAcc - DEMEN
+		$nCurProfile = _GUICtrlComboBox_GetCurSel($cmbProfile) + 1
+		Setlog("Rematching Profile [" & $nCurProfile & "] - " & $ProfileList[$nCurProfile] & " (CoC Acc. " & $aMatchProfileAcc[$nCurProfile - 1] & ")")
+		SwitchCoCAcc()
+		$bReMatchAcc = False
+	EndIf
 
 	While 1
 		; In order to prevent any GDI leaks, restart always GDI+ Environment here (update: bad, cause bot "crashes")
@@ -643,6 +652,7 @@ Func runBot() ;Bot that runs everything in order
 				UpgradeWall()
 				If _Sleep($iDelayRunBot3) Then Return
 				If $g_bRestart = True Then ContinueLoop
+				If $ichkSwitchAcc = 1 And $aProfileType[$nCurProfile - 1] = 2 Then checkSwitchAcc() ;  Switching to active account after donation - SwitchAcc - DEMEN
 				Idle()
 				;$fullArmy1 = $fullArmy
 				If _Sleep($iDelayRunBot3) Then Return
@@ -825,7 +835,11 @@ Func Idle() ;Sequence that runs until Full Army
 		If $iChkSnipeWhileTrain = 1 Then SnipeWhileTrain() ;snipe while train
 
 		If $g_iCommandStop = -1 Then ; Check if closing bot/emulator while training and not in halt mode
-			SmartWait4Train()
+			If $ichkSwitchAcc = 1 Then ; SwitchAcc - DEMEN
+				checkSwitchAcc() ; SwitchAcc - DEMEN
+			Else ; SwitchAcc - DEMEN
+				SmartWait4Train()
+			EndIf
 			If $g_bRestart = True Then ExitLoop ; if smart wait activated, exit to runbot in case user adjusted GUI or left emulator/bot in bad state
 		EndIf
 
@@ -873,6 +887,11 @@ Func AttackMain() ;Main control for attack functions
 			$Is_SearchLimit = False
 			$Is_ClientSyncError = False
 			$g_bQuickAttack = False
+			If $ichkSwitchAcc = 1 Then	; SwitchAcc - DEMEN
+				checkSwitchAcc()
+			Else
+				SmartWait4Train()
+			EndIf
 		EndIf
 	Else
 		SetLog("Attacking Not Planned, Skipped..", $COLOR_WARNING)

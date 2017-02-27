@@ -48,6 +48,7 @@ Global $g_hFrmBot_WNDPROC_ptr = 0
 #include "GUI\MBR GUI Control Preset.au3"
 #include "GUI\MBR GUI Control Child Misc.au3"
 #include "GUI\MBR GUI Control Android.au3"
+#include "GUI\MBR GUI Control SwitchAcc.au3"
 #include "MBR GUI Action.au3"
 
 Func InitializeMainGUI()

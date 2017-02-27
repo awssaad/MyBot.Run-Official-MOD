@@ -170,7 +170,7 @@ Func AttackReport()
 	SetLog("Stars earned: " & $starsearned)
 
 	Local $AtkLogTxt
-	$AtkLogTxt = "" & _NowTime(4) & "|"
+	$AtkLogTxt = String($nCurProfile) & ".|" & _NowTime(4) & "|"  ; adding Acc No. in Attack Log - SwitchAcc - DEMEN
 	$AtkLogTxt &= StringFormat("%5d", $iTrophyCurrent) & "|"
 	$AtkLogTxt &= StringFormat("%6d", $SearchCount) & "|"
 	$AtkLogTxt &= StringFormat("%7d", $g_iStatsLastAttack[$eLootGold]) & "|"
@@ -211,14 +211,22 @@ Func AttackReport()
 	If $g_iFirstAttack = 0 Then $g_iFirstAttack = 1
 	$g_iStatsTotalGain[$eLootGold] += $g_iStatsLastAttack[$eLootGold] + $g_iStatsBonusLast[$eLootGold]
 	$iTotalGoldGain[$g_iMatchMode] += $g_iStatsLastAttack[$eLootGold] + $g_iStatsBonusLast[$eLootGold]
+	If $ichkSwitchAcc = 1 Then $aGoldTotalAcc[$nCurProfile-1] += $g_iStatsLastAttack[$eLootGold] + $g_iStatsBonusLast[$eLootGold] 		; ProfileStats - SwitchAcc Mod - DEMEN
+
 	$g_iStatsTotalGain[$eLootElixir] += $g_iStatsLastAttack[$eLootElixir] + $g_iStatsBonusLast[$eLootElixir]
 	$iTotalElixirGain[$g_iMatchMode] += $g_iStatsLastAttack[$eLootElixir] + $g_iStatsBonusLast[$eLootElixir]
+	If $ichkSwitchAcc = 1 Then $aElixirTotalAcc[$nCurProfile-1] += $g_iStatsLastAttack[$eLootElixir] + $g_iStatsBonusLast[$eLootElixir] ; ProfileStats - SwitchAcc Mod - DEMEN
+
 	If $g_iStatsStartedWith[$eLootDarkElixir] <> "" Then
 		$g_iStatsTotalGain[$eLootDarkElixir] += $g_iStatsLastAttack[$eLootDarkElixir] + $g_iStatsBonusLast[$eLootDarkElixir]
 		$iTotalDarkGain[$g_iMatchMode] += $g_iStatsLastAttack[$eLootDarkElixir] + $g_iStatsBonusLast[$eLootDarkElixir]
+		If $ichkSwitchAcc = 1 Then $aDarkTotalAcc[$nCurProfile-1] += $g_iStatsLastAttack[$eLootDarkElixir] + $g_iStatsBonusLast[$eLootDarkElixir] 	; ProfileStats - SwitchAcc Mod - DEMEN
 	EndIf
+
 	$g_iStatsTotalGain[$eLootTrophy] += $g_iStatsLastAttack[$eLootTrophy]
 	$iTotalTrophyGain[$g_iMatchMode] += $g_iStatsLastAttack[$eLootTrophy]
+	If $ichkSwitchAcc = 1 Then $aTrophyLootAcc[$nCurProfile-1] += $g_iStatsLastAttack[$eLootTrophy]										; ProfileStats - SwitchAcc Mod - DEMEN
+
 	If $g_iMatchMode = $TS Then
 		If $starsearned > 0 Then
 			$iNbrOfTHSnipeSuccess += 1
@@ -227,6 +235,8 @@ Func AttackReport()
 		EndIf
 	EndIf
 	$iAttackedVillageCount[$g_iMatchMode] += 1
+	If $ichkSwitchAcc = 1 Then $aAttackedCountAcc[$nCurProfile-1] += 1 								; ProfileStats - SwitchAcc Mod - DEMEN
+
 	UpdateStats()
 	$actual_train_skip = 0 ;
 

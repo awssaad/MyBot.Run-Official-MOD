@@ -229,6 +229,7 @@ Func ReadRegularConfig()
 
    ; <><><><> Bot / Profiles <><><><>
    ; <<< nothing here >>>
+	ReadConfig_SwitchAcc()	;	SwitchAcc - Demen
 
    ; <><><><> Bot / Stats <><><><>
    ; <<< nothing here >>>
@@ -1123,6 +1124,20 @@ Func ReadConfig_641_1()
 	IniReadS($g_bTrainAddRandomDelayEnable, $g_sProfileConfigPath, "other", "chkAddIdleTime", $g_bTrainAddRandomDelayEnable, "Bool")
 	IniReadS($g_iTrainAddRandomDelayMin, $g_sProfileConfigPath, "other", "txtAddDelayIdlePhaseTimeMin", $g_iTrainAddRandomDelayMin, "Int")
 	IniReadS($g_iTrainAddRandomDelayMax, $g_sProfileConfigPath, "other", "txtAddDelayIdlePhaseTimeMax", $g_iTrainAddRandomDelayMax, "Int")
+EndFunc
+
+Func ReadConfig_SwitchAcc()		;	SwitchAcc - Demen
+   ; <><><><> Bot / Profiles <><><><>
+	IniReadS($ichkSwitchAcc, $Profile, "Switch Account", "Enable", "0")
+	IniReadS($icmbTotalCoCAcc, $Profile, "Switch Account", "Total Coc Account", "-1")
+	IniReadS($ichkSmartSwitch, $Profile, "Switch Account", "Smart Switch", "0")
+	$ichkCloseTraining = Number(IniRead($Profile, "Switch Account", "Sleep Combo", "0"))	; Sleep Combo, 1 = Close CoC, 2 = Close Android, 0 = No sleep
+
+	For $i = 0 to 7
+		IniReadS($aMatchProfileAcc[$i],$Profile, "Switch Account", "MatchProfileAcc." & $i+1, "-1")
+		IniReadS($aProfileType[$i], $Profile, "Switch Account", "ProfileType." & $i+1, "-1")
+		IniReadS($aAccPosY[$i], $Profile, "Switch Account", "AccLocation." & $i+1, "-1")
+	Next
 EndFunc
 
 Func IniReadS(ByRef $variable, $PrimaryInputFile, $section, $key, $defaultvalue, $valueType = Default)

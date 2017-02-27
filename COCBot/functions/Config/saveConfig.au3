@@ -165,6 +165,7 @@ Func SaveRegularConfig()
 
    ; <><><><> Bot / Profiles <><><><>
    ; <<< nothing here >>>
+	SaveConfig_SwitchAcc()
 
    ; <><><><> Bot / Stats <><><><>
    ; <<< nothing here >>>
@@ -1016,6 +1017,40 @@ Func SaveConfig_641_1()
 	IniWriteS($g_sProfileConfigPath, "other", "txtAddDelayIdlePhaseTimeMax", $g_iTrainAddRandomDelayMax)
 EndFunc
 
+Func SaveConfig_SwitchAcc()	; 	SwitchAcc - DEMEN
+	If GUICtrlRead($chkSwitchAcc) = $GUI_CHECKED Then
+		IniWrite($profile, "Switch Account", "Enable", 1)
+	Else
+		IniWrite($profile, "Switch Account", "Enable", 0)
+	EndIf
+
+	IniWrite($profile, "Switch Account", "Total Coc Account", _GUICtrlCombobox_GetCurSel($cmbTotalAccount)+1)		; 1 = 1 Acc, 2 = 2 Acc, etc.
+
+	If GUICtrlRead($radSmartSwitch) = $GUI_CHECKED Then
+	   IniWrite($profile, "Switch Account", "Smart Switch", 1)
+	Else
+	   IniWrite($profile, "Switch Account", "Smart Switch", 0)
+	EndIf
+
+	If GUICtrlRead($chkUseTrainingClose) = $GUI_CHECKED Then
+		If GUICtrlRead($radCloseCoC) = $GUI_CHECKED Then
+			IniWrite($profile, "Switch Account", "Sleep Combo", 1)		; Sleep Combo = 1 => Close CoC
+		Else
+			IniWrite($profile, "Switch Account", "Sleep Combo", 2)		; Sleep Combo = 2 => Close Android
+		EndIf
+	Else
+		IniWrite($profile, "Switch Account", "Sleep Combo", 0)
+	EndIf
+
+	For $i = 1 to 8
+		IniWriteS($profile, "Switch Account", "MatchProfileAcc." & $i, _GUICtrlCombobox_GetCurSel($cmbAccountNo[$i-1])+1)		; 1 = Acc 1, 2 = Acc 2, etc.
+	Next
+
+	For $i = 1 to 8
+		IniWriteS($profile, "Switch Account", "ProfileType." & $i, _GUICtrlCombobox_GetCurSel($cmbProfileType[$i-1])+1)			; 1 = Active, 2 = Donate, 3 = Idle
+	Next
+EndFunc 	; ==> SaveConfig_SwitchAcc
+
 Func IniWriteS($filename, $section, $key, $value)
 	;save in standard config files and also save settings in strategy ini file (save strategy button valorize variable $g_sProfileSecondaryOutputFileName )
 	Local $s = $section
@@ -1027,3 +1062,5 @@ Func IniWriteS($filename, $section, $key, $value)
 		EndIf
 	EndIf
 EndFunc   ;==>IniWriteS
+
+

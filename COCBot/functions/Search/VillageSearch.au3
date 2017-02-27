@@ -378,9 +378,11 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 
 		$iSkipped = $iSkipped + 1
 		$iSkippedVillageCount += 1
+		If $ichkSwitchAcc = 1 Then $aSkippedVillageCountAcc[$nCurProfile - 1] += 1 							; ProfileStats - SwitchAcc - DEMEN
 		If $iTownHallLevel <> "" And $iTownHallLevel > 0 Then
 			$iSearchCost += $aSearchCost[$iTownHallLevel - 1]
 			$g_iStatsTotalGain[$eLootGold] -= $aSearchCost[$iTownHallLevel - 1]
+			If $ichkSwitchAcc = 1 Then $aGoldTotalAcc[$nCurProfile -1] -= $aSearchCost[$iTownHallLevel - 1] ; ProfileStats - SwitchAcc - DEMEN
 		EndIf
 		UpdateStats()
 
