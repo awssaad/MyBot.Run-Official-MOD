@@ -1330,7 +1330,7 @@ Global $g_hDivider
 ; SwitchAcc
 Global $profile = $g_sProfilePath & "\Profile.ini"
 Global $ichkSwitchAcc = 0, $icmbTotalCoCAcc, $nTotalCoCAcc = 8, $ichkSmartSwitch, $ichkCloseTraining
-Global $nTotalProfile = 1, $nCurProfile = 1, $NextProfile
+Global $nTotalProfile = 1, $nCurProfile = 1, $nNextProfile
 Global $ProfileList
 Global $aProfileType[8]		; Type of the all Profiles, 1 = active, 2 = donate, 3 = idle
 Global $aMatchProfileAcc[8]	; Accounts match with All Profiles

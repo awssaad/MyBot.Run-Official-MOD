@@ -180,21 +180,21 @@ Func SwitchProfile($SwitchCase) 										; Switch profile (1 = Active, 2 = Dona
 
    Case 4
 	 Setlog("Switching to next account")
-	 $NextProfile = 1
+	 $nNextProfile = 1
 	 If $nCurProfile < $nTotalProfile Then
-		$NextProfile = $nCurProfile + 1
+		$nNextProfile = $nCurProfile + 1
 	 Else
-		$NextProfile = 1
+		$nNextProfile = 1
 	 EndIf
-	 While $aProfileType[$NextProfile-1] = 3 OR $aProfileType[$NextProfile-1] = 0
-		If $NextProfile < $nTotalProfile Then
-		   $NextProfile += 1
+	 While $aProfileType[$nNextProfile-1] = 3 OR $aProfileType[$nNextProfile-1] = 0
+		If $nNextProfile < $nTotalProfile Then
+		   $nNextProfile += 1
 		Else
-		   $NextProfile = 1
+		   $nNextProfile = 1
 		EndIf
-		If $aProfileType[$NextProfile-1] <> 3 AND $aProfileType[$NextProfile-1] <> 0 Then ExitLoop
+		If $aProfileType[$nNextProfile-1] <> 3 AND $aProfileType[$nNextProfile-1] <> 0 Then ExitLoop
 	  WEnd
-     _GUICtrlComboBox_SetCurSel($g_hCmbProfile, $NextProfile-1)
+     _GUICtrlComboBox_SetCurSel($g_hCmbProfile, $nNextProfile-1)
 	  cmbProfile()
    EndSwitch
 
