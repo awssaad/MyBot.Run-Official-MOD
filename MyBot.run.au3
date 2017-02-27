@@ -534,7 +534,7 @@ Func runBot() ;Bot that runs everything in order
 	Local $iWaitTime
 
 	If $ichkSwitchAcc = 1 And $bReMatchAcc = True Then ; SwitchAcc - DEMEN
-		$nCurProfile = _GUICtrlComboBox_GetCurSel($cmbProfile) + 1
+		$nCurProfile = _GUICtrlComboBox_GetCurSel($g_hCmbProfile) + 1
 		Setlog("Rematching Profile [" & $nCurProfile & "] - " & $ProfileList[$nCurProfile] & " (CoC Acc. " & $aMatchProfileAcc[$nCurProfile - 1] & ")")
 		SwitchCoCAcc()
 		$bReMatchAcc = False
