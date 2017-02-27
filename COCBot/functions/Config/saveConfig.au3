@@ -160,6 +160,9 @@ Func SaveRegularConfig()
 	; <><><><> Bot / Debug <><><><>
 	SaveConfig_Debug()
 
+	; <><><> Team Mod's <><><>
+	SaveConfig_100()
+
    ; <><><><> Attack Plan / Strategies <><><><>
    ; <<< nothing here >>>
 
@@ -699,7 +702,6 @@ Func SaveConfig_600_29_DB_Scripted()
 	IniWriteS($g_sProfileConfigPath, "attack", "RedlineRoutineDB", $g_aiAttackScrRedlineRoutine[$DB])
 	IniWriteS($g_sProfileConfigPath, "attack", "DroplineEdgeDB", $g_aiAttackScrDroplineEdge[$DB])
 	IniWriteS($g_sProfileConfigPath, "attack", "ScriptDB", $g_sAttackScrScriptName[$DB])
-	IniWriteS($g_sProfileConfigPath, "DeploymentSpeed", "DB", $g_iCmbCSVSpeed[$DB])
 EndFunc
 
 Func SaveConfig_600_29_DB_Milking()
@@ -799,7 +801,6 @@ Func SaveConfig_600_29_LB_Scripted()
 	IniWriteS($g_sProfileConfigPath, "attack", "RedlineRoutineAB", $g_aiAttackScrRedlineRoutine[$LB])
 	IniWriteS($g_sProfileConfigPath, "attack", "DroplineEdgeAB", $g_aiAttackScrDroplineEdge[$LB])
 	IniWriteS($g_sProfileConfigPath, "attack", "ScriptAB", $g_sAttackScrScriptName[$LB])
-	IniWriteS($g_sProfileConfigPath, "DeploymentSpeed", "LB", $g_iCmbCSVSpeed[$LB])
 EndFunc
 
 Func SaveConfig_600_29_TS()
@@ -894,8 +895,6 @@ Func SaveConfig_600_31()
 	IniWriteS($g_sProfileConfigPath, "search", "chkDisableCollectorsFilter", $g_bCollectorFilterDisable ? 1 : 0)
 	IniWriteS($g_sProfileConfigPath, "collectors", "minmatches", $g_iCollectorMatchesMin)
 	IniWriteS($g_sProfileConfigPath, "collectors", "tolerance", $g_iCollectorToleranceOffset)
-	IniWriteS($g_sProfileConfigPath, "search", "DBMeetCollOutside", $ichkDBMeetCollOutside ? 1 : 0)
-	IniWriteS($g_sProfileConfigPath, "search", "DBMinCollOutsidePercent", $iDBMinCollOutsidePercent)
 EndFunc
 
 Func SaveConfig_600_32()
@@ -924,8 +923,6 @@ Func SaveConfig_600_35()
 	IniWriteS($g_sProfileConfigPath, "deletefiles", "DeleteLootsDays", $iDeleteLootsDays)
 	IniWriteS($g_sProfileConfigPath, "general", "AutoStart", $ichkAutoStart)
 	IniWriteS($g_sProfileConfigPath, "general", "AutoStartDelay", $ichkAutoStartDelay)
-	IniWriteS($g_sProfileConfigPath, "general", "AutoHide", $ichkAutoHide)
-	IniWriteS($g_sProfileConfigPath, "general", "AutoHideDelay", $ichkAutoHideDelay)
 	IniWriteS($g_sProfileConfigPath, "General", "ChkLanguage", $ichkLanguage)
 	IniWriteS($g_sProfileConfigPath, "general", "DisposeWindows", $iDisposeWindows)
 	IniWriteS($g_sProfileConfigPath, "general", "DisposeWindowsPos", $icmbDisposeWindowsPos)
@@ -1015,6 +1012,17 @@ Func SaveConfig_641_1()
 	IniWriteS($g_sProfileConfigPath, "other", "chkAddIdleTime", $g_bTrainAddRandomDelayEnable ? 1 : 0)
 	IniWriteS($g_sProfileConfigPath, "other", "txtAddDelayIdlePhaseTimeMin", $g_iTrainAddRandomDelayMin)
 	IniWriteS($g_sProfileConfigPath, "other", "txtAddDelayIdlePhaseTimeMax", $g_iTrainAddRandomDelayMax)
+EndFunc
+
+Func SaveConfig_100()
+	; <><><> Team Mod's <><><>
+	ApplyConfig_100("Save")
+	IniWriteS($g_sProfileConfigPath, "general", "AutoHide", $ichkAutoHide) ; Auto Hide
+	IniWriteS($g_sProfileConfigPath, "general", "AutoHideDelay", $ichkAutoHideDelay)
+	IniWriteS($g_sProfileConfigPath, "search", "DBMeetCollOutside", $ichkDBMeetCollOutside ? 1 : 0) ; Check Collector Outside
+	IniWriteS($g_sProfileConfigPath, "search", "DBMinCollOutsidePercent", $iDBMinCollOutsidePercent)
+	IniWriteS($g_sProfileConfigPath, "DeploymentSpeed", "DB", $g_iCmbCSVSpeed[$DB]) ; CSV Deploy Speed
+	IniWriteS($g_sProfileConfigPath, "DeploymentSpeed", "LB", $g_iCmbCSVSpeed[$LB])
 EndFunc
 
 Func SaveConfig_SwitchAcc()	; 	SwitchAcc - DEMEN

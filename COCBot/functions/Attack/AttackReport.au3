@@ -170,24 +170,29 @@ Func AttackReport()
 	SetLog("Stars earned: " & $starsearned)
 
 	Local $AtkLogTxt
-	$AtkLogTxt = String($nCurProfile) & ".|" & _NowTime(4) & "|"  ; adding Acc No. in Attack Log - SwitchAcc - DEMEN
-	$AtkLogTxt &= StringFormat("%5d", $iTrophyCurrent) & "|"
-	$AtkLogTxt &= StringFormat("%6d", $SearchCount) & "|"
-	$AtkLogTxt &= StringFormat("%7d", $g_iStatsLastAttack[$eLootGold]) & "|"
-	$AtkLogTxt &= StringFormat("%7d", $g_iStatsLastAttack[$eLootElixir]) & "|"
-	$AtkLogTxt &= StringFormat("%7d", $g_iStatsLastAttack[$eLootDarkElixir]) & "|"
-	$AtkLogTxt &= StringFormat("%3d", $g_iStatsLastAttack[$eLootTrophy]) & "|"
-	$AtkLogTxt &= StringFormat("%1d", $starsearned) & "|"
-	$AtkLogTxt &= StringFormat("%6d", $g_iStatsBonusLast[$eLootGold]) & "|"
-	$AtkLogTxt &= StringFormat("%6d", $g_iStatsBonusLast[$eLootElixir]) & "|"
-	$AtkLogTxt &= StringFormat("%4d", $g_iStatsBonusLast[$eLootDarkElixir]) & "|"
-	$AtkLogTxt &= $LeagueShort & "|"
+
+	If $ichkSwitchAcc = 1 Then
+		$AtkLogTxt = String($nCurProfile) & ".|" & _NowTime(4) & "|"  ; adding Acc No. in Attack Log - SwitchAcc - DEMEN
+	Else
+		$AtkLogTxt = "" & _NowTime(4) & "|"
+	EndIf
+		$AtkLogTxt &= StringFormat("%5d", $iTrophyCurrent) & "|"
+		$AtkLogTxt &= StringFormat("%6d", $SearchCount) & "|"
+		$AtkLogTxt &= StringFormat("%7d", $g_iStatsLastAttack[$eLootGold]) & "|"
+		$AtkLogTxt &= StringFormat("%7d", $g_iStatsLastAttack[$eLootElixir]) & "|"
+		$AtkLogTxt &= StringFormat("%7d", $g_iStatsLastAttack[$eLootDarkElixir]) & "|"
+		$AtkLogTxt &= StringFormat("%3d", $g_iStatsLastAttack[$eLootTrophy]) & "|"
+		$AtkLogTxt &= StringFormat("%1d", $starsearned) & "|"
+		$AtkLogTxt &= StringFormat("%6d", $g_iStatsBonusLast[$eLootGold]) & "|"
+		$AtkLogTxt &= StringFormat("%6d", $g_iStatsBonusLast[$eLootElixir]) & "|"
+		$AtkLogTxt &= StringFormat("%4d", $g_iStatsBonusLast[$eLootDarkElixir]) & "|"
+		$AtkLogTxt &= $LeagueShort & "|"
 
 	Local $AtkLogTxtExtend
 	$AtkLogTxtExtend = "|"
 	$AtkLogTxtExtend &= $CurCamp & "/" & $TotalCamp & "|"
 	If Int($g_iStatsLastAttack[$eLootTrophy]) >= 0 Then
-		SetAtkLog($AtkLogTxt, $AtkLogTxtExtend, $COLOR_BLACK)
+		SetAtkLog($AtkLogTxt, $AtkLogTxtExtend, $COLOR_GREEN)
 	Else
 		SetAtkLog($AtkLogTxt, $AtkLogTxtExtend, $COLOR_ERROR)
 	EndIf
