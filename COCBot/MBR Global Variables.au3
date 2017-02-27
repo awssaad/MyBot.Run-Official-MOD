@@ -491,6 +491,9 @@ Global Const $g_asTroopNamesPlural[$eTroopCount] = [ _
 Global Const $g_asTroopShortNames[$eTroopCount] = [ _
    "Barb", "Arch", "Giant", "Gobl", "Wall", "Ball", "Wiza", "Heal", "Drag", "Pekk", "BabyD", "Mine", _
    "Mini", "Hogs", "Valk", "Gole", "Witc", "Lava", "Bowl"]
+Global Const $g_aiTroopSpace[$eTroopCount] = [ _
+   1, 1, 5, 1, 2, 5, 4, 14, 20, 25, 10, 5, _
+   2, 5, 8, 30, 12, 30, 6 ]
 Global Const $g_aiTroopTrainTime[$eTroopCount] = [ _
    20, 24, 120, 28, 60, 120, 120, 480, 720, 720, 360, 120, _
    36, 90, 180, 600, 360, 600, 120 ]
