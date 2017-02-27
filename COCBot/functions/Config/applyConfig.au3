@@ -391,6 +391,10 @@ Func ApplyConfig_600_13($TypeReadSave)
 			GUICtrlSetState($g_hChkSkipDonateNearFullTroopsEnable, $g_bDonateSkipNearFullEnable ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetData($g_hTxtSkipDonateNearFullTroopsPercentage, $g_iDonateSkipNearFullPercent)
 			chkskipDonateNearFulLTroopsEnable()
+			GUICtrlSetState($g_hChkUseCCBalanced, $iChkUseCCBalanced = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			_GUICtrlComboBox_SetCurSel($g_hCmbCCDonated, $iCmbCCDonated - 1)
+			_GUICtrlComboBox_SetCurSel($g_hCmbCCReceived, $iCmbCCReceived - 1)
+			chkBalanceDR()
 		Case "Save"
 			$g_bDonateHoursEnable = (GUICtrlRead($g_hChkDonateHoursEnable) = $GUI_CHECKED)
 			For $i = 0 To 23
@@ -399,6 +403,9 @@ Func ApplyConfig_600_13($TypeReadSave)
 			$g_iCmbDonateFilter = _GUICtrlComboBox_GetCurSel($g_hCmbFilterDonationsCC)
 			$g_bDonateSkipNearFullEnable = (GUICtrlRead($g_hChkSkipDonateNearFullTroopsEnable) = $GUI_CHECKED)
 			$g_iDonateSkipNearFullPercent = Number(GUICtrlRead($g_hTxtSkipDonateNearFullTroopsPercentage))
+			$iChkUseCCBalanced =  GUICtrlRead($g_hChkUseCCBalanced) = $GUI_CHECKED ? 1 : 0
+			$iCmbCCDonated = _GUICtrlComboBox_GetCurSel($g_hCmbCCDonated) + 1
+			$iCmbCCReceived = _GUICtrlComboBox_GetCurSel($g_hCmbCCReceived) + 1
 	EndSwitch
 EndFunc
 
@@ -1004,10 +1011,6 @@ Func ApplyConfig_600_29($TypeReadSave)
 			Next
 			GUICtrlSetState($g_hChkDropCCHoursEnable, $iPlannedDropCCHoursEnable = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			chkDropCCHoursEnable()
-			GUICtrlSetState($g_hChkUseCCBalanced, $iChkUseCCBalanced = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			_GUICtrlComboBox_SetCurSel($g_hCmbCCDonated, $iCmbCCDonated - 1)
-			_GUICtrlComboBox_SetCurSel($g_hCmbCCReceived, $iCmbCCReceived - 1)
-			chkBalanceDR()
 			For $i = 0 To 23
 				GUICtrlSetState($g_ahChkDropCCHours[$i], $iPlannedDropCCHours[$i] = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			Next
@@ -1033,9 +1036,6 @@ Func ApplyConfig_600_29($TypeReadSave)
 				$iPlannedattackHours[$i] = GUICtrlRead($g_ahChkAttackHours[$i]) = $GUI_CHECKED ? 1 : 0
 			Next
 			$iPlannedDropCCHoursEnable = GUICtrlRead($g_hChkDropCCHoursEnable) = $GUI_CHECKED ? 1 : 0
-			$iChkUseCCBalanced =  GUICtrlRead($g_hChkUseCCBalanced) = $GUI_CHECKED ? 1 : 0
-			$iCmbCCDonated = _GUICtrlComboBox_GetCurSel($g_hCmbCCDonated) + 1
-			$iCmbCCReceived = _GUICtrlComboBox_GetCurSel($g_hCmbCCReceived) + 1
 			Local $string = ""
 			For $i = 0 To 23
 				$iPlannedDropCCHours[$i] = GUICtrlRead($g_ahChkDropCCHours[$i]) = $GUI_CHECKED ? 1 : 0
@@ -1778,7 +1778,7 @@ Func ApplyConfig_600_54($TypeReadSave)
 					GUICtrlSetState($g_hChkCustomTrainOrderEnable, $GUI_UNCHECKED)
 					$g_bCustomTrainOrderEnable = False
 					GUICtrlSetState($g_hBtnTroopOrderSet, $GUI_DISABLE) ; disable button
-					For $i = 0 To UBound($g_asTroopOrderTrainTab) - 2
+					For $i = 0 To UBound($g_ahCmbTroopOrder) - 1
 						GUICtrlSetState($g_ahCmbTroopOrder[$i], $GUI_DISABLE) ; disable combo boxes
 					Next
 				EndIf
