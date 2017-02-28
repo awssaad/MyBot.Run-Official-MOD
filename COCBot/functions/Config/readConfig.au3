@@ -1128,10 +1128,10 @@ EndFunc
 
 Func ReadConfig_SwitchAcc()		;	SwitchAcc - Demen
    ; <><><><> Bot / Profiles <><><><>
-	IniReadS($ichkSwitchAcc, $Profile, "Switch Account", "Enable", "0")
-	IniReadS($icmbTotalCoCAcc, $Profile, "Switch Account", "Total Coc Account", "-1")
-	IniReadS($ichkSmartSwitch, $Profile, "Switch Account", "Smart Switch", "0")
-	$ichkCloseTraining = Number(IniRead($Profile, "Switch Account", "Sleep Combo", "0"))	; Sleep Combo, 1 = Close CoC, 2 = Close Android, 0 = No sleep
+	IniReadS($ichkSwitchAcc, $Profile, "Switch Account", "Enable", "0", "int")
+	IniReadS($icmbTotalCoCAcc, $Profile, "Switch Account", "Total Coc Account", "-1", "int")
+	IniReadS($ichkSmartSwitch, $Profile, "Switch Account", "Smart Switch", "0", "int")
+	IniReads($ichkCloseTraining, $Profile, "Switch Account", "Sleep Combo", "0", "int")	; Sleep Combo, 1 = Close CoC, 2 = Close Android, 0 = No sleep
 
 	For $i = 0 to 7
 		IniReadS($aMatchProfileAcc[$i],$Profile, "Switch Account", "MatchProfileAcc." & $i+1, "-1")

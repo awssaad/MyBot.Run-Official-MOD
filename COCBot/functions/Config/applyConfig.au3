@@ -109,7 +109,7 @@ Func applyConfig($bRedrawAtExit = True, $TypeReadSave = "Read") ;Applies the dat
 ; <<< nothing here >>>
 
     ; <><><><> Bot / Profiles <><><><>
-	ApplyConfig_SwitchAcc()	;	SwitchAcc - Demen
+	ApplyConfig_SwitchAcc($TypeReadSave)	;	SwitchAcc - Demen
 	PopulatePresetComboBox()
 	MakeSavePresetMessage()
 	GUICtrlSetState($g_hLblLoadPresetMessage, $GUI_SHOW)
@@ -1902,36 +1902,41 @@ Func ApplyConfig_641_1($TypeReadSave)
 	EndSwitch
 EndFunc
 
-Func ApplyConfig_SwitchAcc()	;	SwitchAcc - Demen
- 	If $ichkSwitchAcc = 1 Then
- 		GUICtrlSetState($chkSwitchAcc, $GUI_CHECKED)
- 	Else
- 		GUICtrlSetState($chkSwitchAcc, $GUI_UNCHECKED)
- 	EndIf
+Func ApplyConfig_SwitchAcc($TypeReadSave)	;	SwitchAcc - Demen
+	; <><><><> Bot / Profiles <><><><>
+	Switch $TypeReadSave
+		Case "Read"
+			GUICtrlSetState($chkSwitchAcc, $ichkSwitchAcc = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			If $ichkSmartSwitch = 1 Then
+			   GUICtrlSetState($radSmartSwitch, $GUI_CHECKED)
+			Else
+			   GUICtrlSetState($radNormalSwitch, $GUI_CHECKED)
+			EndIf
+			radNormalSwitch()
+			_GUICtrlCombobox_SetCurSel($cmbTotalAccount, $icmbTotalCoCAcc - 1)
 
-	If $ichkSmartSwitch = 1 Then
-	   GUICtrlSetState($radSmartSwitch, $GUI_CHECKED)
- 	Else
-	   GUICtrlSetState($radNormalSwitch, $GUI_CHECKED)
-	EndIf
+			If $ichkCloseTraining >= 1 Then
+				GUICtrlSetState($chkUseTrainingClose, $GUI_CHECKED)
+				If $ichkCloseTraining = 1 Then
+					GUICtrlSetState($radCloseCoC, $GUI_CHECKED)
+				Else
+					GUICtrlSetState($radCloseAndroid, $GUI_CHECKED)
+				EndIf
+			Else
+				GUICtrlSetState($chkUseTrainingClose, $GUI_UNCHECKED)
+			EndIf
 
-	radNormalSwitch()
-
-	_GUICtrlCombobox_SetCurSel($cmbTotalAccount, $icmbTotalCoCAcc - 1)
-
-	If $ichkCloseTraining >= 1 Then
-		GUICtrlSetState($chkUseTrainingClose, $GUI_CHECKED)
-		If $ichkCloseTraining = 1 Then
-			GUICtrlSetState($radCloseCoC, $GUI_CHECKED)
-		Else
-			GUICtrlSetState($radCloseAndroid, $GUI_CHECKED)
-		EndIf
-	Else
-		GUICtrlSetState($chkUseTrainingClose, $GUI_UNCHECKED)
-	EndIf
-
-	For $i = 0 to 7
-		_GUICtrlCombobox_SetCurSel($cmbAccountNo[$i], $aMatchProfileAcc[$i]-1)
-		_GUICtrlCombobox_SetCurSel($cmbProfileType[$i], $aProfileType[$i]-1)
-	Next
+			For $i = 0 to 7
+				_GUICtrlCombobox_SetCurSel($cmbAccountNo[$i], $aMatchProfileAcc[$i]-1)
+				_GUICtrlCombobox_SetCurSel($cmbProfileType[$i], $aProfileType[$i]-1)
+			Next
+		Case "Save"
+			$ichkSwitchAcc = GUICtrlRead($chkSwitchAcc) = $GUI_CHECKED ? 1 : 0
+			$icmbTotalCoCAcc = _GUICtrlCombobox_GetCurSel($cmbTotalAccount)+1
+			$ichkSmartSwitch = GUICtrlRead($radSmartSwitch) = $GUI_CHECKED ? 1 : 0
+			$ichkCloseTraining = GUICtrlRead($chkUseTrainingClose) = $GUI_CHECKED ? 1 : 0
+			If $ichkCloseTraining = 1 Then
+				$ichkCloseTraining = GUICtrlRead($radCloseCoC) = $GUI_CHECKED ? 1 : 2
+			EndIf
+	EndSwitch
 EndFunc

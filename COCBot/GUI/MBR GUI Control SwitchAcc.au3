@@ -17,7 +17,7 @@
 
 	SaveConfig_SwitchAcc()
 	ReadConfig_SwitchAcc()
-	ApplyConfig_SwitchAcc()
+	ApplyConfig_SwitchAcc("Read")
 
 	$ProfileList = _GUICtrlComboBox_GetListArray($g_hCmbProfile)
 	$nTotalProfile = _GUICtrlComboBox_GetCount($g_hCmbProfile)

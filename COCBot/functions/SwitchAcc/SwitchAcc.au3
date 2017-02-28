@@ -42,7 +42,7 @@ Func InitiateSwitchAcc() ; Checking profiles setup in Mybot, First matching CoC 
 
    ; Locating CoC Accounts
    If _ArrayMax($aAccPosY) > 0 Then
-	   $MaxIdx = _ArrayMaxIndex($aAccPosY)
+	   Local $MaxIdx = _ArrayMaxIndex($aAccPosY)
 	   For $i = 1 to $nTotalCoCAcc
 		   If $aAccPosY[$i-1] <= 0 Then $aAccPosY[$i-1] = $aAccPosY[$MaxIdx] + 73*($i-1-$MaxIdx)
 		   Setlog("  >>> Y-coordinate Acc No. " & $i & " is located at: " & $aAccPosY[$i-1])
@@ -106,7 +106,7 @@ Func CheckWaitHero()	; get hero regen time remaining if enabled
 			For $pMatchMode = $DB To $g_iMatchMode - 1 ; check all attack modes
 				$iActiveHero = -1
 				If IsSpecialTroopToBeUsed($pMatchMode, $pTroopType) And _
-					 BitOr($iHeroAttack[$pMatchMode], $iHeroWait[$pMatchMode]) = $iHeroAttack[$pMatchMode] Then ; check if Hero enabled to wait
+					 BitOr($g_aiAttackUseHeroes[$pMatchMode], $g_aiSearchHeroWaitEnable[$pMatchMode]) = $g_aiAttackUseHeroes[$pMatchMode] Then ; check if Hero enabled to wait
 				$iActiveHero = $pTroopType - $eKing ; compute array offset to active hero
 				EndIf
 				If $iActiveHero <> -1 And $aHeroResult[$iActiveHero] > 0 Then ; valid time?
