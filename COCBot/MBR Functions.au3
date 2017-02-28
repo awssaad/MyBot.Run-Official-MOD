@@ -13,6 +13,7 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
+#include "functions\Other\SetLog.au3"
 #include "functions\Other\Synchronization.au3"
 #include "functions\Other\OnAutoItErrorRegisterBot.au3"
 
@@ -158,7 +159,6 @@
 #include "functions\Android\AndroidEmbed.au3"
 
 #include "functions\Other\WerFaultClose.au3"
-#include "functions\Other\_ArraySortEx.au3"
 #include "functions\Other\_NumberFormat.au3"
 #include "functions\Other\_PadStringCenter.au3"
 #include "functions\Other\_ReduceMemory.au3"
@@ -176,7 +176,6 @@
 #include "functions\Other\ExtendedErrorInfo.au3"
 #include "functions\Other\FindPos.au3"
 #include "functions\Other\StringSize.au3"
-#include "functions\Other\SetLog.au3"
 #include "functions\Other\Tab.au3"
 #include "functions\Other\Time.au3"
 #include "functions\Other\BlockInputEx.au3"
@@ -184,7 +183,6 @@
 #include "functions\Other\CheckPrerequisites.au3"
 #include "functions\Other\CheckDisplay.au3"
 #include "functions\Other\AutoStart.au3"
-#include "functions\Other\AutoHide.au3" ; Auto Hide - Added By NguyenAnhHD
 #include "functions\Other\WindowsArrange.au3"
 #include "functions\Other\MakeScreenshot.au3"
 #include "functions\Other\ClickDrag.au3"
@@ -273,13 +271,15 @@
 #include "functions\Village\ConvertOCRTime.au3"
 #include "functions\Other\ClickZoneR.au3"
 #include "functions\Village\CheckNeedOpenTrain.au3"
-#include "functions\Village\AreCollectorsOutside.au3" ; Check Collector Outside - Added By NguyenAnhHD
 
 #include "functions\Other\Api.au3"
 #include "functions\Other\ApiClient.au3"
 
-#include "functions\SwitchAcc\SwitchAcc.au3"
-#include "functions\SwitchAcc\UpdateProfileStats.au3"
+; Team Mod's
+#include "functions\Mod's\AutoHide.au3" ; Auto Hide - Added By NguyenAnhHD
+#include "functions\Mod's\AreCollectorsOutside.au3" ; Check Collector Outside - Added By NguyenAnhHD
+#include "functions\Mod's\SwitchAcc.au3" ; Switch Account - Added By Demen
+#include "functions\Mod's\UpdateProfileStats.au3" ; Switch Account - Added By Demen
 
 
 ; OLD CODE

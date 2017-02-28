@@ -105,6 +105,9 @@ Func applyConfig($bRedrawAtExit = True, $TypeReadSave = "Read") ;Applies the dat
 	; <><><> Attack Plan / Train Army / Options <><><>
 	ApplyConfig_641_1($TypeReadSave)
 
+	; <><><> Team Mod's <><><>
+	ApplyConfig_100($TypeReadSave)
+
     ; <><><><> Attack Plan / Strategies <><><><>
 ; <<< nothing here >>>
 
@@ -388,6 +391,10 @@ Func ApplyConfig_600_13($TypeReadSave)
 			GUICtrlSetState($g_hChkSkipDonateNearFullTroopsEnable, $g_bDonateSkipNearFullEnable ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetData($g_hTxtSkipDonateNearFullTroopsPercentage, $g_iDonateSkipNearFullPercent)
 			chkskipDonateNearFulLTroopsEnable()
+			GUICtrlSetState($g_hChkUseCCBalanced, $iChkUseCCBalanced = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			_GUICtrlComboBox_SetCurSel($g_hCmbCCDonated, $iCmbCCDonated - 1)
+			_GUICtrlComboBox_SetCurSel($g_hCmbCCReceived, $iCmbCCReceived - 1)
+			chkBalanceDR()
 		Case "Save"
 			$g_bDonateHoursEnable = (GUICtrlRead($g_hChkDonateHoursEnable) = $GUI_CHECKED)
 			For $i = 0 To 23
@@ -396,6 +403,9 @@ Func ApplyConfig_600_13($TypeReadSave)
 			$g_iCmbDonateFilter = _GUICtrlComboBox_GetCurSel($g_hCmbFilterDonationsCC)
 			$g_bDonateSkipNearFullEnable = (GUICtrlRead($g_hChkSkipDonateNearFullTroopsEnable) = $GUI_CHECKED)
 			$g_iDonateSkipNearFullPercent = Number(GUICtrlRead($g_hTxtSkipDonateNearFullTroopsPercentage))
+			$iChkUseCCBalanced =  GUICtrlRead($g_hChkUseCCBalanced) = $GUI_CHECKED ? 1 : 0
+			$iCmbCCDonated = _GUICtrlComboBox_GetCurSel($g_hCmbCCDonated) + 1
+			$iCmbCCReceived = _GUICtrlComboBox_GetCurSel($g_hCmbCCReceived) + 1
 	EndSwitch
 EndFunc
 
@@ -1001,10 +1011,6 @@ Func ApplyConfig_600_29($TypeReadSave)
 			Next
 			GUICtrlSetState($g_hChkDropCCHoursEnable, $iPlannedDropCCHoursEnable = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			chkDropCCHoursEnable()
-			GUICtrlSetState($g_hChkUseCCBalanced, $iChkUseCCBalanced = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			_GUICtrlComboBox_SetCurSel($g_hCmbCCDonated, $iCmbCCDonated - 1)
-			_GUICtrlComboBox_SetCurSel($g_hCmbCCReceived, $iCmbCCReceived - 1)
-			chkBalanceDR()
 			For $i = 0 To 23
 				GUICtrlSetState($g_ahChkDropCCHours[$i], $iPlannedDropCCHours[$i] = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			Next
@@ -1030,9 +1036,6 @@ Func ApplyConfig_600_29($TypeReadSave)
 				$iPlannedattackHours[$i] = GUICtrlRead($g_ahChkAttackHours[$i]) = $GUI_CHECKED ? 1 : 0
 			Next
 			$iPlannedDropCCHoursEnable = GUICtrlRead($g_hChkDropCCHoursEnable) = $GUI_CHECKED ? 1 : 0
-			$iChkUseCCBalanced =  GUICtrlRead($g_hChkUseCCBalanced) = $GUI_CHECKED ? 1 : 0
-			$iCmbCCDonated = _GUICtrlComboBox_GetCurSel($g_hCmbCCDonated) + 1
-			$iCmbCCReceived = _GUICtrlComboBox_GetCurSel($g_hCmbCCReceived) + 1
 			Local $string = ""
 			For $i = 0 To 23
 				$iPlannedDropCCHours[$i] = GUICtrlRead($g_ahChkDropCCHours[$i]) = $GUI_CHECKED ? 1 : 0
@@ -1117,7 +1120,6 @@ Func ApplyConfig_600_29_DB_Standard($TypeReadSave)
 			GUICtrlSetState($g_hChkAttackNearGoldMineDB, $g_abAttackStdSmartNearCollectors[$DB][0] ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkAttackNearElixirCollectorDB, $g_abAttackStdSmartNearCollectors[$DB][1] ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkAttackNearDarkElixirDrillDB, $g_abAttackStdSmartNearCollectors[$DB][2] ? $GUI_CHECKED : $GUI_UNCHECKED)
-			cmbStandardDropSidesDB()
 		Case "Save"
 			$g_aiAttackStdDropOrder[$DB] = _GUICtrlComboBox_GetCurSel($g_hCmbStandardDropOrderDB)
 			$g_aiAttackStdDropSides[$DB] = _GUICtrlComboBox_GetCurSel($g_hCmbStandardDropSidesDB)
@@ -1148,7 +1150,6 @@ Func ApplyConfig_600_29_DB_Scripted($TypeReadSave)
 			_GUICtrlComboBox_SetCurSel($g_hCmbScriptNameDB, $tempindex)
 			cmbScriptNameDB()
 			cmbScriptRedlineImplDB()
-			_GUICtrlComboBox_SetCurSel($g_hCmbCSVSpeed[$DB], $g_iCmbCSVSpeed[$DB])
 		Case "Save"
 			$g_aiAttackScrRedlineRoutine[$DB] = _GUICtrlComboBox_GetCurSel($g_hCmbScriptRedlineImplDB)
 			$g_aiAttackScrDroplineEdge[$DB] = _GUICtrlComboBox_GetCurSel($g_hCmbScriptDroplineDB)
@@ -1157,7 +1158,6 @@ Func ApplyConfig_600_29_DB_Scripted($TypeReadSave)
 			_GUICtrlComboBox_GetLBText($g_hCmbScriptNameDB, $indexofscript, $scriptname)
 			$g_sAttackScrScriptName[$DB] = $scriptname
 			IniWriteS($g_sProfileConfigPath, "attack", "ScriptDB", $g_sAttackScrScriptName[$LB])
-			$g_iCmbCSVSpeed[$DB] = _GUICtrlComboBox_GetCurSel($g_hCmbCSVSpeed[$DB])
 	EndSwitch
 EndFunc
 
@@ -1365,7 +1365,6 @@ Func ApplyConfig_600_29_LB_Standard($TypeReadSave)
 			GUICtrlSetState($g_hChkAttackNearGoldMineAB, $g_abAttackStdSmartNearCollectors[$LB][0] ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkAttackNearElixirCollectorAB, $g_abAttackStdSmartNearCollectors[$LB][1] ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkAttackNearDarkElixirDrillAB, $g_abAttackStdSmartNearCollectors[$LB][2] ? $GUI_CHECKED : $GUI_UNCHECKED)
-			cmbStandardDropSidesAB()
 		Case "Save"
 			$g_aiAttackStdDropOrder[$LB] = _GUICtrlComboBox_GetCurSel($g_hCmbStandardDropOrderAB)
 			$g_aiAttackStdDropSides[$LB] = _GUICtrlComboBox_GetCurSel($g_hCmbStandardDropSidesAB)
@@ -1396,7 +1395,6 @@ Func ApplyConfig_600_29_LB_Scripted($TypeReadSave)
 			_GUICtrlComboBox_SetCurSel($g_hCmbScriptNameAB, $tempindex)
 			cmbScriptNameAB()
 			cmbScriptRedlineImplAB()
-			_GUICtrlComboBox_SetCurSel($g_hCmbCSVSpeed[$LB], $g_iCmbCSVSpeed[$LB])
 		Case "Save"
 			$g_aiAttackScrRedlineRoutine[$LB] = _GUICtrlComboBox_GetCurSel($g_hCmbScriptRedlineImplAB)
 			$g_aiAttackScrDroplineEdge[$LB] = _GUICtrlComboBox_GetCurSel($g_hCmbScriptDroplineAB)
@@ -1405,7 +1403,6 @@ Func ApplyConfig_600_29_LB_Scripted($TypeReadSave)
 			_GUICtrlComboBox_GetLBText($g_hCmbScriptNameAB, $indexofscript, $scriptname)
 			$g_sAttackScrScriptName[$LB] = $scriptname
 			IniWriteS($g_sProfileConfigPath, "attack", "ScriptAB", $g_sAttackScrScriptName[$LB])
-			$g_iCmbCSVSpeed[$LB] = _GUICtrlComboBox_GetCurSel($g_hCmbCSVSpeed[$LB])
 	EndSwitch
 EndFunc
 
@@ -1592,9 +1589,6 @@ Func ApplyConfig_600_31($TypeReadSave)
 			_GUICtrlComboBox_SetCurSel($g_hCmbMinCollectorMatches, $g_iCollectorMatchesMin - 1)
 			GUICtrlSetData($g_hSldCollectorTolerance, $g_iCollectorToleranceOffset)
 			checkCollectors()
-			GUICtrlSetState($g_hChkDBMeetCollOutside, $ichkDBMeetCollOutside = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetData($g_hTxtDBMinCollOutsidePercent, $iDBMinCollOutsidePercent)
-			chkDBMeetCollOutside()
 		Case "Save"
 			For $i = 6 To 12
 				$g_abCollectorLevelEnabled[$i] = (GUICtrlRead($g_ahChkDBCollectorLevel[$i]) = $GUI_CHECKED)
@@ -1603,8 +1597,6 @@ Func ApplyConfig_600_31($TypeReadSave)
 			$g_bCollectorFilterDisable = (GUICtrlRead($g_hChkDBDisableCollectorsFilter) = $GUI_CHECKED)
 			$g_iCollectorMatchesMin = _GUICtrlComboBox_GetCurSel($g_hCmbMinCollectorMatches) + 1
 			$g_iCollectorToleranceOffset = GUICtrlRead($g_hSldCollectorTolerance)
-			$ichkDBMeetCollOutside = GUICtrlRead($g_hChkDBMeetCollOutside) = $GUI_CHECKED ? 1 : 0
-			$iDBMinCollOutsidePercent = GUICtrlRead($g_hTxtDBMinCollOutsidePercent)
 	EndSwitch
 EndFunc
 
@@ -1651,9 +1643,6 @@ Func ApplyConfig_600_35($TypeReadSave)
 			GUICtrlSetState($g_hChkAutostart, $ichkAutoStart = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetData($g_hTxtAutostartDelay, $ichkAutoStartDelay)
 			chkAutoStart()
-			GUICtrlSetState($g_hChkAutohide, $ichkAutoHide = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetData($g_hTxtAutohideDelay, $ichkAutoHideDelay)
-			chkAutoHide()
 			GUICtrlSetState($g_hChkCheckGameLanguage, $ichkLanguage = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkAutoAlign, $iDisposeWindows = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			chkDisposeWindows()
@@ -1685,8 +1674,6 @@ Func ApplyConfig_600_35($TypeReadSave)
 			$iDeleteLootsDays = GUICtrlRead($g_hTxtDeleteLootsDays)
 			$ichkAutoStart = GUICtrlRead($g_hChkAutostart) = $GUI_CHECKED ? 1 : 0
 			$ichkAutoStartDelay = GUICtrlRead($g_hTxtAutostartDelay)
-			$ichkAutoHide = GUICtrlRead($g_hChkAutohide) = $GUI_CHECKED ? 1 : 0
-			$ichkAutoHideDelay = GUICtrlRead($g_hTxtAutohideDelay)
 			$ichkLanguage = GUICtrlRead($g_hChkCheckGameLanguage) = $GUI_CHECKED ? 1 : 0
 			$iDisposeWindows = GUICtrlRead($g_hChkAutoAlign) = $GUI_CHECKED ? 1 : 0
 			$icmbDisposeWindowsPos = _GUICtrlComboBox_GetCurSel($g_hCmbAlignmentOptions)
@@ -1791,7 +1778,7 @@ Func ApplyConfig_600_54($TypeReadSave)
 					GUICtrlSetState($g_hChkCustomTrainOrderEnable, $GUI_UNCHECKED)
 					$g_bCustomTrainOrderEnable = False
 					GUICtrlSetState($g_hBtnTroopOrderSet, $GUI_DISABLE) ; disable button
-					For $i = 0 To UBound($g_asTroopOrderTrainTab) - 2
+					For $i = 0 To UBound($g_ahCmbTroopOrder) - 1
 						GUICtrlSetState($g_ahCmbTroopOrder[$i], $GUI_DISABLE) ; disable combo boxes
 					Next
 				EndIf
@@ -1899,6 +1886,30 @@ Func ApplyConfig_641_1($TypeReadSave)
 			$g_bTrainAddRandomDelayEnable = (GUICtrlRead($g_hChkTrainAddRandomDelayEnable) = $GUI_CHECKED)
 			$g_iTrainAddRandomDelayMin = GUICtrlRead($g_hTxtAddRandomDelayMin)
 			$g_iTrainAddRandomDelayMax = GUICtrlRead($g_hTxtAddRandomDelayMax)
+	EndSwitch
+EndFunc
+
+Func ApplyConfig_100($TypeReadSave)
+	; <><><> Team Mod's <><><>
+	Switch $TypeReadSave
+		Case "Read"
+			GUICtrlSetState($g_hChkAutohide, $ichkAutoHide = 1 ? $GUI_CHECKED : $GUI_UNCHECKED) ; Auto Hide
+			GUICtrlSetData($g_hTxtAutohideDelay, $ichkAutoHideDelay)
+			chkAutoHide()
+			cmbStandardDropSidesDB() ; Classic Four Finger
+			cmbStandardDropSidesAB()
+			GUICtrlSetState($g_hChkDBMeetCollOutside, $ichkDBMeetCollOutside = 1 ? $GUI_CHECKED : $GUI_UNCHECKED) ; Check Collector Outside
+			GUICtrlSetData($g_hTxtDBMinCollOutsidePercent, $iDBMinCollOutsidePercent)
+			chkDBMeetCollOutside()
+			_GUICtrlComboBox_SetCurSel($g_hCmbCSVSpeed[$DB], $g_iCmbCSVSpeed[$DB]); CSV Deploy Speed
+			_GUICtrlComboBox_SetCurSel($g_hCmbCSVSpeed[$LB], $g_iCmbCSVSpeed[$LB])
+		Case "Save"
+			$ichkAutoHide = GUICtrlRead($g_hChkAutohide) = $GUI_CHECKED ? 1 : 0 ; Auto Hide
+			$ichkAutoHideDelay = GUICtrlRead($g_hTxtAutohideDelay)
+			$ichkDBMeetCollOutside = GUICtrlRead($g_hChkDBMeetCollOutside) = $GUI_CHECKED ? 1 : 0 ; Check Collector Outside
+			$iDBMinCollOutsidePercent = GUICtrlRead($g_hTxtDBMinCollOutsidePercent)
+			$g_iCmbCSVSpeed[$DB] = _GUICtrlComboBox_GetCurSel($g_hCmbCSVSpeed[$DB]); CSV Deploy Speed
+			$g_iCmbCSVSpeed[$LB] = _GUICtrlComboBox_GetCurSel($g_hCmbCSVSpeed[$LB])
 	EndSwitch
 EndFunc
 
