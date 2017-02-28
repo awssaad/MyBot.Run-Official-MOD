@@ -73,7 +73,7 @@ Func btnAddConfirm()
 			If GUICtrlGetState($g_hBtnDeleteProfile) <> $GUI_ENABLE Then GUICtrlSetState($g_hBtnDeleteProfile, $GUI_ENABLE)
 			If GUICtrlGetState($g_hBtnRenameProfile) <> $GUI_ENABLE Then GUICtrlSetState($g_hBtnRenameProfile, $GUI_ENABLE)
 
-;====== SwitchAcc - DEMEN ==============
+			;====== SwitchAcc - DEMEN ==============
 			Local $iNewProfile = _GUICtrlCombobox_GetCurSel($g_hCmbProfile)
 			Local $UpdatedProfileList = _GUICtrlComboBox_GetListArray($g_hCmbProfile)
 			Local $nUpdatedTotalProfile = _GUICtrlComboBox_GetCount($g_hCmbProfile)
@@ -87,7 +87,7 @@ Func btnAddConfirm()
 				Next
 			EndIf
 			btnUpdateProfile()
-;====== SwitchAcc - DEMEN ==============
+			;====== SwitchAcc - DEMEN ==============
 
 		Case Else
 			SetLog("If you are seeing this log message there is something wrong.", $COLOR_ERROR)
