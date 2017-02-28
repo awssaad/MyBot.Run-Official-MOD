@@ -44,6 +44,24 @@ Func chkQuickTrainCombo()	; QuickTrainCombo (checkbox) - Demen
 	EndIf
 EndFunc	;==> QuickTrainCombo
 
+Func chkSimpleTrain()	; SimpleTrain - Demen
+	If GUICtrlRead($chkSimpleTrain) = $GUI_CHECKED Then
+		_GUI_Value_STATE("ENABLE", $chkFillArcher & "#" & $chkFillEQ)
+	Else
+		_GUI_Value_STATE("DISABLE", $chkFillArcher & "#" & $chkFillEQ)
+		_GUI_Value_STATE("UNCHECKED", $chkFillArcher & "#" & $chkFillEQ)
+	EndIf
+	chkFillArcher()
+EndFunc   ;==>chkSimpleTrain
+
+Func chkFillArcher()	; SimpleTrain - Demen
+	If GUICtrlRead($chkFillArcher) = $GUI_CHECKED Then
+		_GUI_Value_STATE("ENABLE", $txtFillArcher)
+	Else
+		_GUI_Value_STATE("DISABLE", $txtFillArcher)
+	EndIf
+EndFunc   ;==>chkFillArcher
+
 Func SetComboTroopComp()
 	Local $bWasRedraw = SetRedrawBotWindow(False, Default, Default, Default, "SetComboTroopComp")
 	Local $ArmyCampTemp = 0

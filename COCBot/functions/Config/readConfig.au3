@@ -1131,6 +1131,12 @@ Func ReadConfig_100()
 	IniReadS($iDBMinCollOutsidePercent, $g_sProfileConfigPath, "search", "DBMinCollOutsidePercent", 50, "int")
 	$g_iCmbCSVSpeed[$DB] = Int(IniRead($g_sProfileConfigPath, "DeploymentSpeed", "DB", 2)); CSV Deploy Speed
 	$g_iCmbCSVSpeed[$LB] = Int(IniRead($g_sProfileConfigPath, "DeploymentSpeed", "LB", 2))
+
+	;SimpleTrain - Demen
+	IniReadS($ichkSimpleTrain, $g_sProfileConfigPath, "troop", "SimpleTrain", 0, "int")
+	IniReadS($ichkFillArcher, $g_sProfileConfigPath, "troop", "ChkFillArcher", 0, "int")
+	IniReadS($iFillArcher, $g_sProfileConfigPath, "troop", "FillArcher", 0, "int")
+	IniReadS($ichkFillEQ, $g_sProfileConfigPath, "troop", "FillEQ", 0, "int")
 EndFunc
 
 Func ReadConfig_SwitchAcc()		;	SwitchAcc - Demen

@@ -31,6 +31,8 @@ Global $g_ahPicTrainArmySpell[$eSpellCount] = [0,0,0,0,0,0,0,0,0,0]
 Global $g_hLblTotalTimeCamp = 0, $g_hLblElixirCostCamp = 0, $g_hLblDarkCostCamp = 0, $g_hCalTotalTroops = 0, $g_hLblTotalProgress = 0, $g_hLblCountTotal = 0, _
 	   $g_hTxtTotalCountSpell = 0, $g_hLblTotalTimeSpell = 0, $g_hLblElixirCostSpell = 0, $g_hLblDarkCostSpell = 0
 
+Global $chkSimpleTrain = 0, $chkFillArcher = 0, $txtFillArcher = 0, $chkFillEQ = 0		; SimpleTrain - Demen
+
 ; Boost sub-tab
 Global $g_hCmbBoostBarracks = 0, $g_hCmbBoostSpellFactory = 0, $g_hCmbBoostBarbarianKing = 0, $g_hCmbBoostArcherQueen = 0, $g_hCmbBoostWarden = 0
 Global $g_hChkBoostBarracksHours[24] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], $g_hChkBoostBarracksHoursE1 = 0, $g_hChkBoostBarracksHoursE2 = 0
@@ -612,6 +614,33 @@ Func CreateTroopsSpellsSubTab()
 			 GUICtrlSetColor(-1, $COLOR_WHITE)
 		  GUICtrlCreateIcon($g_sLibIconPath, $eIcnDark, $x + 146, $y + 14, 16, 16)
    GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+;========== Adding GUI for SimpleTrain - Demen ==============
+	$x = 10
+	$y = 363
+	GUICtrlCreateGroup("Simple Train", $x, $y, 418, 38)
+
+		$x += 7
+		$y += 16
+			$chkSimpleTrain = GUICtrlCreateCheckbox("Enable SimpleTrain (not delete queued troops)", $x, $y, -1, 15)
+				GUICtrlSetOnEvent(-1, "chkSimpleTrain")
+
+		$x += 240
+			$chkFillArcher = GUICtrlCreateCheckbox("Fill archers:", $x, $y, 70, 15)
+				GUICtrlSetState(-1, $GUI_DISABLE)
+				GUICtrlSetOnEvent(-1, "chkFillArcher")
+
+			$txtFillArcher = GUICtrlCreateInput("5", $x + 75, $y-1, 20, 16, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+				GUICtrlSetState(-1, $GUI_DISABLE)
+				GUICtrlSetLimit(-1, 2)
+
+		$x += 110
+			$chkFillEQ = GUICtrlCreateCheckbox("Fill 1 EQ", $x, $y, -1, 15)
+				GUICtrlSetState(-1, $GUI_DISABLE)
+
+	GUICtrlCreateGroup("", -99, -99, 1, 1)
+;========== Adding GUI for SimpleTrain - Demen ==============
+
 EndFunc
 
 Func  CreateBoostSubTab()

@@ -1023,6 +1023,13 @@ Func SaveConfig_100()
 	IniWriteS($g_sProfileConfigPath, "search", "DBMinCollOutsidePercent", $iDBMinCollOutsidePercent)
 	IniWriteS($g_sProfileConfigPath, "DeploymentSpeed", "DB", $g_iCmbCSVSpeed[$DB]) ; CSV Deploy Speed
 	IniWriteS($g_sProfileConfigPath, "DeploymentSpeed", "LB", $g_iCmbCSVSpeed[$LB])
+
+	; SimpleTrain - Demen
+	IniWriteS($g_sProfileConfigPath, "troop", "SimpleTrain", $ichkSimpleTrain)
+	IniWriteS($g_sProfileConfigPath, "troop", "ChkFillArcher", $ichkFillArcher)
+	IniWriteS($g_sProfileConfigPath, "troop", "FillArcher", GUICtrlRead($txtFillArcher))
+	IniWriteS($g_sProfileConfigPath, "troop", "FillEQ", $ichkFillEQ)
+
 EndFunc
 
 Func SaveConfig_SwitchAcc()	; 	SwitchAcc - DEMEN

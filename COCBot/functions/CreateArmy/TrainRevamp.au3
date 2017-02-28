@@ -20,7 +20,7 @@ Func TrainRevamp()
 	$g_iTimeBeforeTrain = 0
 	StartGainCost()
 
-	If $g_bQuickTrainEnable = False Then
+	If $g_bQuickTrainEnable = False And $ichkSimpleTrain = 0 Then	; SimpleTrain - Demen
 		TrainRevampOldStyle()
 		Return
 	EndIf
@@ -46,6 +46,13 @@ Func TrainRevamp()
 	$aCurTotalSpell = GetCurTotalSpells() ; needed value for spell donate
 
 	If $g_bRunState = False Then Return
+
+	If $ichkSimpleTrain = 1 Then				;	SimpleTrain - Demen
+		If $bDonationEnabled =  And $g_bChkDonate Then MakingDonatedTroops()
+		SimpleTrain()
+		EndGainCost("Train")
+		Return
+	EndIf										;	SimpleTrain - Demen
 
 	If ($IsFullArmywithHeroesAndSpells = True) Or ($CurCamp = 0 And $g_bFirstStart) Then
 
@@ -2022,7 +2029,7 @@ Func OpenTrainTabNumber($Num, $WhereFrom)
 
 	If IsTrainPage() Then
 		Click($TabNumber[$Num][0], $TabNumber[$Num][1], 2, 200)
-		If _Sleep(1500) Then Return
+		If _Sleep(700) Then Return			; Too slow with wait time 1.5s. Reduce to 0.7s. - Demen
 		If ISArmyWindow(False, $Num) Then
 			If $g_iDebugSetlogTrain = 1 Then $CalledFrom = " (Called from " & $WhereFrom & ")"
 			Setlog(" - Opened the " & $Message[$Num] & $CalledFrom, $COLOR_ACTION1)
@@ -2045,7 +2052,7 @@ Func TrainArmyNumber($Army)	; QuickTrainCombo (Checkbox) - Demen
 				If _ColorCheck(_GetPixelColor($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], True), Hex($a_TrainArmy[$Num][2], 6), $a_TrainArmy[$Num][3]) Then
 					Click($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], 1)
 					SetLog("Making the Army " & $Num + 1, $COLOR_INFO)
-					If _Sleep(1000) Then Return
+					If _Sleep(500) Then Return	; Too slow with wait time 1s. Reduce to 0.5s. - Demen
 				Else
 					Setlog(" - Error Clicking On Army: " & $Num + 1 & "| Pixel was :" & _GetPixelColor($a_TrainArmy[$Num][0], $a_TrainArmy[$Num][1], True), $COLOR_ORANGE)
 					Setlog(" - Please 'edit' the Army " & $Num + 1 & " before start the BOT!!!", $COLOR_RED)

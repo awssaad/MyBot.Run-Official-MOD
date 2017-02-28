@@ -103,7 +103,7 @@ Func CheckWaitHero()	; get hero regen time remaining if enabled
 	If _Sleep($iDelayRespond) Then Return
 	If $aHeroResult[0] > 0 Or $aHeroResult[1] > 0 Or $aHeroResult[2] > 0 Then ; check if hero is enabled to use/wait and set wait time
 		For $pTroopType = $eKing To $eWarden ; check all 3 hero
-			For $pMatchMode = $DB To $g_iMatchMode - 1 ; check all attack modes
+			For $pMatchMode = $DB To $g_iModeCount - 1 ; check all attack modes
 				$iActiveHero = -1
 				If IsSpecialTroopToBeUsed($pMatchMode, $pTroopType) And _
 					 BitOr($g_aiAttackUseHeroes[$pMatchMode], $g_aiSearchHeroWaitEnable[$pMatchMode]) = $g_aiAttackUseHeroes[$pMatchMode] Then ; check if Hero enabled to wait

@@ -280,6 +280,7 @@
 #include "functions\Mod's\AreCollectorsOutside.au3" ; Check Collector Outside - Added By NguyenAnhHD
 #include "functions\Mod's\SwitchAcc.au3" ; Switch Account - Added By Demen
 #include "functions\Mod's\UpdateProfileStats.au3" ; Switch Account - Added By Demen
+#include "functions\Mod's\SimpleTrain.au3"		; SimpleTrain - Added By Demen
 
 
 ; OLD CODE

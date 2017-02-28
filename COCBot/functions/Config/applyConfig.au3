@@ -1903,6 +1903,14 @@ Func ApplyConfig_100($TypeReadSave)
 			chkDBMeetCollOutside()
 			_GUICtrlComboBox_SetCurSel($g_hCmbCSVSpeed[$DB], $g_iCmbCSVSpeed[$DB]); CSV Deploy Speed
 			_GUICtrlComboBox_SetCurSel($g_hCmbCSVSpeed[$LB], $g_iCmbCSVSpeed[$LB])
+
+			; SimpleTrain - Demen
+			GUICtrlSetState($chkSimpleTrain, $ichkSimpleTrain = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			GUICtrlSetState($chkFillArcher, $ichkFillArcher = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			GUICtrlSetData($txtFillArcher, $iFillArcher)
+			GUICtrlSetState($chkFillEQ, $ichkFillEQ = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			chkSimpleTrain()
+
 		Case "Save"
 			$ichkAutoHide = GUICtrlRead($g_hChkAutohide) = $GUI_CHECKED ? 1 : 0 ; Auto Hide
 			$ichkAutoHideDelay = GUICtrlRead($g_hTxtAutohideDelay)
@@ -1910,6 +1918,12 @@ Func ApplyConfig_100($TypeReadSave)
 			$iDBMinCollOutsidePercent = GUICtrlRead($g_hTxtDBMinCollOutsidePercent)
 			$g_iCmbCSVSpeed[$DB] = _GUICtrlComboBox_GetCurSel($g_hCmbCSVSpeed[$DB]); CSV Deploy Speed
 			$g_iCmbCSVSpeed[$LB] = _GUICtrlComboBox_GetCurSel($g_hCmbCSVSpeed[$LB])
+
+			;SimpleTrain - Demen
+			$ichkSimpleTrain = GUICtrlRead($chkSimpleTrain) = $GUI_CHECKED ? 1 : 0
+			$ichkFillArcher = GUICtrlRead($chkFillArcher) = $GUI_CHECKED ? 1 : 0
+			$iFillArcher = GUICtrlRead($txtFillArcher)
+			$ichkFillEQ = GUICtrlRead($chkFillEQ) = $GUI_CHECKED ? 1 : 0
 	EndSwitch
 EndFunc
 
