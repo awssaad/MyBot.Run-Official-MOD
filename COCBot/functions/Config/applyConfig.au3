@@ -342,6 +342,7 @@ Func ApplyConfig_600_12($TypeReadSave)
 			Next
 			cmbDonateCustomB()
 
+			GUICtrlSetData($g_hTxtGeneralBlacklist, $g_sTxtGeneralBlacklist)
 			GUICtrlSetState($g_hChkExtraAlphabets, $g_bChkExtraAlphabets ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkExtraChinese, $g_bChkExtraChinese ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hChkExtraKorean, $g_bChkExtraKorean ? $GUI_CHECKED : $GUI_UNCHECKED)
