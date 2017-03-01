@@ -618,15 +618,15 @@ Func CreateTroopsSpellsSubTab()
 ;========== Adding GUI for SimpleTrain - Demen ==============
 	$x = 10
 	$y = 363
-	GUICtrlCreateGroup("Simple Train", $x, $y, 418, 38)
+	GUICtrlCreateGroup(GetTranslated(621, 300, "Simple Train"), $x, $y, 418, 38)
 
 		$x += 7
 		$y += 16
-			$chkSimpleTrain = GUICtrlCreateCheckbox("Enable SimpleTrain (not delete queued troops)", $x, $y, -1, 15)
+			$chkSimpleTrain = GUICtrlCreateCheckbox(GetTranslated(621, 301, "Enable SimpleTrain (not delete queued troops)"), $x, $y, -1, 15)
 				GUICtrlSetOnEvent(-1, "chkSimpleTrain")
 
 		$x += 240
-			$chkFillArcher = GUICtrlCreateCheckbox("Fill archers:", $x, $y, 70, 15)
+			$chkFillArcher = GUICtrlCreateCheckbox(GetTranslated(621, 302, "Fill archers:"), $x, $y, 70, 15)
 				GUICtrlSetState(-1, $GUI_DISABLE)
 				GUICtrlSetOnEvent(-1, "chkFillArcher")
 
@@ -635,7 +635,7 @@ Func CreateTroopsSpellsSubTab()
 				GUICtrlSetLimit(-1, 2)
 
 		$x += 110
-			$chkFillEQ = GUICtrlCreateCheckbox("Fill 1 EQ", $x, $y, -1, 15)
+			$chkFillEQ = GUICtrlCreateCheckbox(GetTranslated(621, 303,"Fill 1 EQ"), $x, $y, -1, 15)
 				GUICtrlSetState(-1, $GUI_DISABLE)
 
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
