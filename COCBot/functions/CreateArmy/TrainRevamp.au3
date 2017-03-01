@@ -48,7 +48,7 @@ Func TrainRevamp()
 	If $g_bRunState = False Then Return
 
 	If $ichkSimpleTrain = 1 Then				;	SimpleTrain - Demen
-		If $bDonationEnabled =  And $g_bChkDonate Then MakingDonatedTroops()
+		If $bDonationEnabled And $g_bChkDonate Then MakingDonatedTroops()
 		SimpleTrain()
 		EndGainCost("Train")
 		Return
@@ -2430,6 +2430,7 @@ Func CheckValuesCost($Troop = "Arch", $troopQuantity = 1, $DebugLogs = 0)
 	; Local Variables
 	Local $TempColorToCheck = ""
 	Local $nElixirCurrent = 0 , $nDarkCurrent = 0 , $bLocalDebugOCR = 0
+	Local $iTroopIndex = TroopIndexLookup($Troop)
 
 	If _sleep(1000) Then Return ; small delay
 	If $g_bRunState = False then Return
@@ -2445,12 +2446,25 @@ Func CheckValuesCost($Troop = "Arch", $troopQuantity = 1, $DebugLogs = 0)
 	; Let´s UPDATE the current Elixir and Dark elixir each Troop train on 'Bottom train Window Page'
 	If _ColorCheck(_GetPixelColor(223, 594, True), Hex(0xE8E8E0, 6), 20) Then ; Gray background window color
 		; Village without Dark Elixir
-		If ISArmyWindow(False, $TrainTroopsTAB) OR ISArmyWindow(False, $BrewSpellsTAB) Then $nElixirCurrent = getResourcesValueTrainPage(315, 594)  ; ELIXIR
+		If $iTroopIndex >= $eBarb And $iTroopIndex <= $eBowl Then
+			If ISArmyWindow(False, $TrainTroopsTAB) Then $nElixirCurrent = getResourcesValueTrainPage(315, 594)  ; ELIXIR
+		ElseIf $iTroopIndex >= $eLSpell And $iTroopIndex <= $eSkSpell Then
+			If ISArmyWindow(False, $BrewSpellsTAB) Then $nElixirCurrent = getResourcesValueTrainPage(315, 594)  ; ELIXIR
+		EndIf
 	Else
 		; Village with Elixir and Dark Elixir
-		If ISArmyWindow(False, $TrainTroopsTAB) OR ISArmyWindow(False, $BrewSpellsTAB) Then $nElixirCurrent = getResourcesValueTrainPage(230, 594)  ; ELIXIR
-		If ISArmyWindow(False, $TrainTroopsTAB) OR ISArmyWindow(False, $BrewSpellsTAB) Then $nDarkCurrent = getResourcesValueTrainPage(382, 594) 	; DARK ELIXIR
-	EndIf
+		If $iTroopIndex >= $eBarb And $iTroopIndex <= $eBowl Then
+			If ISArmyWindow(False, $TrainTroopsTAB) Then
+				$nElixirCurrent = getResourcesValueTrainPage(230, 594)  ; ELIXIR
+				$nDarkCurrent = getResourcesValueTrainPage(382, 594) 	; DARK ELIXIR
+			EndIf
+		ElseIf $iTroopIndex >= $eLSpell And $iTroopIndex <= $eSkSpell Then
+			If ISArmyWindow(False, $BrewSpellsTAB) Then
+				$nElixirCurrent = getResourcesValueTrainPage(230, 594)  ; ELIXIR
+				$nDarkCurrent = getResourcesValueTrainPage(382, 594) 	; DARK ELIXIR
+			EndIf
+		EndIf
+	EndIf	; Edited for SimpleTrain: Bypass checking $TrainTroopsTAB when deal with Spell - Demen
 
 	; 	DEBUG
 	If $g_iDebugSetlogTrain = 1 Or $DebugLogs Then
@@ -2460,7 +2474,6 @@ Func CheckValuesCost($Troop = "Arch", $troopQuantity = 1, $DebugLogs = 0)
 	EndIf
 
 	Local $troopCost = 0
-	Local $iTroopIndex = TroopIndexLookup($Troop)
 
 	; Return the Cost of Troops or Spells
 	If $iTroopIndex >= $eBarb And $iTroopIndex <= $eBowl Then
