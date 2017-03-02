@@ -85,11 +85,11 @@ Global Const $g_bBtnColor = False; True
 Global $hImageList = 0
 Global $g_hFrmBotEx = 0, $g_hFrmBotBottom = 0, $g_hFrmBotEmbeddedShield = 0, $g_hFrmBotEmbeddedShieldInput = 0, $g_hFrmBotEmbeddedGraphics = 0
 Global $g_hFrmBot_MAIN_PIC = 0, $g_hFrmBot_URL_PIC = 0
-Global $g_hTabMain = 0, $g_hTabLog = 0, $g_hTabVillage = 0, $g_hTabAttack = 0, $g_hTabBot = 0, $g_hTabAbout = 0
+Global $g_hTabMain = 0, $g_hTabLog = 0, $g_hTabVillage = 0, $g_hTabAttack = 0, $g_hTabBot = 0, $g_hTabMod = 0, $g_hTabAbout = 0
 Global $g_hStatusBar = 0
 Global $g_hTiShow = 0, $g_hTiHide = 0, $g_hTiDonate = 0, $g_hTiAbout = 0, $g_hTiExit = 0
 Global $g_aFrmBotPosInit[7] = [0, 0, 0, 0, 0, 0, 0]
-Global $g_hFirstControlToHide = 0, $g_hLastControlToHide = 0, $g_aiControlPrevState[1]
+Global $g_hFirstControlToHide = 0, $g_hLastControlToHide = 0, $g_hFirstControlToHideMOD = 0, $g_hLastControlToHideMOD = 0, $g_aiControlPrevState[1]
 Global $g_bFrmBotMinimized = False ; prevents bot flickering
 
 #include "GUI\MBR GUI Design Bottom.au3"
@@ -97,6 +97,7 @@ Global $g_bFrmBotMinimized = False ; prevents bot flickering
 #include "GUI\MBR GUI Design Village.au3"
 #include "GUI\MBR GUI Design Attack.au3"
 #include "GUI\MBR GUI Design Bot.au3"
+#include "GUI\MBR GUI Design Mod.au3"
 #include "GUI\MBR GUI Design About.au3"
 
 Func CreateMainGUI()
@@ -171,6 +172,9 @@ Func CreateMainGUI()
    SplashStep(GetTranslated(500, 28, "Loading Bot tab..."))
    CreateBotTab()
 
+   SplashStep("Loading Mod tab...")
+   CreateModTab()
+
    SplashStep(GetTranslated(500, 29, "Loading About Us tab..."))
    CreateAboutTab()
 
@@ -185,6 +189,7 @@ Func CreateMainGUI()
    $g_hTabVillage = GUICtrlCreateTabItem(GetTranslated(600,2, "Village"))
    $g_hTabAttack = GUICtrlCreateTabItem(GetTranslated(600,3,"Attack Plan"))
    $g_hTabBot = GUICtrlCreateTabItem(GetTranslated(600,4,"Bot"))
+   $g_hTabMod = GUICtrlCreateTabItem("Mods")
    $g_hTabAbout = GUICtrlCreateTabItem(GetTranslated(600, 5, "About Us"))
    GUICtrlCreateTabItem("")
    GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)
@@ -210,6 +215,8 @@ Func CreateMainGUI()
 	  Bind_ImageList($g_hGUI_STRATEGIES_TAB)
 
    Bind_ImageList($g_hGUI_BOT_TAB)
+
+   Bind_ImageList($g_hGUI_MOD_TAB)
 
    Bind_ImageList($g_hGUI_STATS_TAB)
 

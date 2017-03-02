@@ -42,7 +42,7 @@ Global $groupLeague = ""
 ; Groups of controls
 Global $aTabControlsVillage, $aTabControlsDonate, $aTabControlsUpgrade, $aTabControlsNotify
 Global $aTabControlsAttack, $aTabControlsArmy, $aTabControlsSearch, $aTabControlsDeadbase, $aTabControlsActivebase, $aTabControlsTHSnipe, $aTabControlsAttackOptions
-Global $aTabControlsStrategies, $aTabControlsBot, $aTabControlsStats
+Global $aTabControlsStrategies, $aTabControlsBot, $aTabControlsMOD, $aTabControlsStats
 Global $oAlwaysEnabledControls = ObjCreate("Scripting.Dictionary")
 
 Func InitializeControlVariables()
@@ -192,7 +192,8 @@ Func InitializeControlVariables()
    Dim $aTabControlsAttackOptions = [$g_hGUI_ATTACKOPTION_TAB, $g_hGUI_ATTACKOPTION_TAB_ITEM1, $g_hGUI_ATTACKOPTION_TAB_ITEM2, $g_hGUI_ATTACKOPTION_TAB_ITEM3,  $g_hGUI_ATTACKOPTION_TAB_ITEM4,  $g_hGUI_ATTACKOPTION_TAB_ITEM5]
    Dim $aTabControlsStrategies = [$g_hGUI_STRATEGIES_TAB, $g_hGUI_STRATEGIES_TAB_ITEM1, $g_hGUI_STRATEGIES_TAB_ITEM2]
 
-   Dim $aTabControlsBot = [$g_hGUI_BOT_TAB, $g_hGUI_BOT_TAB_ITEM1, $g_hGUI_BOT_TAB_ITEM2, $g_hGUI_BOT_TAB_ITEM3, $g_hGUI_BOT_TAB_ITEM4, $g_hGUI_BOT_TAB_ITEM5]
+   Dim $aTabControlsBot = [$g_hGUI_BOT_TAB, $g_hGUI_BOT_TAB_ITEM1, $g_hGUI_BOT_TAB_ITEM2, $g_hGUI_BOT_TAB_ITEM3, $g_hGUI_BOT_TAB_ITEM4] ;, $g_hGUI_BOT_TAB_ITEM5
+   Dim $aTabControlsMOD = [$g_hGUI_MOD_TAB, $g_hGUI_MOD_TAB_ITEM1, $g_hGUI_MOD_TAB_ITEM2]
    Dim $aTabControlsStats = [$g_hGUI_STATS_TAB, $g_hGUI_STATS_TAB_ITEM1, $g_hGUI_STATS_TAB_ITEM2, $g_hGUI_STATS_TAB_ITEM3]
 
 	; always enabled / unchanged controls during enabling/disabling all GUI controls function
@@ -241,6 +242,7 @@ Func InitializeControlVariables()
 	$oAlwaysEnabledControls($g_hTabVillage) = 1
 	$oAlwaysEnabledControls($g_hTabAttack) = 1
 	$oAlwaysEnabledControls($g_hTabBot) = 1
+	$oAlwaysEnabledControls($g_hTabMod) = 1
 	$oAlwaysEnabledControls($g_hTabAbout) = 1
 
 	For $i in $aTabControlsVillage
@@ -280,6 +282,9 @@ Func InitializeControlVariables()
 		$oAlwaysEnabledControls($i) = 1
 	Next
 	For $i in $aTabControlsBot
+		$oAlwaysEnabledControls($i) = 1
+	Next
+	For $i in $aTabControlsMOD
 		$oAlwaysEnabledControls($i) = 1
 	Next
 	For $i in $aTabControlsStats

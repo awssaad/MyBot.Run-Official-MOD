@@ -48,7 +48,7 @@ Global $g_hFrmBot_WNDPROC_ptr = 0
 #include "GUI\MBR GUI Control Preset.au3"
 #include "GUI\MBR GUI Control Child Misc.au3"
 #include "GUI\MBR GUI Control Android.au3"
-#include "GUI\MBR GUI Control SwitchAcc.au3"
+#include "GUI\MBR GUI Control Mod.au3"
 #include "MBR GUI Action.au3"
 
 Func InitializeMainGUI()
@@ -640,6 +640,8 @@ Func GUIControl_WM_NOTIFY($hWind, $iMsg, $wParam, $lParam)
 			tabTHSnipe()
 		Case $g_hGUI_BOT_TAB
 			tabBot()
+		Case $g_hGUI_MOD_TAB
+;~			tabMod()
 		Case Else
 			$bCheckEmbeddedShield = False
 	EndSwitch
@@ -1016,6 +1018,7 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
 				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
 				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+				GUISetState(@SW_HIDE, $g_hGUI_MOD)
 				GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
 				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_LOG)
 
@@ -1023,6 +1026,7 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $g_hGUI_LOG)
 				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
 				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+				GUISetState(@SW_HIDE, $g_hGUI_MOD)
 				GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
 				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_VILLAGE)
 				tabVillage()
@@ -1031,6 +1035,7 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $g_hGUI_LOG)
 				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
 				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+				GUISetState(@SW_HIDE, $g_hGUI_MOD)
 				GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
 				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_ATTACK)
 				tabAttack()
@@ -1039,15 +1044,26 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $g_hGUI_LOG)
 				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
 				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
+				GUISetState(@SW_HIDE, $g_hGUI_MOD)
 				GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
 				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_BOT)
 				tabBot()
 
-			Case $tabidx = 4 ; About
+			Case $tabidx = 4 ; Options
 				GUISetState(@SW_HIDE, $g_hGUI_LOG)
 				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
 				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
 				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+				GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
+				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_MOD)
+;~				tabMod()
+
+			Case $tabidx = 5 ; About
+				GUISetState(@SW_HIDE, $g_hGUI_LOG)
+				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
+				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
+				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+				GUISetState(@SW_HIDE, $g_hGUI_MOD)
 				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_ABOUT)
 
 			Case ELSE
@@ -1055,6 +1071,7 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
 				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
 				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+				GUISetState(@SW_HIDE, $g_hGUI_MOD)
 		EndSelect
 
 EndFunc   ;==>tabMain
@@ -1256,10 +1273,10 @@ Func tabBot()
 			Case $tabidx = 2 ; Profiles tab
 				GUISetState(@SW_HIDE, $g_hGUI_STATS)
 				ControlHide("","",$g_hCmbGUILanguage)
-			Case $tabidx = 3 ; Android tab
-				GUISetState(@SW_HIDE, $g_hGUI_STATS)
-				ControlHide("","",$g_hCmbGUILanguage)
-			Case $tabidx = 4 ; Stats tab
+;~			Case $tabidx = 3 ; Android tab
+;~				GUISetState(@SW_HIDE, $g_hGUI_STATS)
+;~				ControlHide("","",$g_hCmbGUILanguage)
+			Case $tabidx = 3 ; Stats tab
 				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_STATS)
 				ControlHide("","",$g_hCmbGUILanguage)
 		EndSelect

@@ -611,6 +611,20 @@ Func ToggleGuiControls($Enable, $OptimizedRedraw = True)
 			If $g_aiControlPrevState[$i] Then GUICtrlSetState($i, $g_aiControlPrevState[$i])
 		EndIf
 	Next
+
+	For $i = $g_hFirstControlToHideMOD To $g_hLastControlToHideMOD
+		If IsAlwaysEnabledControl($i) Then ContinueLoop
+		If $g_bNotifyPBEnable And $i = $g_hBtnNotifyDeleteMessages Then ContinueLoop ; exclude the DeleteAllMesages button when PushBullet is enabled
+		If $Enable = False Then
+			; Save state of all controls on tabs
+			$g_aiControlPrevState[$i] = BitAND(GUICtrlGetState($i), $GUI_ENABLE)
+			If $g_aiControlPrevState[$i] Then GUICtrlSetState($i, $GUI_DISABLE)
+		Else
+			; Restore previous state of controls
+			If $g_aiControlPrevState[$i] Then GUICtrlSetState($i, $g_aiControlPrevState[$i])
+		EndIf
+	Next
+
 	If $Enable = False Then
 		ControlDisable("","",$g_hCmbGUILanguage)
 	Else

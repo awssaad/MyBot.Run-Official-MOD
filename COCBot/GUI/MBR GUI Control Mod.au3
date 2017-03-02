@@ -1,10 +1,10 @@
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: MBR GUI Control SwitchAcc
-; Description ...: Extended GUI Control for SwitchAcc
+; Name ..........: MBR GUI Control Mod
+; Description ...: Extended GUI Control Mod
 ; Syntax ........:
 ; Parameters ....: None
 ; Return values .: None
-; Author ........:
+; Author ........: Team Mod MBR
 ; Modified ......:
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2016
 ;                  MyBot is distributed under the terms of the GNU GPL
@@ -13,7 +13,114 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
- Func btnUpdateProfile()
+; Auto Hide - NguyenAnhHD
+Func chkAutoHide()
+	GUICtrlSetState($g_hTxtAutohideDelay, GUICtrlRead($g_hChkAutoHide) = $GUI_CHECKED ? $GUI_ENABLE : $GUI_DISABLE)
+EndFunc   ;==>chkAutoHide
+
+; Classic Four Finger - NguyenAnhHD
+Func cmbStandardDropSidesAB() ; avoid conflict between FourFinger and SmartAttack
+	If _GUICtrlComboBox_GetCurSel($g_hCmbStandardDropSidesAB) = 4 Then
+		GUICtrlSetState($g_hChkSmartAttackRedAreaAB, $GUI_UNCHECKED)
+		GUICtrlSetState($g_hChkSmartAttackRedAreaAB, $GUI_DISABLE)
+	Else
+		GUICtrlSetState($g_hChkSmartAttackRedAreaAB, $GUI_ENABLE)
+	EndIf
+	chkSmartAttackRedAreaAB()
+EndFunc   ;==>g_hCmbStandardDropSidesAB
+
+Func cmbStandardDropSidesDB() ; avoid conflict between FourFinger and SmartAttack
+	If _GUICtrlComboBox_GetCurSel($g_hCmbStandardDropSidesDB) = 4 Then
+		GUICtrlSetState($g_hChkSmartAttackRedAreaDB, $GUI_UNCHECKED)
+		GUICtrlSetState($g_hChkSmartAttackRedAreaDB, $GUI_DISABLE)
+	Else
+		GUICtrlSetState($g_hChkSmartAttackRedAreaDB, $GUI_ENABLE)
+	EndIf
+	chkSmartAttackRedAreaDB()
+EndFunc   ;==>g_hCmbStandardDropSidesDB
+
+; CSV Deploy Speed - NguyenAnhHD
+Func cmbCSVSpeed()
+
+	Switch _GUICtrlComboBox_GetCurSel($g_hCmbCSVSpeed[$g_iMatchMode])
+		Case 0
+			$g_hDivider = 0.5
+		Case 1
+			$g_hDivider = 0.75
+		Case 2
+			$g_hDivider = 1
+		Case 3
+			$g_hDivider = 1.25
+		Case 4
+			$g_hDivider = 1.5
+		Case 5
+			$g_hDivider = 2
+		Case 6
+			$g_hDivider = 3
+	EndSwitch
+
+EndFunc   ;==>cmbCSVSpeed
+
+; Attack Now Button - NguyenAnhHD
+Func AttackNowLB()
+	Setlog("Begin Live Base Attack TEST")
+	$g_iMatchMode = $LB			; Select Live Base As Attack Type
+	cmbCSVSpeed()
+	$g_aiAttackAlgorithm[$LB] = 1			; Select Scripted Attack
+	$g_sAttackScrScriptName[$LB] = GuiCtrlRead($g_hCmbScriptNameAB)		; Select Scripted Attack File From The Combo Box, Cos it wasn't refreshing until pressing Start button
+	$g_iMatchMode = 1			; Select Live Base As Attack Type
+	$g_bRunState = True
+
+	ForceCaptureRegion()
+	_CaptureRegion2()
+
+	If CheckZoomOut("VillageSearch", True, False) = False Then
+		$i = 0
+		Local $bMeasured
+		Do
+			$i += 1
+			If _Sleep($iDelayPrepareSearch3) Then Return ; wait 500 ms
+			ForceCaptureRegion()
+			$bMeasured = CheckZoomOut("VillageSearch", $i < 2, True)
+		Until $bMeasured = True Or $i >= 2
+		If $bMeasured = False Then Return ; exit func
+	EndIf
+
+	PrepareAttack($g_iMatchMode)			; lol I think it's not needed for Scripted attack, But i just Used this to be sure of my code
+	Attack()			; Fire xD
+	Setlog("End Live Base Attack TEST")
+EndFunc   ;==>AttackNowLB
+
+Func AttackNowDB()
+	Setlog("Begin Dead Base Attack TEST")
+	$g_iMatchMode = $DB			; Select Dead Base As Attack Type
+	cmbCSVSpeed()
+	$g_aiAttackAlgorithm[$DB] = 1			; Select Scripted Attack
+	$g_sAttackScrScriptName[$DB] = GuiCtrlRead($g_hCmbScriptNameDB)		; Select Scripted Attack File From The Combo Box, Cos it wasn't refreshing until pressing Start button
+	$g_iMatchMode = 0			; Select Dead Base As Attack Type
+	$g_bRunState = True
+	ForceCaptureRegion()
+	_CaptureRegion2()
+
+	If CheckZoomOut("VillageSearch", True, False) = False Then
+		$i = 0
+		Local $bMeasured
+		Do
+			$i += 1
+			If _Sleep($iDelayPrepareSearch3) Then Return ; wait 500 ms
+			ForceCaptureRegion()
+			$bMeasured = CheckZoomOut("VillageSearch", $i < 2, True)
+		Until $bMeasured = True Or $i >= 2
+		If $bMeasured = False Then Return ; exit func
+	EndIf
+
+	PrepareAttack($g_iMatchMode)			; lol I think it's not needed for Scripted attack, But i just Used this to be sure of my code
+	Attack()			; Fire xD
+	Setlog("End Dead Base Attack TEST")
+EndFunc   ;==>AttackNowLB
+
+; Switch Account - Demen
+Func btnUpdateProfile()
 
 	SaveConfig_SwitchAcc()
 	ReadConfig_SwitchAcc()
@@ -67,7 +174,7 @@
 		EndIf
 	Next
 
- EndFunc
+EndFunc
 
 Func btnClearProfile()
 	For $i = 0 To 7
@@ -208,4 +315,33 @@ Func btnClearAccLocation()
 	Setlog("Position of all accounts cleared")
 	SaveConfig_SwitchAcc()
 EndFunc
-; ============= SwitchAcc Mode ============= - DEMEN
+
+; QuickTrainCombo (checkbox) - Demen
+Func chkQuickTrainCombo()
+	If GUICtrlRead($g_ahChkArmy[0]) = $GUI_UNCHECKED And GUICtrlRead($g_ahChkArmy[1]) = $GUI_UNCHECKED And GUICtrlRead($g_ahChkArmy[2]) = $GUI_UNCHECKED Then
+		GUICtrlSetState($g_ahChkArmy[0],$GUI_CHECKED)
+		ToolTip("QuickTrainCombo: " & @CRLF & "At least 1 Army Check is required! Default Army1.")
+		Sleep(2000)
+		ToolTip('')
+	EndIf
+EndFunc	;==> QuickTrainCombo
+
+; SimpleTrain - Demen
+Func chkSimpleTrain()
+	If GUICtrlRead($chkSimpleTrain) = $GUI_CHECKED Then
+		_GUI_Value_STATE("ENABLE", $chkFillArcher & "#" & $chkFillEQ)
+	Else
+		_GUI_Value_STATE("DISABLE", $chkFillArcher & "#" & $chkFillEQ)
+		_GUI_Value_STATE("UNCHECKED", $chkFillArcher & "#" & $chkFillEQ)
+	EndIf
+	chkFillArcher()
+EndFunc   ;==>chkSimpleTrain
+
+Func chkFillArcher()
+	If GUICtrlRead($chkFillArcher) = $GUI_CHECKED Then
+		_GUI_Value_STATE("ENABLE", $txtFillArcher)
+	Else
+		_GUI_Value_STATE("DISABLE", $txtFillArcher)
+	EndIf
+EndFunc   ;==>chkFillArcher
+
