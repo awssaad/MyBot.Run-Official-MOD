@@ -14,8 +14,7 @@
 ; ===============================================================================================================================
 #include-once
 
-Global $g_hGUI_STATS = 0, $g_hGUI_STATS_TAB = 0, $g_hGUI_STATS_TAB_ITEM1 = 0, $g_hGUI_STATS_TAB_ITEM2 = 0, $g_hGUI_STATS_TAB_ITEM3 = 0, $g_hGUI_STATS_TAB_ITEM4 = 0
-Global $g_hGUI_STATS_TAB_ITEM5 = 0	; 	Tab ProfileStats - SwitchAcc - Demen
+Global $g_hGUI_STATS = 0, $g_hGUI_STATS_TAB = 0, $g_hGUI_STATS_TAB_ITEM1 = 0, $g_hGUI_STATS_TAB_ITEM2 = 0, $g_hGUI_STATS_TAB_ITEM3 = 0, $g_hGUI_STATS_TAB_ITEM4 = 0, $g_hGUI_STATS_TAB_ITEM5 = 0
 Global $btnResetStats = 0
 
 ; Gain
@@ -61,14 +60,14 @@ Func CreateBotStats()
 	  GUICtrlSetState(-1, $GUI_DISABLE)
    $g_hGUI_STATS_TAB_ITEM1 = GUICtrlCreateTabItem(GetTranslated(600,38,"Gain"))
    CreateGainSubTab()
+   $g_hGUI_STATS_TAB_ITEM5 = GUICtrlCreateTabItem("Profile Stats")	; 	ProfileStats - SwitchAcc - Demen
+   CreateProfileStatsSubTab()
    $g_hGUI_STATS_TAB_ITEM2 = GUICtrlCreateTabItem(GetTranslated(600,39,"Misc"))
    CreateMiscSubTab()
    $g_hGUI_STATS_TAB_ITEM3 = GUICtrlCreateTabItem(GetTranslated(600,40,"Attacks"))
    CreateAttacksSubTab()
    $g_hGUI_STATS_TAB_ITEM4 = GUICtrlCreateTabItem(GetTranslated(600, 55,"Donations"))
    CreateDonationsSubTab()
-   $g_hGUI_STATS_TAB_ITEM4 = GUICtrlCreateTabItem("Profile Stats")	; 	ProfileStats - SwitchAcc - Demen
-   CreateProfileStatsSubTab()
    GUICtrlCreateTabItem("")
 EndFunc
 

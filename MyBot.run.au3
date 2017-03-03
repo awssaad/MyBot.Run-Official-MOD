@@ -31,8 +31,12 @@
 Opt("MustDeclareVars", 1)
 
 Global $g_sBotVersion = "v7.0.1" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it is also use on Checkversion()
+Global $sModversion = "v1.5" ;<== Just Change This to Version Number
 Global $g_sBotTitle = "" ;~ Don't assign any title here, use Func UpdateBotTitle()
 Global $g_hFrmBot = 0 ; The main GUI window
+
+Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/25631-mods-mybot-v653-dococ-aio-mod-v084-update-1402/" ;<== Our Website Link Or Link Download
+Global $sModDownloadUrl = "https://github.com/NguyenAnhHD/MyBot_Official-MOD/releases"
 
 ; MBR includes
 #include "COCBot\MBR Global Variables.au3"
@@ -68,7 +72,7 @@ InitializeBot()
 MainLoop()
 
 Func UpdateBotTitle()
-	Local $sTitle = "My Bot " & $g_sBotVersion & " "
+	Local $sTitle = "My Bot " & $g_sBotVersion & " Official MOD " & $sModversion & " "
 	If $g_sBotTitle = "" Then
 		$g_sBotTitle = $sTitle
 		Return

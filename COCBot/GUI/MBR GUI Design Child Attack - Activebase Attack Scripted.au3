@@ -31,7 +31,7 @@ Func CreateAttackSearchActiveBaseScripted()
    ;			_GUICtrlSetTip(-1, GetTranslated(607,3, -1))
 
 		   $y +=15
-		   $g_hCmbScriptNameAB = GUICtrlCreateCombo("", $x , $y, 200, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+		   $g_hCmbScriptNameAB = GUICtrlCreateCombo("", $x , $y, 200, -1, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL, $WS_VSCROLL))
 			   _GUICtrlSetTip(-1, GetTranslated(607,4, -1))
 			   GUICtrlSetState(-1, $GUI_UNCHECKED)
 			   GUICtrlSetOnEvent(-1, "cmbScriptNameAB")

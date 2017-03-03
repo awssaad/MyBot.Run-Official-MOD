@@ -53,3 +53,7 @@ Global $aLocateAccConfig[8], $aAccPosY[8]
 ; SimpleTrain (Demen) - Added by Demen
 Global $ichkSimpleTrain, $ichkFillArcher, $iFillArcher, $ichkFillEQ
 
+Global $lastModversion = "" ;latest version from GIT
+Global $lastModmessage = "" ;message for last version
+Global $oldModversmessage = "" ;warning message for old bot
+
