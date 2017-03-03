@@ -1,33 +1,39 @@
 ; #FUNCTION# ====================================================================================================================
-; Name ..........: MBR GUI Design
-; Description ...: This file creates the "Profiles" tab under the "Bot" tab
+; Name ..........: MBR GUI Design Mod
+; Description ...: This file creates the "Mods" tab
 ; Syntax ........:
 ; Parameters ....: None
 ; Return values .: None
-; Author ........:
-; Modified ......: CodeSlinger69 (2017)
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
+; Author ........: Team Mod MBR (NguyenAnhHD, Demen)
+; Modified ......:
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2016
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
-#include-once
+
+Global $g_hGUI_MOD = 0
+Global $g_hGUI_MOD_TAB = 0, $g_hGUI_MOD_TAB_ITEM1 = 0, $g_hGUI_MOD_TAB_ITEM2 = 0
 
 Global $g_hCmbProfile = 0, $g_hTxtVillageName = 0, $g_hBtnAddProfile = 0, $g_hBtnConfirmAddProfile = 0, $g_hBtnConfirmRenameProfile = 0, _
-	   $g_hBtnDeleteProfile = 0, $g_hBtnCancelProfileChange = 0, $g_hBtnRenameProfile = 0
+	   $g_hBtnDeleteProfile = 0, $g_hBtnCancelProfileChange = 0, $g_hBtnRenameProfile = 0, $g_hBtnRecycle = 0
 
-;$hGUI_Profiles = GUICreate("", $_GUI_MAIN_WIDTH - 28, $_GUI_MAIN_HEIGHT - 255 - 28, 5, 25, BitOR($WS_CHILD, $WS_TABSTOP), -1, $g_hGUI_BOT)
-;GUISwitch($hGUI_Profiles)
+#include "..\functions\Mod's\Misc\MBR GUI Design Child Mod - Switch Account.au3"
+#include "..\functions\Mod's\Misc\MBR GUI Design Child Mod - Switch Profiles.au3"
 
-Func CreateBotProfiles()
+Func CreateModTab()
+
+   $g_hGUI_MOD = GUICreate("", $_GUI_MAIN_WIDTH - 20, $_GUI_MAIN_HEIGHT - 255, $_GUI_CHILD_LEFT, $_GUI_CHILD_TOP, BitOR($WS_CHILD, $WS_TABSTOP), -1, $g_hFrmBotEx)
+
+   GUISwitch($g_hGUI_MOD)
+
+   $g_hGUI_MOD_TAB = GUICtrlCreateTab(0, 0, $_GUI_MAIN_WIDTH - 20, $_GUI_MAIN_HEIGHT - 255, BitOR($TCS_MULTILINE, $TCS_RIGHTJUSTIFY))
+   $g_hGUI_MOD_TAB_ITEM1 = GUICtrlCreateTabItem("Switch Account")
 
     Local $x = 25, $y = 45
 	GUICtrlCreateGroup(GetTranslated(637,1, "Switch Profiles"), $x - 20, $y - 20, 440, 360)
-		;$y -= 5
 		$x -= 5
-		;$lblProfile = GUICtrlCreateLabel(GetTranslated(7,27, "Current Profile") & ":", $x, $y, -1, -1)
-		;$y += 15
 		$g_hCmbProfile = GUICtrlCreateCombo("", $x - 3, $y + 1, 130, 18, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
 			_GUICtrlSetTip(-1, GetTranslated(637,2, "Use this to switch to a different profile")& @CRLF & _
 							   GetTranslated(637,3, "Your profiles can be found in") & ": " & @CRLF & $g_sProfilePath)
@@ -40,7 +46,6 @@ Func CreateBotProfiles()
 			GUICtrlSetFont(-1, 9, 400, 1)
 			_GUICtrlSetTip(-1, GetTranslated(637,5, "Your village/profile's name"))
 			GUICtrlSetState(-1, $GUI_HIDE)
-			; GUICtrlSetOnEvent(-1, "txtVillageName") - No longer needed
 
 		Local $bIconAdd = _GUIImageList_Create(24, 24, 4)
 			_GUIImageList_AddBitmap($bIconAdd, @ScriptDir & "\images\Button\iconAdd.bmp")
@@ -72,6 +77,14 @@ Func CreateBotProfiles()
 			_GUIImageList_AddBitmap($bIconEdit, @ScriptDir & "\images\Button\iconEdit_2.bmp")
 			_GUIImageList_AddBitmap($bIconEdit, @ScriptDir & "\images\Button\iconEdit_4.bmp")
 			_GUIImageList_AddBitmap($bIconEdit, @ScriptDir & "\images\Button\iconEdit.bmp")
+		; IceCube (Misc v1.0)
+		Local $bIconRecycle = _GUIImageList_Create(24, 24, 4)
+			_GUIImageList_AddBitmap($bIconRecycle, @ScriptDir & "\images\Button\iconRecycle.bmp")
+			_GUIImageList_AddBitmap($bIconRecycle, @ScriptDir & "\images\Button\iconRecycle_2.bmp")
+			_GUIImageList_AddBitmap($bIconRecycle, @ScriptDir & "\images\Button\iconRecycle_2.bmp")
+			_GUIImageList_AddBitmap($bIconRecycle, @ScriptDir & "\images\Button\iconRecycle_4.bmp")
+			_GUIImageList_AddBitmap($bIconRecycle, @ScriptDir & "\images\Button\iconRecycle.bmp")
+		; IceCube (Misc v1.0)
 
 		$g_hBtnAddProfile = GUICtrlCreateButton("", $x + 135, $y, 24, 24)
 			_GUICtrlButton_SetImageList($g_hBtnAddProfile, $bIconAdd, 4)
@@ -102,5 +115,27 @@ Func CreateBotProfiles()
 			_GUICtrlButton_SetImageList($g_hBtnRenameProfile, $bIconEdit, 4)
 			GUICtrlSetOnEvent(-1, "btnRenameConfirm")
 			_GUICtrlSetTip(-1, GetTranslated(637,10, "Rename Profile"))
+		; IceCube (Misc v1.0)
+		$g_hBtnRecycle = GUICtrlCreateButton("", $x + 223, $y + 2, 22, 22)
+			_GUICtrlButton_SetImageList($g_hBtnRecycle, $bIconRecycle, 4)
+			GUICtrlSetOnEvent(-1, "btnRecycle")
+			GUICtrlSetState(-1, $GUI_SHOW)
+			_GUICtrlSetTip(-1, GetTranslated(637,50, "Recycle Profile by removing all settings no longer suported that could lead to bad behaviour"))
+			If GUICtrlRead($g_hCmbProfile) = "<No Profiles>" Then
+				GUICtrlSetState(-1, $GUI_DISABLE)
+			Else
+				GUICtrlSetState(-1, $GUI_ENABLE)
+			EndIf
+		; IceCube (Misc v1.0)
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+	CreateModSwitchAccount()
+
+   $g_hGUI_MOD_TAB_ITEM2 = GUICtrlCreateTabItem("Switch Profiles")
+	CreateModSwitchProfile()
+
+	; This dummy is used in btnStart and btnStop to disable/enable all labels, text, buttons etc. on all tabs.
+   $g_hLastControlToHide = GUICtrlCreateDummy()
+   ReDim $g_aiControlPrevState[$g_hLastControlToHide + 1]
+   GUICtrlCreateTabItem("")
 EndFunc

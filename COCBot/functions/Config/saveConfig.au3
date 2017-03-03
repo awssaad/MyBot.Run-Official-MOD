@@ -160,6 +160,11 @@ Func SaveRegularConfig()
 	; <><><><> Bot / Debug <><><><>
 	SaveConfig_Debug()
 
+	; <><><> Team Mod's (NguyenAnhHD, Demen) <><><>
+	SaveConfig_MOD()
+    ; <><><><> Switch Account - Demen <><><><>
+	SaveConfig_SwitchAcc()
+
    ; <><><><> Attack Plan / Strategies <><><><>
    ; <<< nothing here >>>
 
@@ -583,7 +588,7 @@ Func SaveConfig_600_28_LB()
 	IniWriteS($g_sProfileConfigPath, "search", "ABWeakXBow", $g_aiFilterMaxXBowLevel[$LB])
 	IniWriteS($g_sProfileConfigPath, "search", "ABWeakInferno", $g_aiFilterMaxInfernoLevel[$LB])
 	IniWriteS($g_sProfileConfigPath, "search", "ABWeakEagle", $g_aiFilterMaxEagleLevel[$LB])
-	IniWriteS($g_sProfileConfigPath, "search", "DBMeetOne", $g_abFilterMeetOneConditionEnable[$LB] ? 1 : 0)
+	IniWriteS($g_sProfileConfigPath, "search", "ABMeetOne", $g_abFilterMeetOneConditionEnable[$LB] ? 1 : 0)
 EndFunc
 
 Func SaveConfig_600_28_TS()
@@ -943,7 +948,9 @@ Func SaveConfig_600_52_1()
 	; <><><> Attack Plan / Train Army / Troops/Spells <><><>
 	ApplyConfig_600_52_1("Save")
 	IniWriteS($g_sProfileConfigPath, "other", "ChkUseQTrain", $g_bQuickTrainEnable ? 1 : 0)
-	IniWriteS($g_sProfileConfigPath, "troop", "QuickTrainArmyNum", $g_iQuickTrainArmyNum)
+	IniWriteS($g_sProfileConfigPath, "troop", "QuickTrainArmy1", $g_bQuickTrainArmy[0] ? 1 : 0)		; QuickTrainCombo (Checkbox) - Demen
+	IniWriteS($g_sProfileConfigPath, "troop", "QuickTrainArmy2", $g_bQuickTrainArmy[1] ? 1 : 0)		; QuickTrainCombo (Checkbox) - Demen
+	IniWriteS($g_sProfileConfigPath, "troop", "QuickTrainArmy3", $g_bQuickTrainArmy[2] ? 1 : 0)		; QuickTrainCombo (Checkbox) - Demen
 EndFunc
 
 Func SaveConfig_600_52_2()
@@ -1008,6 +1015,63 @@ Func SaveConfig_641_1()
 	IniWriteS($g_sProfileConfigPath, "other", "txtAddDelayIdlePhaseTimeMax", $g_iTrainAddRandomDelayMax)
 EndFunc
 
+Func SaveConfig_MOD()
+	; <><><> Team Mod's (NguyenAnhHD, Demen) <><><>
+	ApplyConfig_MOD("Save")
+	; Auto Hide (NguyenAnhHD) - Added by NguyenAnhHD
+	IniWriteS($g_sProfileConfigPath, "general", "AutoHide", $ichkAutoHide)
+	IniWriteS($g_sProfileConfigPath, "general", "AutoHideDelay", $ichkAutoHideDelay)
+
+	; Check Collector Outside (McSlither) - Added by NguyenAnhHD
+	IniWriteS($g_sProfileConfigPath, "search", "DBMeetCollOutside", $ichkDBMeetCollOutside ? 1 : 0)
+	IniWriteS($g_sProfileConfigPath, "search", "DBMinCollOutsidePercent", $iDBMinCollOutsidePercent)
+
+	; CSV Deploy Speed (Roro-Titi) - Added by NguyenAnhHD
+	IniWriteS($g_sProfileConfigPath, "DeploymentSpeed", "DB", $g_iCmbCSVSpeed[$DB])
+	IniWriteS($g_sProfileConfigPath, "DeploymentSpeed", "LB", $g_iCmbCSVSpeed[$LB])
+
+	; Switch Profile (IceCube) - Added by NguyenAnhHD
+	IniWriteS($g_sProfileConfigPath, "profiles", "chkGoldSwitchMax", $ichkGoldSwitchMax ? 1 : 0)
+	IniWriteS($g_sProfileConfigPath, "profiles", "txtMaxGoldAmount", $itxtMaxGoldAmount)
+	IniWriteS($g_sProfileConfigPath, "profiles", "chkGoldSwitchMin", $ichkGoldSwitchMin ? 1 : 0)
+	IniWriteS($g_sProfileConfigPath, "profiles", "txtMinGoldAmount", $itxtMinGoldAmount)
+
+	IniWriteS($g_sProfileConfigPath, "profiles", "chkElixirSwitchMax", $ichkElixirSwitchMax ? 1 : 0)
+	IniWriteS($g_sProfileConfigPath, "profiles", "txtMaxElixirAmount", $itxtMaxElixirAmount)
+	IniWriteS($g_sProfileConfigPath, "profiles", "chkElixirSwitchMin", $ichkElixirSwitchMin ? 1 : 0)
+	IniWriteS($g_sProfileConfigPath, "profiles", "txtMinElixirAmount", $itxtMinElixirAmount)
+
+	IniWriteS($g_sProfileConfigPath, "profiles", "chkDESwitchMax", $ichkDESwitchMax ? 1 : 0)
+	IniWriteS($g_sProfileConfigPath, "profiles", "txtMaxDEAmount", $itxtMaxDEAmount)
+	IniWriteS($g_sProfileConfigPath, "profiles", "chkDESwitchMin", $ichkDESwitchMin ? 1 : 0)
+	IniWriteS($g_sProfileConfigPath, "profiles", "txtMinDEAmount", $itxtMinDEAmount)
+
+	IniWriteS($g_sProfileConfigPath, "profiles", "chkTrophySwitchMax", $ichkTrophySwitchMax ? 1 : 0)
+	IniWriteS($g_sProfileConfigPath, "profiles", "txtMaxTrophyAmount", $itxtMaxTrophyAmount)
+	IniWriteS($g_sProfileConfigPath, "profiles", "chkTrophySwitchMin", $ichkTrophySwitchMin ? 1 : 0)
+	IniWriteS($g_sProfileConfigPath, "profiles", "txtMinTrophyAmount", $itxtMinTrophyAmount)
+
+	; SimpleTrain (Demen) - Added by Demen
+	IniWriteS($g_sProfileConfigPath, "troop", "SimpleTrain", $ichkSimpleTrain)
+	IniWriteS($g_sProfileConfigPath, "troop", "ChkFillArcher", $ichkFillArcher)
+	IniWriteS($g_sProfileConfigPath, "troop", "FillArcher", GUICtrlRead($txtFillArcher))
+	IniWriteS($g_sProfileConfigPath, "troop", "FillEQ", $ichkFillEQ)
+
+EndFunc
+
+Func SaveConfig_SwitchAcc()
+   ; <><><><> Switch Account - Demen <><><><>
+	ApplyConfig_SwitchAcc("Save")
+	IniWriteS($profile, "Switch Account", "Enable", $ichkSwitchAcc)
+	IniWriteS($profile, "Switch Account", "Total Coc Account", $icmbTotalCoCAcc)		; 1 = 1 Acc, 2 = 2 Acc, etc.
+	IniWriteS($profile, "Switch Account", "Smart Switch", $ichkSmartSwitch)
+	IniWriteS($profile, "Switch Account", "Sleep Combo", $ichkCloseTraining)	; 0 = No Sleep, 1 = Close CoC, 2 = Close Android
+	For $i = 1 to 8
+		IniWriteS($profile, "Switch Account", "MatchProfileAcc." & $i, _GUICtrlCombobox_GetCurSel($cmbAccountNo[$i-1])+1)		; 1 = Acc 1, 2 = Acc 2, etc.
+		IniWriteS($profile, "Switch Account", "ProfileType." & $i, _GUICtrlCombobox_GetCurSel($cmbProfileType[$i-1])+1)			; 1 = Active, 2 = Donate, 3 = Idle
+	Next
+EndFunc
+
 Func IniWriteS($filename, $section, $key, $value)
 	;save in standard config files and also save settings in strategy ini file (save strategy button valorize variable $g_sProfileSecondaryOutputFileName )
 	Local $s = $section
@@ -1019,3 +1083,5 @@ Func IniWriteS($filename, $section, $key, $value)
 		EndIf
 	EndIf
 EndFunc   ;==>IniWriteS
+
+

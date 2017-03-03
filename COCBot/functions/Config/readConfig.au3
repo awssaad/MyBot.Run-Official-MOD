@@ -218,6 +218,11 @@ Func ReadRegularConfig()
 	; <><><> Attack Plan / Train Army / Options <><><>
 	ReadConfig_641_1()
 
+	; <><><> Team Mod's (NguyenAnhHD, Demen) <><><>
+	ReadConfig_MOD()
+    ; <><><><> Switch Account - Demen <><><><>
+	ReadConfig_SwitchAcc()
+
    ; <><><><> Attack Plan / Strategies <><><><>
    ; <<< nothing here >>>
 
@@ -1039,20 +1044,10 @@ EndFunc
 Func ReadConfig_600_52_1()
 	; <><><><> Attack Plan / Train Army / Troops/Spells <><><><>
 	$g_bQuickTrainEnable = (IniRead($g_sProfileConfigPath, "other", "ChkUseQTrain", "0") = "1")
-    IniReadS($g_iQuickTrainArmyNum, $g_sProfileConfigPath, "troop", "QuickTrainArmyNum", -1, "int")
-	If $g_iQuickTrainArmyNum = -1 Then ; Convert 6.5.3 style to 6.5.4+ style for this ini key
-	   Local $iQTArmy[3] = [0,0,0]
-	   IniReadS($iQTArmy[0], $g_sProfileConfigPath, "troop", "QuickTrain1", 1, "int")
-	   IniReadS($iQTArmy[1], $g_sProfileConfigPath, "troop", "QuickTrain2", 0, "int")
-	   IniReadS($iQTArmy[2], $g_sProfileConfigPath, "troop", "QuickTrain3", 0, "int")
-	   $g_iQuickTrainArmyNum = 1
-	   For $i = 0 To 2
-		  If $iQTArmy[$i] = 1 Then
-			 $g_iQuickTrainArmyNum = $i+1
-			 ExitLoop
-		  EndIf
-	   Next
-    EndIf
+	$g_bQuickTrainArmy[0] = (IniRead($g_sProfileConfigPath, "troop", "QuickTrainArmy1", "0") = "1")		; QuickTrainCombo (check box) - Demen
+	$g_bQuickTrainArmy[1] = (IniRead($g_sProfileConfigPath, "troop", "QuickTrainArmy2", "0") = "1")		; QuickTrainCombo (check box) - Demen
+	$g_bQuickTrainArmy[2] = (IniRead($g_sProfileConfigPath, "troop", "QuickTrainArmy3", "0") = "1")		; QuickTrainCombo (check box) - Demen
+
 EndFunc
 
 Func ReadConfig_600_52_2()
@@ -1127,6 +1122,62 @@ Func ReadConfig_641_1()
 	IniReadS($g_bTrainAddRandomDelayEnable, $g_sProfileConfigPath, "other", "chkAddIdleTime", $g_bTrainAddRandomDelayEnable, "Bool")
 	IniReadS($g_iTrainAddRandomDelayMin, $g_sProfileConfigPath, "other", "txtAddDelayIdlePhaseTimeMin", $g_iTrainAddRandomDelayMin, "Int")
 	IniReadS($g_iTrainAddRandomDelayMax, $g_sProfileConfigPath, "other", "txtAddDelayIdlePhaseTimeMax", $g_iTrainAddRandomDelayMax, "Int")
+EndFunc
+
+Func ReadConfig_MOD()
+	; <><><><> Team Mod's (NguyenAnhHD, Demen) <><><><>
+	; Auto Hide (NguyenAnhHD) - Added by NguyenAnhHD
+	IniReadS($ichkAutoHide, $g_sProfileConfigPath, "general", "AutoHide", 0, "int")
+	IniReadS($ichkAutoHideDelay, $g_sProfileConfigPath, "general", "AutoHideDelay", 10, "int")
+
+	; Check Collector Outside (McSlither) - Added by NguyenAnhHD
+	IniReadS($ichkDBMeetCollOutside, $g_sProfileConfigPath, "search", "DBMeetCollOutside", 0, "int")
+	IniReadS($iDBMinCollOutsidePercent, $g_sProfileConfigPath, "search", "DBMinCollOutsidePercent", 50, "int")
+
+	; CSV Deploy Speed (Roro-Titi) - Added by NguyenAnhHD
+	$g_iCmbCSVSpeed[$DB] = Int(IniRead($g_sProfileConfigPath, "DeploymentSpeed", "DB", 2))
+	$g_iCmbCSVSpeed[$LB] = Int(IniRead($g_sProfileConfigPath, "DeploymentSpeed", "LB", 2))
+
+	; Switch Profile (IceCube) - Added by NguyenAnhHD
+	IniReadS($ichkGoldSwitchMax, $g_sProfileConfigPath, "profiles", "chkGoldSwitchMax", 0, "int")
+	IniReadS($itxtMaxGoldAmount, $g_sProfileConfigPath, "profiles", "txtMaxGoldAmount", 6000000, "int")
+	IniReadS($ichkGoldSwitchMin, $g_sProfileConfigPath, "profiles", "chkGoldSwitchMin", 0, "int")
+	IniReadS($itxtMinGoldAmount, $g_sProfileConfigPath, "profiles", "txtMinGoldAmount", 500000, "int")
+
+	IniReadS($ichkElixirSwitchMax, $g_sProfileConfigPath, "profiles", "chkElixirSwitchMax", 0, "int")
+	IniReadS($itxtMaxElixirAmount, $g_sProfileConfigPath, "profiles", "txtMaxElixirAmount", 6000000, "int")
+	IniReadS($ichkElixirSwitchMin, $g_sProfileConfigPath, "profiles", "chkElixirSwitchMin", 0, "int")
+	IniReadS($itxtMinElixirAmount, $g_sProfileConfigPath, "profiles", "txtMinElixirAmount", 500000, "int")
+
+	IniReadS($ichkDESwitchMax, $g_sProfileConfigPath, "profiles", "chkDESwitchMax", 0, "int")
+	IniReadS($itxtMaxDEAmount, $g_sProfileConfigPath, "profiles", "txtMaxDEAmount", 200000, "int")
+	IniReadS($ichkDESwitchMin, $g_sProfileConfigPath, "profiles", "chkDESwitchMin", 0, "int")
+	IniReadS($itxtMinDEAmount, $g_sProfileConfigPath, "profiles", "txtMinDEAmount", 10000, "int")
+
+	IniReadS($ichkTrophySwitchMax, $g_sProfileConfigPath, "profiles", "chkTrophySwitchMax", 0, "int")
+	IniReadS($itxtMaxTrophyAmount, $g_sProfileConfigPath, "profiles", "txtMaxTrophyAmount", 3000, "int")
+	IniReadS($ichkTrophySwitchMin, $g_sProfileConfigPath, "profiles", "chkTrophySwitchMin", 0, "int")
+	IniReadS($itxtMinTrophyAmount, $g_sProfileConfigPath, "profiles", "txtMinTrophyAmount", 1000, "int")
+
+	; SimpleTrain (Demen) - Added by Demen
+	IniReadS($ichkSimpleTrain, $g_sProfileConfigPath, "troop", "SimpleTrain", 0, "int")
+	IniReadS($ichkFillArcher, $g_sProfileConfigPath, "troop", "ChkFillArcher", 0, "int")
+	IniReadS($iFillArcher, $g_sProfileConfigPath, "troop", "FillArcher", 0, "int")
+	IniReadS($ichkFillEQ, $g_sProfileConfigPath, "troop", "FillEQ", 0, "int")
+EndFunc
+
+Func ReadConfig_SwitchAcc()
+   ; <><><><> Switch Account - Demen <><><><>
+	IniReadS($ichkSwitchAcc, $Profile, "Switch Account", "Enable", "0", "int")
+	IniReadS($icmbTotalCoCAcc, $Profile, "Switch Account", "Total Coc Account", "-1", "int")
+	IniReadS($ichkSmartSwitch, $Profile, "Switch Account", "Smart Switch", "0", "int")
+	IniReads($ichkCloseTraining, $Profile, "Switch Account", "Sleep Combo", "0", "int")	; Sleep Combo, 1 = Close CoC, 2 = Close Android, 0 = No sleep
+
+	For $i = 0 to 7
+		IniReadS($aMatchProfileAcc[$i],$Profile, "Switch Account", "MatchProfileAcc." & $i+1, "-1")
+		IniReadS($aProfileType[$i], $Profile, "Switch Account", "ProfileType." & $i+1, "-1")
+		IniReadS($aAccPosY[$i], $Profile, "Switch Account", "AccLocation." & $i+1, "-1")
+	Next
 EndFunc
 
 Func IniReadS(ByRef $variable, $PrimaryInputFile, $section, $key, $defaultvalue, $valueType = Default)

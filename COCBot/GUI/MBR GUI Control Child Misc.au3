@@ -46,6 +46,12 @@ Func btnAddConfirm()
 			GUICtrlSetState($g_hBtnCancelProfileChange, $GUI_SHOW)
 			GUICtrlSetState($g_hBtnConfirmRenameProfile, $GUI_HIDE)
 			GUICtrlSetState($g_hBtnRenameProfile, $GUI_HIDE)
+			; IceCube (Misc v1.0)
+			GUICtrlSetState($g_hBtnRecycle, $GUI_HIDE)
+			; IceCube (Misc v1.0)
+
+			SaveConfig_SwitchAcc()	;	SwitchAcc - Demen
+
 		Case $g_hBtnConfirmAddProfile
 			Local $newProfileName = StringRegExpReplace(GUICtrlRead($g_hTxtVillageName), '[/:*?"<>|]', '_')
 			If FileExists($g_sProfilePath & "\" & $newProfileName) Then
@@ -57,6 +63,7 @@ Func btnAddConfirm()
 			; Setup the profile if it doesn't exist.
 			createProfile()
 			setupProfileComboBox()
+			setupProfileComboBoxswitch()
 			selectProfile()
 			GUICtrlSetState($g_hTxtVillageName, $GUI_HIDE)
 			GUICtrlSetState($g_hCmbProfile, $GUI_SHOW)
@@ -66,9 +73,32 @@ Func btnAddConfirm()
 			GUICtrlSetState($g_hBtnCancelProfileChange, $GUI_HIDE)
 			GUICtrlSetState($g_hBtnConfirmRenameProfile, $GUI_HIDE)
 			GUICtrlSetState($g_hBtnRenameProfile, $GUI_SHOW)
+			; IceCube (Misc v1.0)
+			GUICtrlSetState($g_hBtnRecycle, $GUI_SHOW)
+			; IceCube (Misc v1.0)
 
 			If GUICtrlGetState($g_hBtnDeleteProfile) <> $GUI_ENABLE Then GUICtrlSetState($g_hBtnDeleteProfile, $GUI_ENABLE)
 			If GUICtrlGetState($g_hBtnRenameProfile) <> $GUI_ENABLE Then GUICtrlSetState($g_hBtnRenameProfile, $GUI_ENABLE)
+			; IceCube (Misc v1.0)
+			If GUICtrlGetState($g_hBtnRecycle) <> $GUI_ENABLE Then GUICtrlSetState($g_hBtnRecycle, $GUI_ENABLE)
+			; IceCube (Misc v1.0)
+
+			;====== SwitchAcc - DEMEN ==============
+			Local $iNewProfile = _GUICtrlCombobox_GetCurSel($g_hCmbProfile)
+			Local $UpdatedProfileList = _GUICtrlComboBox_GetListArray($g_hCmbProfile)
+			Local $nUpdatedTotalProfile = _GUICtrlComboBox_GetCount($g_hCmbProfile)
+
+			If $iNewProfile <= 7 Then
+				_GUICtrlComboBox_SetCurSel($cmbAccountNo[$iNewProfile], -1)		; clear config of new profile
+				_GUICtrlComboBox_SetCurSel($cmbProfileType[$iNewProfile], -1)
+				For $i = 7 To $iNewProfile+1  Step -1
+					_GUICtrlComboBox_SetCurSel($cmbAccountNo[$i], $aMatchProfileAcc[$i-1]-1)	; push config up 1 level. -1 because $aMatchProfileAcc is saved from 1 to 8
+					_GUICtrlComboBox_SetCurSel($cmbProfileType[$i], $aProfileType[$i-1]-1)
+				Next
+			EndIf
+			btnUpdateProfile()
+			;====== SwitchAcc - DEMEN ==============
+
 		Case Else
 			SetLog("If you are seeing this log message there is something wrong.", $COLOR_ERROR)
 	EndSwitch
@@ -77,6 +107,10 @@ EndFunc   ;==>btnAddConfirm
 Func btnDeleteCancel()
 	Switch @GUI_CtrlId
 		Case $g_hBtnDeleteProfile
+
+			SaveConfig_SwitchAcc()		; SwitchAcc - Demen
+			Local $iDeleteProfile = _GUICtrlCombobox_GetCurSel($g_hCmbProfile)		; SwitchAcc - Demen
+
 			Local $msgboxAnswer = MsgBox($MB_ICONWARNING + $MB_OKCANCEL, GetTranslated(637, 8, "Delete Profile"), GetTranslated(637, 14, "Are you sure you really want to delete the profile?\r\nThis action can not be undone."))
 			If $msgboxAnswer = $IDOK Then
 				; Confirmed profile deletion so delete it.
@@ -91,8 +125,27 @@ Func btnDeleteCancel()
 					; create new default profile
 					createProfile(True)
 				EndIf
+
+				;====== SwitchAcc - DEMEN ==============
+				Local $UpdatedProfileList = _GUICtrlComboBox_GetListArray($g_hCmbProfile)
+				Local $nUpdatedTotalProfile = _GUICtrlComboBox_GetCount($g_hCmbProfile)
+
+				If $iDeleteProfile <= 7 Then
+					For $i = $iDeleteProfile To 7
+						If $i <=6 Then
+							_GUICtrlComboBox_SetCurSel($cmbAccountNo[$i], $aMatchProfileAcc[$i+1]-1)
+							_GUICtrlComboBox_SetCurSel($cmbProfileType[$i], $aProfileType[$i+1]-1)
+						Else
+							_GUICtrlComboBox_SetCurSel($cmbAccountNo[$i], -1)
+							_GUICtrlComboBox_SetCurSel($cmbProfileType[$i], -1)
+						EndIf
+					Next
+				EndIf
+				btnUpdateProfile()
+				;====== SwitchAcc - DEMEN ==============
+
 			EndIf
-		Case $g_hBtnCancelProfileChange
+			Case $g_hBtnCancelProfileChange
 			GUICtrlSetState($g_hTxtVillageName, $GUI_HIDE)
 			GUICtrlSetState($g_hCmbProfile, $GUI_SHOW)
 			GUICtrlSetState($g_hBtnConfirmAddProfile, $GUI_HIDE)
@@ -101,6 +154,9 @@ Func btnDeleteCancel()
 			GUICtrlSetState($g_hBtnDeleteProfile, $GUI_SHOW)
 			GUICtrlSetState($g_hBtnConfirmRenameProfile, $GUI_HIDE)
 			GUICtrlSetState($g_hBtnRenameProfile, $GUI_SHOW)
+			; IceCube (Misc v1.0)
+			GUICtrlSetState($g_hBtnRecycle, $GUI_SHOW)
+			; IceCube (Misc v1.0)
 		Case Else
 			SetLog("If you are seeing this log message there is something wrong.", $COLOR_ERROR)
 	EndSwitch
@@ -108,6 +164,9 @@ Func btnDeleteCancel()
 	If GUICtrlRead($g_hCmbProfile) = "<No Profiles>" Then
 		GUICtrlSetState($g_hBtnDeleteProfile, $GUI_DISABLE)
 		GUICtrlSetState($g_hBtnRenameProfile, $GUI_DISABLE)
+		; IceCube (Misc v1.0)
+		GUICtrlSetState($g_hBtnRecycle, $GUI_DISABLE)
+		; IceCube (Misc v1.0)
 	EndIf
 EndFunc   ;==>btnDeleteCancel
 
@@ -123,6 +182,9 @@ Func btnRenameConfirm()
 			GUICtrlSetState($g_hBtnCancelProfileChange, $GUI_SHOW)
 			GUICtrlSetState($g_hBtnRenameProfile, $GUI_HIDE)
 			GUICtrlSetState($g_hBtnConfirmRenameProfile, $GUI_SHOW)
+			; IceCube (Misc v1.0)
+			GUICtrlSetState($g_hBtnRecycle, $GUI_HIDE)
+			; IceCube (Misc v1.0)
 		Case $g_hBtnConfirmRenameProfile
 			Local $newProfileName = StringRegExpReplace(GUICtrlRead($g_hTxtVillageName), '[/:*?"<>|]', '_')
 			If FileExists($g_sProfilePath & "\" & $newProfileName) Then
@@ -134,6 +196,7 @@ Func btnRenameConfirm()
 			; Rename the profile.
 			renameProfile()
 			setupProfileComboBox()
+			setupProfileComboBoxswitch()
 			selectProfile()
 
 			GUICtrlSetState($g_hTxtVillageName, $GUI_HIDE)
@@ -144,6 +207,9 @@ Func btnRenameConfirm()
 			GUICtrlSetState($g_hBtnDeleteProfile, $GUI_SHOW)
 			GUICtrlSetState($g_hBtnConfirmRenameProfile, $GUI_HIDE)
 			GUICtrlSetState($g_hBtnRenameProfile, $GUI_SHOW)
+			; IceCube (Misc v1.0)
+			GUICtrlSetState($g_hBtnRecycle, $GUI_SHOW)
+			; IceCube (Misc v1.0)
 		Case Else
 			SetLog("If you are seeing this log message there is something wrong.", $COLOR_ERROR)
 	EndSwitch

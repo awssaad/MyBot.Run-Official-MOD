@@ -250,7 +250,7 @@ Func UpdateStats()
 
 	If $iOldSkippedVillageCount <> $iSkippedVillageCount Then
 		GUICtrlSetData($g_hLblResultVillagesSkipped, _NumberFormat($iSkippedVillageCount, True))
-		GUICtrlSetData($g_hLblResultSkippedHourNow, _NumberFormat($iSkippedVillageCount, True))
+		If $ichkSwitchAcc <> 1 Then GUICtrlSetData($g_hLblResultSkippedHourNow, _NumberFormat($iSkippedVillageCount, True))		; ProfileStats SwitchAcc - Demen
 		$iOldSkippedVillageCount = $iSkippedVillageCount
 	EndIf
 
@@ -412,7 +412,7 @@ Func UpdateStats()
 
 	If $iOldAttackedCount <> $iAttackedCount Then
 		GUICtrlSetData($g_hLblResultVillagesAttacked, _NumberFormat($iAttackedCount, True))
-		GUICtrlSetData($g_hLblResultAttackedHourNow, _NumberFormat($iAttackedCount, True))
+		If $ichkSwitchAcc <> 1 Then GUICtrlSetData($g_hLblResultAttackedHourNow, _NumberFormat($iAttackedCount, True))		; ProfileStats - SwitchAcc - Demen
 		$iOldAttackedCount = $iAttackedCount
 	EndIf
 
@@ -445,12 +445,13 @@ Func UpdateStats()
 		EndIf
 		GUICtrlSetData($g_ahLblStatsGainPerHour[$eLootTrophy], _NumberFormat(Round($g_iStatsTotalGain[$eLootTrophy] / (Int(TimerDiff($g_hTimerSinceStarted) + $g_iTimePassed)) * 3600 * 1000)) & " / h")
 
-		GUICtrlSetData($g_hLblResultGoldHourNow, _NumberFormat(Round($g_iStatsTotalGain[$eLootGold] / (Int(TimerDiff($g_hTimerSinceStarted) + $g_iTimePassed)) * 3600)) & "k / h") ;GUI BOTTOM
-		GUICtrlSetData($g_hLblResultElixirHourNow, _NumberFormat(Round($g_iStatsTotalGain[$eLootElixir] / (Int(TimerDiff($g_hTimerSinceStarted) + $g_iTimePassed)) * 3600)) & "k / h") ;GUI BOTTOM
-		If $g_iStatsStartedWith[$eLootDarkElixir] <> "" Then
-			GUICtrlSetData($g_hLblResultDEHourNow, _NumberFormat(Round($g_iStatsTotalGain[$eLootDarkElixir] / (Int(TimerDiff($g_hTimerSinceStarted) + $g_iTimePassed)) * 3600 * 1000)) & " / h") ;GUI BOTTOM
+		If $ichkSwitchAcc <> 1 Then 		; 	ProfileStats - SwitchAcc - Demen
+			GUICtrlSetData($g_hLblResultGoldHourNow, _NumberFormat(Round($g_iStatsTotalGain[$eLootGold] / (Int(TimerDiff($g_hTimerSinceStarted) + $g_iTimePassed)) * 3600)) & "k / h") ;GUI BOTTOM
+			GUICtrlSetData($g_hLblResultElixirHourNow, _NumberFormat(Round($g_iStatsTotalGain[$eLootElixir] / (Int(TimerDiff($g_hTimerSinceStarted) + $g_iTimePassed)) * 3600)) & "k / h") ;GUI BOTTOM
+			If $g_iStatsStartedWith[$eLootDarkElixir] <> "" Then
+				GUICtrlSetData($g_hLblResultDEHourNow, _NumberFormat(Round($g_iStatsTotalGain[$eLootDarkElixir] / (Int(TimerDiff($g_hTimerSinceStarted) + $g_iTimePassed)) * 3600 * 1000)) & " / h") ;GUI BOTTOM
+			EndIf							; 	ProfileStats - SwitchAcc - Demen
 		EndIf
-
 	EndIf
 
 	If Number($g_iStatsLastAttack[$eLootGold]) > Number($topgoldloot) Then
@@ -472,6 +473,8 @@ Func UpdateStats()
 		$topTrophyloot = $g_iStatsLastAttack[$eLootTrophy]
 		GUICtrlSetData($g_ahLblStatsTop[$eLootTrophy],_NumberFormat($topTrophyloot))
 	EndIf
+
+	If $ichkSwitchAcc = 1 Then UpdateStatsForSwitchAcc()	;	ProfileStats - SwitchAcc - Demen
 
 	If $ResetStats = 1 Then
 		$ResetStats = 0
@@ -550,6 +553,7 @@ Func ResetStats()
 	$g_iTotalDonateStatsTroopsXP = 0
 	$g_iTotalDonateStatsSpells = 0
 	$g_iTotalDonateStatsSpellsXP = 0
+	If $ichkSwitchAcc = 1 Then ResetStatsForSwitchAcc()		;	ProfileStats - SwitchAcc - Demen
 
 	UpdateStats()
  EndFunc   ;==>ResetStats

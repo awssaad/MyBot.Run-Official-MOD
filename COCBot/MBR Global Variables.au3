@@ -13,6 +13,10 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
+; AutoIt includes
+#include <WindowsConstants.au3>
+#include <WinAPI.au3>
+#include <Process.au3>
 #include <Math.au3> ; Added for Weak Base
 #include <ButtonConstants.au3>
 #include <ComboConstants.au3>
@@ -30,7 +34,6 @@
 #include <ProgressConstants.au3> ; Added for Splash
 #include <StaticConstants.au3>
 #include <TabConstants.au3>
-;#include <WindowsConstants.au3> ; included on MBR Bot.au3
 #include <WinAPIProc.au3>
 #include <WinAPIRes.au3>
 #include <ScreenCapture.au3>
@@ -46,8 +49,6 @@
 #include <INet.au3>
 #include <GuiTab.au3>
 #include <String.au3>
-;#include <IE.au3>
-#include <Process.au3>
 #include <GuiListView.au3>
 #include <GUIToolTip.au3>
 #include <Crypt.au3>
@@ -417,7 +418,8 @@ Global Enum $eIcnArcher = 1, $eIcnDonArcher, $eIcnBalloon, $eIcnDonBalloon, $eIc
 			$eHdV11, $eUnranked, $eBronze, $eSilver, $eGold, $eCrystal, $eMaster, $eChampion, $eTitan, $eLegend, _
 			$eWall04, $eWall05, $eWall06, $eWall07, $eWall08, $eWall09, $eWall10, $eWall11, $eIcnPBNotify, $eIcnCCTroops, _
 			$eIcnCCSpells, $eIcnSpellsGroup, $eBahasaIND, $eChinese_S, $eChinese_T, $eEnglish, $eFrench, $eGerman, $eItalian, $ePersian, _
-			$eRussian, $eSpanish, $eTurkish, $eMissingLangIcon, $eWall12, $ePortuguese, $eIcnDonPoisonSpell, $eIcnDonEarthQuakeSpell, $eIcnDonHasteSpell, $eIcnDonSkeletonSpell, $eVietnamese, $eKorean
+			$eRussian, $eSpanish, $eTurkish, $eMissingLangIcon, $eWall12, $ePortuguese, $eIcnDonPoisonSpell, $eIcnDonEarthQuakeSpell, $eIcnDonHasteSpell, $eIcnDonSkeletonSpell, $eVietnamese, $eKorean, _
+			$eIcnMods, $eIcnSwitch, $eIcnProfile2, $eArabic
 
 Global $eIcnDonBlank = $eIcnDonBlacklist
 Global $eIcnOptions = $eIcnDonBlacklist
@@ -492,30 +494,30 @@ Global Const $g_asTroopShortNames[$eTroopCount] = [ _
    "Mini", "Hogs", "Valk", "Gole", "Witc", "Lava", "Bowl"]
 Global Const $g_aiTroopSpace[$eTroopCount] = [ _
    1, 1, 5, 1, 2, 5, 4, 14, 20, 25, 10, 5, _
-   2, 5, 8, 30, 12, 30, 8 ]
+   2, 5, 8, 30, 12, 30, 6 ]
 Global Const $g_aiTroopTrainTime[$eTroopCount] = [ _
-   20, 25, 120, 30, 60, 300, 300, 600, 900, 900, 600, 300, _
-   45, 120, 300, 900, 600, 900, 300 ]
+   20, 24, 120, 28, 60, 120, 120, 480, 720, 720, 360, 120, _
+   36, 90, 180, 600, 360, 600, 120 ]
 ; Zero element contains number of levels, elements 1 thru n contain cost of that level troop
 Global Const $g_aiTroopCostPerLevel[$eTroopCount][9] = [ _
-   [7, 25, 40, 60, 100, 150, 200, 250], _ 				; Archer
-   [7, 50, 80, 120, 200, 300, 400, 500], _ 				;Barbarian
-   [8, 500, 750, 1250, 1750, 2250, 3000, 3500, 4000], _ ; Giant
+   [7, 25, 40, 60, 100, 150, 200, 250], _ 				; Barbarian
+   [7, 50, 80, 120, 200, 300, 400, 500], _ 				; Archer
+   [8, 250, 750, 1250, 1750, 2250, 3000, 3500, 4000], _ ; Giant
    [7, 25, 40, 60, 80, 100, 150, 200], _ 				; Goblin
    [6, 1000, 1500, 2000, 2500, 3000, 3500], _ 			; WallBreaker
    [7, 2000, 2500, 3000, 3500, 4000, 4500, 5000], _ 	; Balloon
    [7, 1500, 2000, 2500, 3000, 3500, 4000, 4500], _ 	; Wizard
-   [4, 5000, 6000, 8000, 10000], _						 ;Healer
+   [4, 5000, 6000, 8000, 10000], _						; Healer
    [6, 25000, 29000, 33000, 37000, 42000, 46000], _ 	; Dragon
    [5, 28000, 32000, 36000, 40000, 45000], _ 			; Pekka
    [5, 15000, 16000, 17000, 18000, 19000], _ 			; BabyDragon
    [4, 4200, 4800, 5400, 6000], _  						; Miner
    [7, 6, 7, 8, 9, 10, 11, 12], _ 						; Minion
    [7, 40, 45, 52, 58, 65, 90, 115], _					; HogRider
-   [5, 70, 100, 130, 160, 190], _ 						;Valkyrie
+   [5, 70, 100, 130, 160, 190], _ 						; Valkyrie
    [6, 450, 525, 600, 675, 750, 825], _ 				; Golem
    [3, 250, 350, 450], _ 								; Witch
-   [4, 390, 450, 510, 570], _  							;Lavahound
+   [4, 390, 450, 510, 570], _  							; Lavahound
    [3, 130, 150, 170] ] 								; Bowler
 Global Const $g_aiTroopDonateXP[$eTroopCount] = [1,1,5,1,2,5,4,14,20,25,10,5,2,5,8,30,12,30,6]
 
@@ -525,7 +527,7 @@ Global Enum $eSpellLightning, $eSpellHeal, $eSpellRage, $eSpellJump, $eSpellFree
 Global Const $g_asSpellNames[$eSpellCount] = ["Lightning", "Heal", "Rage", "Jump", "Freeze", "Clone", "Poison", "Earthquake", "Haste", "Skeleton"]
 Global Const $g_asSpellShortNames[$eSpellCount] = ["LSpell", "HSpell", "RSpell", "JSpell", "FSpell", "CSpell", "PSpell", "ESpell", "HaSpell", "SkSpell"]
 Global Const $g_aiSpellSpace[$eSpellCount] = [ 2, 2, 2, 2, 2, 4, 1, 1, 1, 1 ]
-Global Const $g_aiSpellTrainTime[$eSpellCount] = [ 360, 360, 360, 360, 360, 360, 180, 180, 180, 180 ]
+Global Const $g_aiSpellTrainTime[$eSpellCount] = [ 360, 360, 360, 360, 360, 720, 180, 180, 180, 180 ]
 ; Zero element contains number of levels, elements 1 thru n contain cost of that level spell
 Global Const $g_aiSpellCostPerLevel[$eSpellCount][8] = [ _
    [7, 15000, 16500, 18000, 20000, 22000, 24000, 26000], _ ;LightningSpell
@@ -536,7 +538,7 @@ Global Const $g_aiSpellCostPerLevel[$eSpellCount][8] = [ _
    [4, 38000, 40000, 42000, 44000], _					   ;CloneSpell
    [5, 95, 110, 125, 140, 155], _         				   ;PoisonSpell
    [4, 125, 140, 160, 180], _    						   ;EarthquakeSpell
-   [4, 80, 85, 60, 95], _								   ;HasteSpell
+   [4, 80, 85, 90, 95], _								   ;HasteSpell
    [4, 110, 120, 130, 140] ]   							   ;SkeletonSpell
 Global Const $g_aiSpellDonateXP[$eSpellCount] = [10, 10, 10, 10, 10, 0, 5, 5, 5, 5]
 
@@ -553,16 +555,6 @@ Global Enum $eLeagueUnranked, $eLeagueBronze, $eLeagueSilver, $eLeagueGold, $eLe
 
 ; Loot types
 Global Enum $eLootGold, $eLootElixir, $eLootDarkElixir, $eLootTrophy, $eLootCount
-
-; notes $g_avDefaultTroopGroup[19][0] = TroopName | [1] = TroopNamePosition | [2] = TroopHeight | [3] = Times | [4] = qty | [5] = marker for DarkTroop or ElixerTroop]
-Global $g_avDefaultTroopGroup[19][6]  = [ ["Arch", 1, 1, 25, 0, "e"], ["Giant", 2, 5, 120, 0, "e"], ["Wall", 4, 2, 60, 0, "e"], ["Barb", 0, 1, 20, 0, "e"], ["Gobl", 3, 1, 30, 0, "e"], ["Heal", 7, 14, 600, 0, "e"], ["Pekk", 9, 25, 900, 0, "e"],  _
-									 ["Ball", 5, 5, 300, 0, "e"], ["Wiza", 6, 4, 300, 0, "e"], ["Drag", 8, 20, 900, 0, "e"], ["BabyD", 10, 10, 600, 0, "e"],["Mine", 11, 5, 300, 0, "e"], _
-									 ["Mini", 0, 2, 45, 0, "d"], ["Hogs", 1, 5, 120, 0, "d"], ["Valk", 2, 8, 300, 0, "d"], ["Gole", 3, 30, 900, 0, "d"], ["Witc", 4, 12, 600, 0, "d"], ["Lava", 5, 30, 900, 0, "d"], ["Bowl", 6, 6, 300, 0, "d"]]
-Global $g_asTroopName[UBound($g_avDefaultTroopGroup, 1)]
-For $i = 0 To UBound($g_avDefaultTroopGroup, 1) - 1
-   $g_asTroopName[$i] = $g_avDefaultTroopGroup[$i][0]
-Next
-
 
 ;--------------------------------------------------------------------------
 ; END: Attacks, Troops, Spells, Leagues, Loot Types
@@ -733,7 +725,7 @@ Global $g_abNotifyScheduleWeekDays[7] = [False,False,False,False,False,False,Fal
 
 ; <><><><> Attack Plan / Train Army / Troops/Spells <><><><>
 Global $g_bQuickTrainEnable = False
-Global $g_iQuickTrainArmyNum = 1
+Global $g_bQuickTrainArmy[3] = [True, False, False]			; QuickTrainCombo (Checkbox) - Demen
 Global $g_aiArmyCompTroops[$eTroopCount] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 Global $g_aiArmyCompSpells[$eSpellCount] = [0,0,0,0,0,0,0,0,0,0]
 Global $g_aiTrainArmyTroopLevel[$eTroopCount] = [1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -752,7 +744,21 @@ Global Const $g_aiTroopOrderIcon[21] = [ _
    $eIcnOptions, $eIcnBarbarian, $eIcnArcher, $eIcnGiant, $eIcnGoblin, $eIcnWallBreaker, $eIcnBalloon, _
    $eIcnWizard, $eIcnHealer, $eIcnDragon, $eIcnPekka, $eIcnBabyDragon, $eIcnMiner, $eIcnMinion, _
    $eIcnHogRider, $eIcnValkyrie, $eIcnGolem, $eIcnWitch, $eIcnLavaHound, $eIcnBowler]
-Global $g_bCustomTrainOrderEnable = False, $g_aiCmbCustomTrainOrder[UBound($g_aiTroopOrderIcon)] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+Global $g_bCustomTrainOrderEnable = False, $g_aiCmbCustomTrainOrder[$eTroopCount] = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
+
+#cs
+Global Const $g_aiTrainOrderDefault[] = [ _
+   $eTroopArcher, $eTroopGiant, $eTroopWallBreaker, $eTroopBarbarian, $eTroopGoblin, $eTroopHealer, _
+   $eTroopPekka, $eTroopBalloon, $eTroopWizard, $eTroopDragon, $eTroopBabyDragon, $eTroopMiner, _
+   $eTroopMinion, $eTroopHogRider, $eTroopValkyrie, $eTroopGolem, $eTroopWitch, $eTroopLavaHound, _
+   $eTroopBowler ]
+#ce
+
+Global $g_aiTrainOrder[$eTroopCount] = [ _
+   $eTroopArcher, $eTroopGiant, $eTroopWallBreaker, $eTroopBarbarian, $eTroopGoblin, $eTroopHealer, _
+   $eTroopPekka, $eTroopBalloon, $eTroopWizard, $eTroopDragon, $eTroopBabyDragon, $eTroopMiner, _
+   $eTroopMinion, $eTroopHogRider, $eTroopValkyrie, $eTroopGolem, $eTroopWitch, $eTroopLavaHound, _
+   $eTroopBowler ]
 
 ; <><><><> Attack Plan / Train Army / Options <><><><>
 Global $g_bCloseWhileTrainingEnable = True, $g_bCloseWithoutShield = False, $g_bCloseEmulator = False, $g_bCloseRandom = False, $g_bCloseExactTime = False, _
@@ -909,6 +915,7 @@ Global $ichkDisableSplash = 0 ; Splash screen disabled = 1
 Global $ichkVersion = 1
 Global $ichkDeleteLogs = 1, $iDeleteLogsDays = 2, $ichkDeleteTemp = 1, $iDeleteTempDays = 2, $ichkDeleteLoots = 1, $iDeleteLootsDays = 2
 Global $ichkAutoStart, $ichkAutoStartDelay = 10
+Global $ichkAutoHide, $ichkAutoHideDelay = 10
 Global $ichklanguage = 1
 Global $idisposewindows = 1, $icmbDisposeWindowsPos = 0, $iWAOffsetX = 10, $iWAOffsetY = 10
 Global $iUpdatingWhenMinimized = 1 ; Alternative Minimize Window routine for bot that enables window updates when minimized
@@ -1308,3 +1315,5 @@ Global Const $g_aLSpellDmg[7] = [300, 330, 360, 390, 450, 510, 570]
 Global Const $g_aEQSpellDmg[4] = [0.14, 0.17, 0.21, 0.25]
 ; Global Const $drillLevelHold[6] = [120, 225, 405, 630, 960, 1350] ; Total Amount of DE available from Drill at each level (1-6)
 ; Global Const $drillLevelSteal[6] = [59, 102, 172, 251, 343, 479] ; Amount of DE available to steal from Drills at each level (1-6)
+
+#include "functions\Mod's\Misc\MBR Global Variables.au3"

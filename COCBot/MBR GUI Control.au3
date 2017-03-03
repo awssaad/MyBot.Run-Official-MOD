@@ -49,6 +49,8 @@ Global $g_hFrmBot_WNDPROC_ptr = 0
 #include "GUI\MBR GUI Control Child Misc.au3"
 #include "GUI\MBR GUI Control Android.au3"
 #include "MBR GUI Action.au3"
+; Team Mod's (NguyenAnhHD, Demen)
+#include "functions\Mod's\Misc\MBR GUI Control Mod.au3"
 
 Func InitializeMainGUI()
    InitializeControlVariables()
@@ -432,6 +434,8 @@ Func GUIControl_WM_COMMAND($hWind, $iMsg, $wParam, $lParam)
 			btnAttackNowLB()
 		Case $g_hBtnAttackNowTS
 			btnAttackNowTS()
+		Case $ModSupportConfig
+			ShellExecute($sModSupportUrl)
 		;Case $idMENU_DONATE_SUPPORT
 		;	ShellExecute("https://mybot.run/forums/index.php?/donate/make-donation/")
 		Case $g_hBtnNotifyDeleteMessages
@@ -639,6 +643,8 @@ Func GUIControl_WM_NOTIFY($hWind, $iMsg, $wParam, $lParam)
 			tabTHSnipe()
 		Case $g_hGUI_BOT_TAB
 			tabBot()
+		Case $g_hGUI_MOD_TAB
+;~			tabMod()
 		Case Else
 			$bCheckEmbeddedShield = False
 	EndSwitch
@@ -1015,6 +1021,7 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
 				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
 				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+				GUISetState(@SW_HIDE, $g_hGUI_MOD)
 				GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
 				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_LOG)
 
@@ -1022,6 +1029,7 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $g_hGUI_LOG)
 				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
 				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+				GUISetState(@SW_HIDE, $g_hGUI_MOD)
 				GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
 				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_VILLAGE)
 				tabVillage()
@@ -1030,6 +1038,7 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $g_hGUI_LOG)
 				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
 				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+				GUISetState(@SW_HIDE, $g_hGUI_MOD)
 				GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
 				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_ATTACK)
 				tabAttack()
@@ -1038,15 +1047,26 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $g_hGUI_LOG)
 				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
 				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
+				GUISetState(@SW_HIDE, $g_hGUI_MOD)
 				GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
 				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_BOT)
 				tabBot()
 
-			Case $tabidx = 4 ; About
+			Case $tabidx = 4 ; Options
 				GUISetState(@SW_HIDE, $g_hGUI_LOG)
 				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
 				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
 				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+				GUISetState(@SW_HIDE, $g_hGUI_ABOUT)
+				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_MOD)
+;~				tabMod()
+
+			Case $tabidx = 5 ; About
+				GUISetState(@SW_HIDE, $g_hGUI_LOG)
+				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
+				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
+				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+				GUISetState(@SW_HIDE, $g_hGUI_MOD)
 				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_ABOUT)
 
 			Case ELSE
@@ -1054,6 +1074,7 @@ Func tabMain()
 				GUISetState(@SW_HIDE, $g_hGUI_VILLAGE)
 				GUISetState(@SW_HIDE, $g_hGUI_ATTACK)
 				GUISetState(@SW_HIDE, $g_hGUI_BOT)
+				GUISetState(@SW_HIDE, $g_hGUI_MOD)
 		EndSelect
 
 EndFunc   ;==>tabMain
@@ -1255,10 +1276,10 @@ Func tabBot()
 			Case $tabidx = 2 ; Profiles tab
 				GUISetState(@SW_HIDE, $g_hGUI_STATS)
 				ControlHide("","",$g_hCmbGUILanguage)
-			Case $tabidx = 3 ; Android tab
-				GUISetState(@SW_HIDE, $g_hGUI_STATS)
-				ControlHide("","",$g_hCmbGUILanguage)
-			Case $tabidx = 4 ; Stats tab
+;~			Case $tabidx = 3 ; Android tab
+;~				GUISetState(@SW_HIDE, $g_hGUI_STATS)
+;~				ControlHide("","",$g_hCmbGUILanguage)
+			Case $tabidx = 3 ; Stats tab
 				GUISetState(@SW_SHOWNOACTIVATE, $g_hGUI_STATS)
 				ControlHide("","",$g_hCmbGUILanguage)
 		EndSelect
@@ -1412,7 +1433,7 @@ Func Bind_ImageList($nCtrl)
 	Switch $nCtrl
 		Case $g_hTabMain
 			; the icons for main tab
-			Local $aIconIndex[5] = [$eIcnHourGlass, $eIcnTH11, $eIcnAttack, $eIcnGUI, $eIcnInfo]
+			Local $aIconIndex[6] = [$eIcnHourGlass, $eIcnTH11, $eIcnAttack, $eIcnGUI, $eIcnMods, $eIcnInfo]
 
 		Case $g_hGUI_VILLAGE_TAB
 			; the icons for village tab
@@ -1460,8 +1481,12 @@ Func Bind_ImageList($nCtrl)
 
 		Case $g_hGUI_BOT_TAB
 			; the icons for Bot tab
-			Local $aIconIndex[5] = [$eIcnOptions, $eIcnAndroid, $eIcnProfile, $eIcnProfile, $eIcnGold]
+			Local $aIconIndex[4] = [$eIcnOptions, $eIcnAndroid, $eIcnProfile, $eIcnGold]
 			; The Android Robot is a Google Trademark and follows Creative Common Attribution 3.0
+
+		Case $g_hGUI_MOD_TAB
+			; the icons for Mods tab
+			Local $aIconIndex[2] = [$eIcnSwitch, $eIcnProfile2]
 
 		Case $g_hGUI_STRATEGIES_TAB
 			; the icons for strategies tab
@@ -1469,7 +1494,7 @@ Func Bind_ImageList($nCtrl)
 
 		Case $g_hGUI_STATS_TAB
 			; the icons for stats tab
-			Local $aIconIndex[4] = [$eIcnGoldElixir, $eIcnOptions, $eIcnCamp, $eIcnCCRequest]
+			Local $aIconIndex[5] = [$eIcnGoldElixir, $eIcnGoldElixir, $eIcnOptions, $eIcnCamp, $eIcnCCRequest]
 
 		Case Else
 			;do nothing

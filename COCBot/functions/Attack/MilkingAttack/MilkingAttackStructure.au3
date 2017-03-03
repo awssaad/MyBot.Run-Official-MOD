@@ -72,7 +72,7 @@ Func MilkingAttackStructure($vectstr)
 					Else
 						Local $rndpos = Random(3, UBound($vect) - 1, 1)
 					EndIf
-					$pixel = StringSplit($vect[$rndpos], "-", 2)
+					Local $pixel = StringSplit($vect[$rndpos], "-", 2)
 
 					If UBound($pixel) = 2 Then
 						;If $g_iDebugSetlog=1 Then Setlog("Click( " & $pixel[0] & ", " & $pixel[1] & " ," &  $troopxwave& ", "0,#0778)")

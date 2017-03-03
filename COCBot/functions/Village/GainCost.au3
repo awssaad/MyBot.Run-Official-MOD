@@ -50,18 +50,21 @@ Func EndGainCost($Type)
 				$tempGoldCollected = $iGoldCurrent - $TempGainCost[0]
 				$iGoldFromMines += $tempGoldCollected
 				$g_iStatsTotalGain[$eLootGold] += $tempGoldCollected
+				If $ichkSwitchAcc = 1 Then $aGoldTotalAcc[$nCurProfile -1] += $tempGoldCollected 		; ProfileStats - SwitchAcc - DEMEN
 			EndIf
 
 			If $TempGainCost[1] <> "" And $iElixirCurrent <> "" And $TempGainCost[1] <> $iElixirCurrent Then
 				$tempElixirCollected = $iElixirCurrent - $TempGainCost[1]
 				$iElixirFromCollectors += $tempElixirCollected
 				$g_iStatsTotalGain[$eLootElixir] += $tempElixirCollected
+				If $ichkSwitchAcc = 1 Then $aElixirTotalAcc[$nCurProfile -1] += $tempElixirCollected 	; ProfileStats - SwitchAcc - DEMEN
 			EndIf
 
 			If $TempGainCost[2] <> "" And $iDarkCurrent <> "" And $TempGainCost[2] <> $iDarkCurrent Then
 				$tempDElixirCollected = $iDarkCurrent - $TempGainCost[2]
 				$iDElixirFromDrills += $tempDElixirCollected
 				$g_iStatsTotalGain[$eLootDarkElixir] += $tempDElixirCollected
+				If $ichkSwitchAcc = 1 Then $aDarkTotalAcc[$nCurProfile -1] += $tempDElixirCollected  	; ProfileStats - SwitchAcc - DEMEN
 			EndIf
 		Case "Train"
 			Local $tempElixirSpent = 0
@@ -70,12 +73,14 @@ Func EndGainCost($Type)
 				$tempElixirSpent = ($TempGainCost[1] - $iElixirCurrent)
 				$iTrainCostElixir += $tempElixirSpent
 				$g_iStatsTotalGain[$eLootElixir] -= $tempElixirSpent
+				If $ichkSwitchAcc = 1 Then $aElixirTotalAcc[$nCurProfile-1] -= $tempElixirSpent 	; ProfileStats - SwitchAcc - DEMEN
 			EndIf
 
 			If $TempGainCost[2] <> "" And $iDarkCurrent <> ""  And $TempGainCost[2] <> $iDarkCurrent Then
 				$tempDElixirSpent = ($TempGainCost[2] - $iDarkCurrent)
 				$iTrainCostDElixir += $tempDElixirSpent
 				$g_iStatsTotalGain[$eLootDarkElixir] -= $tempDElixirSpent
+				If $ichkSwitchAcc = 1 Then $aDarkTotalAcc[$nCurProfile - 1] -= $tempDElixirSpent 	; ProfileStats - SwitchAcc -  DEMEN
 			EndIf
 	EndSwitch
 

@@ -18,7 +18,7 @@ Global $g_hGUI_TRAINARMY = 0
 Global $g_hGUI_TRAINARMY_TAB = 0, $g_hGUI_TRAINARMY_TAB_ITEM1 = 0, $g_hGUI_TRAINARMY_TAB_ITEM2 = 0, $g_hGUI_TRAINARMY_TAB_ITEM3 = 0, $g_hGUI_TRAINARMY_TAB_ITEM4 = 0
 
 ; Troops/Spells sub-tab
-Global $g_hChkUseQuickTrain = 0, $g_hRdoArmy1 = 0, $g_hRdoArmy2 = 0, $g_hRdoArmy3 = 0
+Global $g_hChkUseQuickTrain = 0, $g_ahChkArmy[3] = [0,0,0]			; QuickTrainCombo (check box) - Demen
 Global $g_ahTxtTrainArmyTroopCount[$eTroopCount] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 Global $g_ahLblTrainArmyTroopLevel[$eTroopCount] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 Global $g_ahTxtTrainArmySpellCount[$eSpellCount] = [0,0,0,0,0,0,0,0,0,0]
@@ -31,18 +31,23 @@ Global $g_ahPicTrainArmySpell[$eSpellCount] = [0,0,0,0,0,0,0,0,0,0]
 Global $g_hLblTotalTimeCamp = 0, $g_hLblElixirCostCamp = 0, $g_hLblDarkCostCamp = 0, $g_hCalTotalTroops = 0, $g_hLblTotalProgress = 0, $g_hLblCountTotal = 0, _
 	   $g_hTxtTotalCountSpell = 0, $g_hLblTotalTimeSpell = 0, $g_hLblElixirCostSpell = 0, $g_hLblDarkCostSpell = 0
 
+Global $chkSimpleTrain = 0, $chkFillArcher = 0, $txtFillArcher = 0, $chkFillEQ = 0		; SimpleTrain - Demen
+
 ; Boost sub-tab
 Global $g_hCmbBoostBarracks = 0, $g_hCmbBoostSpellFactory = 0, $g_hCmbBoostBarbarianKing = 0, $g_hCmbBoostArcherQueen = 0, $g_hCmbBoostWarden = 0
 Global $g_hChkBoostBarracksHours[24] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], $g_hChkBoostBarracksHoursE1 = 0, $g_hChkBoostBarracksHoursE2 = 0
 
 ; Train Order sub-tab
+Global Const $g_asTroopOrderList[] = [ "", _
+   GetTranslated(604,1, "Barbarians"), GetTranslated(604,2, "Archers"), GetTranslated(604,3, "Giants"), GetTranslated(604,4, "Goblins"), _
+   GetTranslated(604,5, "Wall Breakers"), GetTranslated(604,7, "Balloons"), GetTranslated(604,8, "Wizards"), GetTranslated(604,9, "Healers"), _
+   GetTranslated(604,10, "Dragons"), GetTranslated(604,11, "Pekkas"), GetTranslated(604,20, "Baby Dragons"), GetTranslated(604,21, "Miners"), _
+   GetTranslated(604,13, "Minions"), GetTranslated(604,14, "Hog Riders"), GetTranslated(604,15, "Valkyries"), GetTranslated(604,16, "Golems"), _
+   GetTranslated(604,17, "Witches"), GetTranslated(604,18, "Lava Hounds"), GetTranslated(604, 19, "Bowlers") ]
 Global $g_hChkCustomTrainOrderEnable = 0
-Global $g_ahCmbTroopOrder[UBound($g_aiTroopOrderIcon)] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-Global $g_ahImgTroopOrder[UBound($g_aiTroopOrderIcon)] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+Global $g_ahCmbTroopOrder[$eTroopCount] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+Global $g_ahImgTroopOrder[$eTroopCount] = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 Global $g_hBtnTroopOrderSet = 0, $g_ahImgTroopOrderSet = 0
-; Do Not Use translated names here or ChangeTroopTrainOrder() code breaks
-;Local $g_asTroopOrderTrainTab[] = ["", $sTxtBarbarians, $sTxtArchers, $sTxtGiants, $sTxtGoblins, $sTxtWallBreakers, $sTxtBalloons, $sTxtWizards, $sTxtHealers, $sTxtDragons, $sTxtPekkas, $sTxtBabyDragons, $sTxtMiners, $sTxtMinions, $sTxtHogRiders, $sTxtValkyries, $sTxtGolems, $sTxtWitches, $sTxtLavaHounds, $sTxtBowlers]
-Global $g_asTroopOrderTrainTab[] = ["", "Barbarians", "Archers", "Giants", "Goblins", "Wall Breakers", "Balloons", "Wizards", "Healers", "Dragons", "Pekkas", "Baby Dragons", "Miners", "Minions", "Hog Riders", "Valkyries", "Golems", "Witches", "Lava Hounds", "Bowlers"]
 
 ; Options sub-tab
 Global $g_hChkCloseWhileTraining = 0, $g_hChkCloseWithoutShield = 0, $g_hChkCloseEmulator = 0, $g_hChkRandomClose = 0, $g_hRdoCloseWaitExact = 0, $g_hRdoCloseWaitRandom = 0
@@ -79,13 +84,12 @@ Func CreateTroopsSpellsSubTab()
 	   $g_hChkUseQuickTrain = GUICtrlCreateCheckbox(GetTranslated(621, 34, "Use Quick Train"), $x + 15, $y + 19, -1, 15)
 	   GUICtrlSetState(-1, $GUI_UNCHECKED)
 	   GUICtrlSetOnEvent(-1, "chkUseQTrain")
-	   $g_hRdoArmy1 = GUICtrlCreateRadio(GetTranslated(621, 37, "Army 1"), $x + 120, $y + 20, 50, 15)
-	   GUICtrlSetState(-1, $GUI_DISABLE)
-	   GUICtrlSetState(-1, $GUI_CHECKED)
-	   $g_hRdoArmy2 = GUICtrlCreateRadio(GetTranslated(621, 38, "Army 2"), $x + 180, $y + 20, 50, 15)
-	   GUICtrlSetState(-1, $GUI_DISABLE)
-	   $g_hRdoArmy3 = GUICtrlCreateRadio(GetTranslated(621, 39, "Army 3"), $x + 240, $y + 20, 50, 15)
-	   GUICtrlSetState(-1, $GUI_DISABLE)
+	   For $i = 0 To 2												; QuickTrainCombo (check box) - Demen
+		   $g_ahChkArmy[$i] = GUICtrlCreateCheckbox(GetTranslated(621, 37 + $i, "Army " & $i+1), $x + 120 + $i*60, $y + 20, 50, 15)
+		   GUICtrlSetState(-1, $GUI_DISABLE)
+		   If $i = 0 Then GUICtrlSetState(-1, $GUI_CHECKED)
+		   GUICtrlSetOnEvent(-1, "chkQuickTrainCombo")
+	   Next															; QuickTrainCombo (check box) - Demen
 	   GUICtrlCreateLabel(GetTranslated(621, 41, "Remove Army"), $x + 335, $y + 20, -1, 15, $SS_LEFT)
 	   GUICtrlCreateIcon($g_sLibIconPath, $eIcnResetButton, $x + 405, $y + 17, 24, 24)
 	   GUICtrlSetOnEvent(-1, "Removecamp")
@@ -610,6 +614,33 @@ Func CreateTroopsSpellsSubTab()
 			 GUICtrlSetColor(-1, $COLOR_WHITE)
 		  GUICtrlCreateIcon($g_sLibIconPath, $eIcnDark, $x + 146, $y + 14, 16, 16)
    GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+;========== Adding GUI for SimpleTrain - Demen ==============
+	$x = 10
+	$y = 363
+	GUICtrlCreateGroup(GetTranslated(621, 300, "Simple Train"), $x, $y, 418, 38)
+
+		$x += 7
+		$y += 16
+			$chkSimpleTrain = GUICtrlCreateCheckbox(GetTranslated(621, 301, "Enable SimpleTrain (not delete queued troops)"), $x, $y, -1, 15)
+				GUICtrlSetOnEvent(-1, "chkSimpleTrain")
+
+		$x += 240
+			$chkFillArcher = GUICtrlCreateCheckbox(GetTranslated(621, 302, "Fill archers:"), $x, $y, 70, 15)
+				GUICtrlSetState(-1, $GUI_DISABLE)
+				GUICtrlSetOnEvent(-1, "chkFillArcher")
+
+			$txtFillArcher = GUICtrlCreateInput("5", $x + 75, $y-1, 20, 16, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
+				GUICtrlSetState(-1, $GUI_DISABLE)
+				GUICtrlSetLimit(-1, 2)
+
+		$x += 110
+			$chkFillEQ = GUICtrlCreateCheckbox(GetTranslated(621, 303,"Fill 1 EQ"), $x, $y, -1, 15)
+				GUICtrlSetState(-1, $GUI_DISABLE)
+
+	GUICtrlCreateGroup("", -99, -99, 1, 1)
+;========== Adding GUI for SimpleTrain - Demen ==============
+
 EndFunc
 
 Func  CreateBoostSubTab()
@@ -625,8 +656,8 @@ Func  CreateBoostSubTab()
 	   GUICtrlCreateLabel(GetTranslated(623, 5, "Barracks") & " " & $sTextBoostLeft, $x + 20 + 29, $y + 4 + 7, -1, -1)
 		  $sTxtTip = GetTranslated(623, 6, "Use this to boost your Barracks with GEMS! Use with caution!")
 		  _GUICtrlSetTip(-1, $sTxtTip)
-	   $g_hCmbBoostBarracks = GUICtrlCreateCombo("", $x + 140 + 45, $y + 7, 40, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-		  GUICtrlSetData(-1, "0|1|2|3|4|5|6|7|8|9|10|11|12", "0")
+	   $g_hCmbBoostBarracks = GUICtrlCreateCombo("", $x + 140 + 45, $y + 7, 60, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+		  GUICtrlSetData(-1, "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|No limit", "0")
 		  _GUICtrlSetTip(-1, $sTxtTip)
    GUICtrlCreateGroup("", -99, -99, 1, 1)
 
@@ -637,8 +668,8 @@ Func  CreateBoostSubTab()
 	   GUICtrlCreateLabel(GetTranslated(623, 8, "Spell Factory") & " " & $sTextBoostLeft, $x + 20 + 29, $y + 4, -1, -1)
 		  $sTxtTip = GetTranslated(623, 9, "Use this to boost your Spell Factory with GEMS! Use with caution!")
 		  _GUICtrlSetTip(-1, $sTxtTip)
-	   $g_hCmbBoostSpellFactory = GUICtrlCreateCombo("", $x + 185, $y, 40, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-		  GUICtrlSetData(-1, "0|1|2|3|4|5|6|7|8|9|10|11|12", "0")
+	   $g_hCmbBoostSpellFactory = GUICtrlCreateCombo("", $x + 185, $y, 60, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+		  GUICtrlSetData(-1, "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|No limit", "0")
 		  _GUICtrlSetTip(-1, $sTxtTip)
    GUICtrlCreateGroup("", -99, -99, 1, 1)
 
@@ -648,8 +679,8 @@ Func  CreateBoostSubTab()
 	   GUICtrlCreateLabel(GetTranslated(623, 13, "Barbarian King") & " " & $sTextBoostLeft, $x + 20, $y + 4, -1, -1)
 		  $sTxtTip = GetTranslated(623, 14, "Use this to boost your Barbarian King with GEMS! Use with caution!")
 		  _GUICtrlSetTip(-1, $sTxtTip)
-	   $g_hCmbBoostBarbarianKing = GUICtrlCreateCombo("", $x + 185, $y, 40, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-		  GUICtrlSetData(-1, "0|1|2|3|4|5|6|7|8|9|10|11|12", "0")
+	   $g_hCmbBoostBarbarianKing = GUICtrlCreateCombo("", $x + 185, $y, 60, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+		  GUICtrlSetData(-1, "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|No limit", "0")
 		  _GUICtrlSetTip(-1, $sTxtTip)
 		  GUICtrlSetOnEvent(-1, "chkUpgradeKing")
 
@@ -658,8 +689,8 @@ Func  CreateBoostSubTab()
 	   GUICtrlCreateLabel(GetTranslated(623, 15, "Archer Queen") & " " & $sTextBoostLeft, $x + 20, $y + 4, -1, -1)
 		  $sTxtTip = GetTranslated(623, 16, "Use this to boost your Archer Queen with GEMS! Use with caution!")
 		  _GUICtrlSetTip(-1, $sTxtTip)
-	   $g_hCmbBoostArcherQueen = GUICtrlCreateCombo("", $x + 185, $y, 40, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-		  GUICtrlSetData(-1, "0|1|2|3|4|5|6|7|8|9|10|11|12", "0")
+	   $g_hCmbBoostArcherQueen = GUICtrlCreateCombo("", $x + 185, $y, 60, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+		  GUICtrlSetData(-1, "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|No limit", "0")
 		  _GUICtrlSetTip(-1, $sTxtTip)
 		  GUICtrlSetOnEvent(-1, "chkUpgradeQueen")
 
@@ -668,8 +699,8 @@ Func  CreateBoostSubTab()
 	   GUICtrlCreateLabel(GetTranslated(623, 17, "Grand Warden") & " " & $sTextBoostLeft, $x + 20, $y + 4, -1, -1)
 		  $sTxtTip = GetTranslated(623, 18, "Use this to boost your Grand Warden with GEMS! Use with caution!")
 		  _GUICtrlSetTip(-1, $sTxtTip)
-	   $g_hCmbBoostWarden = GUICtrlCreateCombo("", $x + 185, $y, 40, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-		  GUICtrlSetData(-1, "0|1|2|3|4|5|6|7|8|9|10|11|12", "0")
+	   $g_hCmbBoostWarden = GUICtrlCreateCombo("", $x + 185, $y, 60, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
+		  GUICtrlSetData(-1, "0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|No limit", "0")
 		  _GUICtrlSetTip(-1, $sTxtTip)
 		  GUICtrlSetOnEvent(-1, "chkUpgradeWarden")
    GUICtrlCreateGroup("", -99, -99, 1, 1)
@@ -770,17 +801,22 @@ Func CreateTrainOrderSubTab()
 						  GetTranslated(641, 28, "Changing train order can be useful with CSV scripted attack armies!"))
 	   GUICtrlSetOnEvent(-1, "chkTroopOrder2")
 
+	  If UBound($g_asTroopOrderList) - 1 <> $eTroopCount Then ; safety check in case troops are added
+		If $g_iDebugSetlogTrain = 1 Then Setlog("UBound($g_asTroopOrderList) - 1: " & UBound($g_asTroopOrderList) - 1 & " = " & "$eTroopCount: " & $eTroopCount, $COLOR_DEBUG) ;Debug
+		Setlog("Monkey ate bad banana, fix $g_asTroopOrderList & $eTroopCount arrays!", $COLOR_RED)
+	  EndIf
+
 	  ; Create translated list of Troops for combo box
 	  Local $sComboData = ""
-	  For $j = 0 To UBound($g_asTroopOrderTrainTab) - 1
-		  $sComboData &= $g_asTroopOrderTrainTab[$j] & "|"
+	  For $j = 0 To UBound($g_asTroopOrderList) - 1
+		  $sComboData &= $g_asTroopOrderList[$j] & "|"
 	  Next
 
 	  Local $txtTroopOrder = GetTranslated(641, 29, "Enter sequence order for training of troop #")
 
 	  ; Create ComboBox(es) for selection of troop training order
 	  $y += 23
-	  For $z = 0 To UBound($g_asTroopOrderTrainTab) - 2
+	  For $z = 0 To $eTroopCount - 1
 		  If $z < 12 Then
 			  GUICtrlCreateLabel($z + 1 & ":", $x - 16, $y + 2, -1, 18)
 			  $g_ahCmbTroopOrder[$z] = GUICtrlCreateCombo("", $x, $y, 94, 18, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))

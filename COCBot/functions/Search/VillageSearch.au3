@@ -230,13 +230,26 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 			SetLog($GetResourcesTXT, $COLOR_SUCCESS, "Lucida Console", 7.5)
 			SetLog("      " & "Dead Base Found!", $COLOR_SUCCESS, "Lucida Console", 7.5)
 			$logwrited = True
-			$g_iMatchMode = $DB
-			ExitLoop
+			If $ichkDBMeetCollOutside = 1 Then
+				If AreCollectorsOutside($iDBMinCollOutsidePercent) Then
+					SetLog("Collectors are outside, match found !", $COLOR_GREEN, "Lucida Console", 7.5)
+					$g_iMatchMode = $DB
+					cmbCSVSpeed()
+					ExitLoop
+				Else
+					SetLog("Collectors are not outside, skipping search !", $COLOR_RED, "Lucida Console", 7.5)
+				EndIf
+			Else
+				$g_iMatchMode = $DB
+				cmbCSVSpeed()
+				ExitLoop
+			EndIf
 		ElseIf $match[$LB] And Not $dbBase Then
 			SetLog($GetResourcesTXT, $COLOR_SUCCESS, "Lucida Console", 7.5)
 			SetLog("      " & "Live Base Found!", $COLOR_SUCCESS, "Lucida Console", 7.5)
 			$logwrited = True
 			$g_iMatchMode = $LB
+			cmbCSVSpeed()
 			ExitLoop
 		ElseIf $match[$LB] And $g_bCollectorFilterDisable Then
 			SetLog($GetResourcesTXT, $COLOR_SUCCESS, "Lucida Console", 7.5)
@@ -275,7 +288,7 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 		If $noMatchTxt <> "" Then
 			;SetLog(_PadStringCenter(" " & StringMid($noMatchTxt, 3) & " ", 50, "~"), $COLOR_DEBUG)
 			SetLog($GetResourcesTXT, $COLOR_BLACK, "Lucida Console", 7.5)
-			SetLog("      " & StringMid($noMatchTxt, 3), $COLOR_BLACK, "Lucida Console", 7.5)
+			SetLog("      " & StringMid($noMatchTxt, 3), $COLOR_ORANGE, "Lucida Console", 7.5)
 			$logwrited = True
 		EndIf
 
@@ -365,9 +378,11 @@ Func VillageSearch() ;Control for searching a village that meets conditions
 
 		$iSkipped = $iSkipped + 1
 		$iSkippedVillageCount += 1
+		If $ichkSwitchAcc = 1 Then $aSkippedVillageCountAcc[$nCurProfile - 1] += 1 							; ProfileStats - SwitchAcc - DEMEN
 		If $iTownHallLevel <> "" And $iTownHallLevel > 0 Then
 			$iSearchCost += $aSearchCost[$iTownHallLevel - 1]
 			$g_iStatsTotalGain[$eLootGold] -= $aSearchCost[$iTownHallLevel - 1]
+			If $ichkSwitchAcc = 1 Then $aGoldTotalAcc[$nCurProfile -1] -= $aSearchCost[$iTownHallLevel - 1] ; ProfileStats - SwitchAcc - DEMEN
 		EndIf
 		UpdateStats()
 

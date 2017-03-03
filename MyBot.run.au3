@@ -22,22 +22,21 @@
 #pragma compile(Icon, "Images\MyBot.ico")
 #pragma compile(FileDescription, Clash of Clans Bot - A Free Clash of Clans bot - https://mybot.run)
 #pragma compile(ProductName, My Bot)
-#pragma compile(ProductVersion, 7.0)
-#pragma compile(FileVersion, 7.0)
+#pragma compile(ProductVersion, 7.0.1)
+#pragma compile(FileVersion, 7.0.1)
 #pragma compile(LegalCopyright, © https://mybot.run)
 #pragma compile(Out, MyBot.run.exe) ; Required
 
 ; Enforce variable declarations
 Opt("MustDeclareVars", 1)
 
-; AutoIt includes
-#include <WindowsConstants.au3>
-#include <WinAPI.au3>
-#include <Process.au3>
-
-Global $g_sBotVersion = "v7.0" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it is also use on Checkversion()
+Global $g_sBotVersion = "v7.0.1" ;~ Don't add more here, but below. Version can't be longer than vX.y.z because it is also use on Checkversion()
+Global $sModversion = "v1.5" ;<== Just Change This to Version Number
 Global $g_sBotTitle = "" ;~ Don't assign any title here, use Func UpdateBotTitle()
 Global $g_hFrmBot = 0 ; The main GUI window
+
+Global $sModSupportUrl = "https://mybot.run/forums/index.php?/topic/25631-mods-mybot-v653-dococ-aio-mod-v084-update-1402/" ;<== Our Website Link Or Link Download
+Global $sModDownloadUrl = "https://github.com/NguyenAnhHD/MyBot_Official-MOD/releases"
 
 ; MBR includes
 #include "COCBot\MBR Global Variables.au3"
@@ -73,7 +72,7 @@ InitializeBot()
 MainLoop()
 
 Func UpdateBotTitle()
-	Local $sTitle = "My Bot " & $g_sBotVersion & " "
+	Local $sTitle = "My Bot " & $g_sBotVersion & " Official MOD " & $sModversion & " "
 	If $g_sBotTitle = "" Then
 		$g_sBotTitle = $sTitle
 		Return
@@ -87,7 +86,7 @@ Func UpdateBotTitle()
 	EndIf
 
 	SetDebugLog("Bot title updated to: " & $g_sBotTitle)
-EndFunc
+EndFunc   ;==>UpdateBotTitle
 
 Func InitializeBot()
 
@@ -475,6 +474,8 @@ Func FinalInitialization(Const $hBLT, Const $sAI)
 
    CheckDisplay() ; verify display size and DPI (Dots Per Inch) setting
 
+   btnUpdateProfile()	; update profiles & StatsProfile - SwitchAcc - Demen
+
    LoadAmountOfResourcesImages()
 
    ;~ InitializeVariables();initialize variables used in extrawindows
@@ -531,6 +532,13 @@ EndFunc   ;==>MainLoop
 Func runBot() ;Bot that runs everything in order
 	Local $iWaitTime
 
+	If $ichkSwitchAcc = 1 And $bReMatchAcc = True Then ; SwitchAcc - DEMEN
+		$nCurProfile = _GUICtrlComboBox_GetCurSel($g_hCmbProfile) + 1
+		Setlog("Rematching Profile [" & $nCurProfile & "] - " & $ProfileList[$nCurProfile] & " (CoC Acc. " & $aMatchProfileAcc[$nCurProfile - 1] & ")")
+		SwitchCoCAcc()
+		$bReMatchAcc = False
+	EndIf
+
 	While 1
 		; In order to prevent any GDI leaks, restart always GDI+ Environment here (update: bad, cause bot "crashes")
 		;__GDIPlus_Shutdown()
@@ -560,6 +568,7 @@ Func runBot() ;Bot that runs everything in order
 			If $g_bRestart = True Then ContinueLoop
 			If _Sleep($iDelayRunBot3) Then Return
 			VillageReport()
+			ProfileSwitch()
 			If $OutOfGold = 1 And (Number($iGoldCurrent) >= Number($g_iTxtRestartGold)) Then ; check if enough gold to begin searching again
 				$OutOfGold = 0 ; reset out of gold flag
 				Setlog("Switching back to normal after no gold to search ...", $COLOR_SUCCESS)
@@ -643,6 +652,7 @@ Func runBot() ;Bot that runs everything in order
 				UpgradeWall()
 				If _Sleep($iDelayRunBot3) Then Return
 				If $g_bRestart = True Then ContinueLoop
+				If $ichkSwitchAcc = 1 And $aProfileType[$nCurProfile - 1] = 2 Then checkSwitchAcc() ;  Switching to active account after donation - SwitchAcc - DEMEN
 				Idle()
 				;$fullArmy1 = $fullArmy
 				If _Sleep($iDelayRunBot3) Then Return
@@ -825,7 +835,11 @@ Func Idle() ;Sequence that runs until Full Army
 		If $iChkSnipeWhileTrain = 1 Then SnipeWhileTrain() ;snipe while train
 
 		If $g_iCommandStop = -1 Then ; Check if closing bot/emulator while training and not in halt mode
-			SmartWait4Train()
+			If $ichkSwitchAcc = 1 Then ; SwitchAcc - DEMEN
+				checkSwitchAcc() ; SwitchAcc - DEMEN
+			Else ; SwitchAcc - DEMEN
+				SmartWait4Train()
+			EndIf
 			If $g_bRestart = True Then ExitLoop ; if smart wait activated, exit to runbot in case user adjusted GUI or left emulator/bot in bad state
 		EndIf
 
@@ -873,6 +887,11 @@ Func AttackMain() ;Main control for attack functions
 			$Is_SearchLimit = False
 			$Is_ClientSyncError = False
 			$g_bQuickAttack = False
+			If $ichkSwitchAcc = 1 Then	; SwitchAcc - DEMEN
+				checkSwitchAcc()
+			Else
+				SmartWait4Train()
+			EndIf
 		EndIf
 	Else
 		SetLog("Attacking Not Planned, Skipped..", $COLOR_WARNING)
