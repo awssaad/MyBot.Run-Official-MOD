@@ -89,7 +89,7 @@ Global $g_hTabMain = 0, $g_hTabLog = 0, $g_hTabVillage = 0, $g_hTabAttack = 0, $
 Global $g_hStatusBar = 0
 Global $g_hTiShow = 0, $g_hTiHide = 0, $g_hTiDonate = 0, $g_hTiAbout = 0, $g_hTiExit = 0
 Global $g_aFrmBotPosInit[7] = [0, 0, 0, 0, 0, 0, 0]
-Global $g_hFirstControlToHide = 0, $g_hLastControlToHide = 0, $g_hFirstControlToHideMOD = 0, $g_hLastControlToHideMOD = 0, $g_aiControlPrevState[1]
+Global $g_hFirstControlToHide = 0, $g_hLastControlToHide = 0, $g_aiControlPrevState[1]
 Global $g_bFrmBotMinimized = False ; prevents bot flickering
 
 #include "GUI\MBR GUI Design Bottom.au3"

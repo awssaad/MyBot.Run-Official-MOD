@@ -1433,7 +1433,7 @@ Func Bind_ImageList($nCtrl)
 	Switch $nCtrl
 		Case $g_hTabMain
 			; the icons for main tab
-			Local $aIconIndex[5] = [$eIcnHourGlass, $eIcnTH11, $eIcnAttack, $eIcnGUI, $eIcnInfo]
+			Local $aIconIndex[6] = [$eIcnHourGlass, $eIcnTH11, $eIcnAttack, $eIcnGUI, $eIcnMods, $eIcnInfo]
 
 		Case $g_hGUI_VILLAGE_TAB
 			; the icons for village tab
@@ -1483,6 +1483,10 @@ Func Bind_ImageList($nCtrl)
 			; the icons for Bot tab
 			Local $aIconIndex[4] = [$eIcnOptions, $eIcnAndroid, $eIcnProfile, $eIcnGold]
 			; The Android Robot is a Google Trademark and follows Creative Common Attribution 3.0
+
+		Case $g_hGUI_MOD_TAB
+			; the icons for Mods tab
+			Local $aIconIndex[2] = [$eIcnSwitch, $eIcnProfile2]
 
 		Case $g_hGUI_STRATEGIES_TAB
 			; the icons for strategies tab

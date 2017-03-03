@@ -135,7 +135,7 @@ Func CreateModTab()
 	CreateModSwitchProfile()
 
 	; This dummy is used in btnStart and btnStop to disable/enable all labels, text, buttons etc. on all tabs.
-   $g_hLastControlToHideMOD = GUICtrlCreateDummy()
-   ReDim $g_aiControlPrevState[$g_hLastControlToHideMOD + 1]
+   $g_hLastControlToHide = GUICtrlCreateDummy()
+   ReDim $g_aiControlPrevState[$g_hLastControlToHide + 1]
    GUICtrlCreateTabItem("")
 EndFunc
