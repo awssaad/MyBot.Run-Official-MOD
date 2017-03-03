@@ -97,7 +97,7 @@ Global $g_bFrmBotMinimized = False ; prevents bot flickering
 #include "GUI\MBR GUI Design Village.au3"
 #include "GUI\MBR GUI Design Attack.au3"
 #include "GUI\MBR GUI Design Bot.au3"
-#include "GUI\MBR GUI Design Mod.au3"
+#include "GUI\MBR GUI Design Mod.au3" ; Team Mod's (NguyenAnhHD, Demen)
 #include "GUI\MBR GUI Design About.au3"
 
 Func CreateMainGUI()
@@ -172,7 +172,7 @@ Func CreateMainGUI()
    SplashStep(GetTranslated(500, 28, "Loading Bot tab..."))
    CreateBotTab()
 
-   SplashStep("Loading Mod tab...")
+   SplashStep(GetTranslated(500, 40, "Loading Mod tab..."))
    CreateModTab()
 
    SplashStep(GetTranslated(500, 29, "Loading About Us tab..."))
@@ -189,7 +189,7 @@ Func CreateMainGUI()
    $g_hTabVillage = GUICtrlCreateTabItem(GetTranslated(600,2, "Village"))
    $g_hTabAttack = GUICtrlCreateTabItem(GetTranslated(600,3,"Attack Plan"))
    $g_hTabBot = GUICtrlCreateTabItem(GetTranslated(600,4,"Bot"))
-   $g_hTabMod = GUICtrlCreateTabItem("Mods")
+   $g_hTabMod = GUICtrlCreateTabItem(GetTranslated(600,60,"Mods"))
    $g_hTabAbout = GUICtrlCreateTabItem(GetTranslated(600, 5, "About Us"))
    GUICtrlCreateTabItem("")
    GUICtrlSetResizing(-1, $GUI_DOCKBORDERS)

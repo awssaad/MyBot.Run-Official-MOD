@@ -105,14 +105,14 @@ Func applyConfig($bRedrawAtExit = True, $TypeReadSave = "Read") ;Applies the dat
 	; <><><> Attack Plan / Train Army / Options <><><>
 	ApplyConfig_641_1($TypeReadSave)
 
-	; <><><> Team Mod's <><><>
-	ApplyConfig_100($TypeReadSave)
+	; <><><> Team Mod's (NguyenAnhHD, Demen) <><><>
+	ApplyConfig_MOD($TypeReadSave)
+    ; <><><><> Switch Account - Demen <><><><>
+	ApplyConfig_SwitchAcc($TypeReadSave)
 
     ; <><><><> Attack Plan / Strategies <><><><>
 ; <<< nothing here >>>
 
-    ; <><><><> Bot / Profiles <><><><>
-	ApplyConfig_SwitchAcc($TypeReadSave)	;	SwitchAcc - Demen
 	PopulatePresetComboBox()
 	MakeSavePresetMessage()
 	GUICtrlSetState($g_hLblLoadPresetMessage, $GUI_SHOW)
@@ -1890,22 +1890,58 @@ Func ApplyConfig_641_1($TypeReadSave)
 	EndSwitch
 EndFunc
 
-Func ApplyConfig_100($TypeReadSave)
-	; <><><> Team Mod's <><><>
+Func ApplyConfig_MOD($TypeReadSave)
+	; <><><> Team Mod's (NguyenAnhHD, Demen) <><><>
 	Switch $TypeReadSave
 		Case "Read"
-			GUICtrlSetState($g_hChkAutohide, $ichkAutoHide = 1 ? $GUI_CHECKED : $GUI_UNCHECKED) ; Auto Hide
+			; Auto Hide (NguyenAnhHD) - Added by NguyenAnhHD
+			GUICtrlSetState($g_hChkAutohide, $ichkAutoHide = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetData($g_hTxtAutohideDelay, $ichkAutoHideDelay)
 			chkAutoHide()
-			cmbStandardDropSidesDB() ; Classic Four Finger
+
+			; Classic Four Finger (Demen) - Added by NguyenAnhHD
+			cmbStandardDropSidesDB()
 			cmbStandardDropSidesAB()
-			GUICtrlSetState($g_hChkDBMeetCollOutside, $ichkDBMeetCollOutside = 1 ? $GUI_CHECKED : $GUI_UNCHECKED) ; Check Collector Outside
+
+			; Check Collector Outside (McSlither) - Added by NguyenAnhHD
+			GUICtrlSetState($g_hChkDBMeetCollOutside, $ichkDBMeetCollOutside = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetData($g_hTxtDBMinCollOutsidePercent, $iDBMinCollOutsidePercent)
 			chkDBMeetCollOutside()
-			_GUICtrlComboBox_SetCurSel($g_hCmbCSVSpeed[$DB], $g_iCmbCSVSpeed[$DB]); CSV Deploy Speed
+
+			; CSV Deploy Speed (Roro-Titi) - Added by NguyenAnhHD
+			_GUICtrlComboBox_SetCurSel($g_hCmbCSVSpeed[$DB], $g_iCmbCSVSpeed[$DB])
 			_GUICtrlComboBox_SetCurSel($g_hCmbCSVSpeed[$LB], $g_iCmbCSVSpeed[$LB])
 
-			; SimpleTrain - Demen
+			; Switch Profile (IceCube) - Added by NguyenAnhHD
+			GUICtrlSetState($g_hChkGoldSwitchMax, $ichkGoldSwitchMax = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			_GUICtrlComboBox_SetCurSel($g_hCmbGoldMaxProfile, $icmbGoldMaxProfile)
+			GUICtrlSetData($g_hTxtMaxGoldAmount, $itxtMaxGoldAmount)
+			GUICtrlSetState($g_hChkGoldSwitchMin, $ichkGoldSwitchMin = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			_GUICtrlComboBox_SetCurSel($g_hCmbGoldMinProfile, $icmbGoldMinProfile)
+			GUICtrlSetData($g_hTxtMinGoldAmount, $itxtMinGoldAmount)
+
+			GUICtrlSetState($g_hChkElixirSwitchMax, $ichkElixirSwitchMax = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			_GUICtrlComboBox_SetCurSel($g_hCmbElixirMaxProfile, $icmbElixirMaxProfile)
+			GUICtrlSetData($g_hTxtMaxElixirAmount, $itxtMaxElixirAmount)
+			GUICtrlSetState($g_hChkElixirSwitchMin, $ichkElixirSwitchMin = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			_GUICtrlComboBox_SetCurSel($g_hCmbElixirMinProfile, $icmbElixirMinProfile)
+			GUICtrlSetData($g_hTxtMinElixirAmount, $itxtMinElixirAmount)
+
+			GUICtrlSetState($g_hChkDESwitchMax, $ichkDESwitchMax = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			_GUICtrlComboBox_SetCurSel($g_hCmbDEMaxProfile, $icmbDEMaxProfile)
+			GUICtrlSetData($g_hTxtMaxDEAmount, $itxtMaxDEAmount)
+			GUICtrlSetState($g_hChkDESwitchMin, $ichkDESwitchMin = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			_GUICtrlComboBox_SetCurSel($g_hCmbDEMinProfile, $icmbDEMinProfile)
+			GUICtrlSetData($g_hTxtMinDEAmount, $itxtMinDEAmount)
+
+			GUICtrlSetState($g_hChkTrophySwitchMax, $ichkTrophySwitchMax = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			_GUICtrlComboBox_SetCurSel($g_hCmbTrophyMaxProfile, $icmbTrophyMaxProfile)
+			GUICtrlSetData($g_hTxtMaxTrophyAmount, $itxtMaxTrophyAmount)
+			GUICtrlSetState($g_hChkTrophySwitchMin, $ichkTrophySwitchMin = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+			_GUICtrlComboBox_SetCurSel($g_hCmbTrophyMinProfile, $icmbTrophyMinProfile)
+			GUICtrlSetData($g_hTxtMinTrophyAmount, $itxtMinTrophyAmount)
+
+			; SimpleTrain (Demen) - Added by Demen
 			GUICtrlSetState($chkSimpleTrain, $ichkSimpleTrain = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($chkFillArcher, $ichkFillArcher = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetData($txtFillArcher, $iFillArcher)
@@ -1913,14 +1949,40 @@ Func ApplyConfig_100($TypeReadSave)
 			chkSimpleTrain()
 
 		Case "Save"
-			$ichkAutoHide = GUICtrlRead($g_hChkAutohide) = $GUI_CHECKED ? 1 : 0 ; Auto Hide
+			; Auto Hide (NguyenAnhHD) - Added by NguyenAnhHD
+			$ichkAutoHide = GUICtrlRead($g_hChkAutohide) = $GUI_CHECKED ? 1 : 0
 			$ichkAutoHideDelay = GUICtrlRead($g_hTxtAutohideDelay)
-			$ichkDBMeetCollOutside = GUICtrlRead($g_hChkDBMeetCollOutside) = $GUI_CHECKED ? 1 : 0 ; Check Collector Outside
+
+			; Check Collector Outside (McSlither) - Added by NguyenAnhHD
+			$ichkDBMeetCollOutside = GUICtrlRead($g_hChkDBMeetCollOutside) = $GUI_CHECKED ? 1 : 0
 			$iDBMinCollOutsidePercent = GUICtrlRead($g_hTxtDBMinCollOutsidePercent)
-			$g_iCmbCSVSpeed[$DB] = _GUICtrlComboBox_GetCurSel($g_hCmbCSVSpeed[$DB]); CSV Deploy Speed
+
+			; CSV Deploy Speed (Roro-Titi) - Added by NguyenAnhHD
+			$g_iCmbCSVSpeed[$DB] = _GUICtrlComboBox_GetCurSel($g_hCmbCSVSpeed[$DB])
 			$g_iCmbCSVSpeed[$LB] = _GUICtrlComboBox_GetCurSel($g_hCmbCSVSpeed[$LB])
 
-			;SimpleTrain - Demen
+			; Switch Profile (IceCube) - Added by NguyenAnhHD
+			$ichkGoldSwitchMax = GUICtrlRead($g_hChkGoldSwitchMax) = $GUI_CHECKED ? 1 : 0
+			$itxtMaxGoldAmount = GUICtrlRead($g_hTxtMaxGoldAmount)
+			$ichkGoldSwitchMin = GUICtrlRead($g_hChkGoldSwitchMin) = $GUI_CHECKED ? 1 : 0
+			$itxtMinGoldAmount = GUICtrlRead($g_hTxtMinGoldAmount)
+
+			$ichkElixirSwitchMax = GUICtrlRead($g_hChkElixirSwitchMax) = $GUI_CHECKED ? 1 : 0
+			$itxtMaxElixirAmount = GUICtrlRead($g_hTxtMaxElixirAmount)
+			$ichkElixirSwitchMin = GUICtrlRead($g_hChkElixirSwitchMin) = $GUI_CHECKED ? 1 : 0
+			$itxtMinElixirAmount = GUICtrlRead($g_hTxtMinElixirAmount)
+
+			$ichkDESwitchMax = GUICtrlRead($g_hChkDESwitchMax) = $GUI_CHECKED ? 1 : 0
+			$itxtMaxDEAmount = GUICtrlRead($g_hTxtMaxDEAmount)
+			$ichkDESwitchMin = GUICtrlRead($g_hChkDESwitchMin) = $GUI_CHECKED ? 1 : 0
+			$itxtMinDEAmount = GUICtrlRead($g_hTxtMinDEAmount)
+
+			$ichkTrophySwitchMax = GUICtrlRead($g_hChkTrophySwitchMax) = $GUI_CHECKED ? 1 : 0
+			$itxtMaxTrophyAmount = GUICtrlRead($g_hTxtMaxTrophyAmount)
+			$ichkTrophySwitchMin = GUICtrlRead($g_hChkTrophySwitchMin) = $GUI_CHECKED ? 1 : 0
+			$itxtMinTrophyAmount = GUICtrlRead($g_hTxtMinTrophyAmount)
+
+			;SimpleTrain (Demen) - Added by Demen
 			$ichkSimpleTrain = GUICtrlRead($chkSimpleTrain) = $GUI_CHECKED ? 1 : 0
 			$ichkFillArcher = GUICtrlRead($chkFillArcher) = $GUI_CHECKED ? 1 : 0
 			$iFillArcher = GUICtrlRead($txtFillArcher)
@@ -1928,8 +1990,8 @@ Func ApplyConfig_100($TypeReadSave)
 	EndSwitch
 EndFunc
 
-Func ApplyConfig_SwitchAcc($TypeReadSave)	;	SwitchAcc - Demen
-	; <><><><> Bot / Profiles <><><><>
+Func ApplyConfig_SwitchAcc($TypeReadSave)
+	; <><><><> Switch Account - Demen <><><><>
 	Switch $TypeReadSave
 		Case "Read"
 			GUICtrlSetState($chkSwitchAcc, $ichkSwitchAcc = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)

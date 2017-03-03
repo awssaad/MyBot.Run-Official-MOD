@@ -4,7 +4,7 @@
 ; Syntax ........:
 ; Parameters ....: None
 ; Return values .: None
-; Author ........: Team Mod MBR
+; Author ........: Team Mod MBR (NguyenAnhHD, Demen)
 ; Modified ......:
 ; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2016
 ;                  MyBot is distributed under the terms of the GNU GPL
@@ -13,12 +13,12 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
-; Auto Hide - NguyenAnhHD
+; Auto Hide (NguyenAnhHD) - Added by NguyenAnhHD
 Func chkAutoHide()
 	GUICtrlSetState($g_hTxtAutohideDelay, GUICtrlRead($g_hChkAutoHide) = $GUI_CHECKED ? $GUI_ENABLE : $GUI_DISABLE)
 EndFunc   ;==>chkAutoHide
 
-; Classic Four Finger - NguyenAnhHD
+; Classic Four Finger (Demen) - Added by NguyenAnhHD
 Func cmbStandardDropSidesAB() ; avoid conflict between FourFinger and SmartAttack
 	If _GUICtrlComboBox_GetCurSel($g_hCmbStandardDropSidesAB) = 4 Then
 		GUICtrlSetState($g_hChkSmartAttackRedAreaAB, $GUI_UNCHECKED)
@@ -39,7 +39,7 @@ Func cmbStandardDropSidesDB() ; avoid conflict between FourFinger and SmartAttac
 	chkSmartAttackRedAreaDB()
 EndFunc   ;==>g_hCmbStandardDropSidesDB
 
-; CSV Deploy Speed - NguyenAnhHD
+; CSV Deploy Speed (Roro-Titi) - Added by NguyenAnhHD
 Func cmbCSVSpeed()
 
 	Switch _GUICtrlComboBox_GetCurSel($g_hCmbCSVSpeed[$g_iMatchMode])
@@ -61,9 +61,9 @@ Func cmbCSVSpeed()
 
 EndFunc   ;==>cmbCSVSpeed
 
-; Attack Now Button - NguyenAnhHD
+; Attack Now Button MR.ViPeR) - Added by NguyenAnhHD
 Func AttackNowLB()
-	Setlog("Begin Live Base Attack TEST")
+	SetLog("Begin Live Base Attack TEST")
 	$g_iMatchMode = $LB			; Select Live Base As Attack Type
 	cmbCSVSpeed()
 	$g_aiAttackAlgorithm[$LB] = 1			; Select Scripted Attack
@@ -88,11 +88,11 @@ Func AttackNowLB()
 
 	PrepareAttack($g_iMatchMode)			; lol I think it's not needed for Scripted attack, But i just Used this to be sure of my code
 	Attack()			; Fire xD
-	Setlog("End Live Base Attack TEST")
+	SetLog("End Live Base Attack TEST")
 EndFunc   ;==>AttackNowLB
 
 Func AttackNowDB()
-	Setlog("Begin Dead Base Attack TEST")
+	SetLog("Begin Dead Base Attack TEST")
 	$g_iMatchMode = $DB			; Select Dead Base As Attack Type
 	cmbCSVSpeed()
 	$g_aiAttackAlgorithm[$DB] = 1			; Select Scripted Attack
@@ -116,10 +116,53 @@ Func AttackNowDB()
 
 	PrepareAttack($g_iMatchMode)			; lol I think it's not needed for Scripted attack, But i just Used this to be sure of my code
 	Attack()			; Fire xD
-	Setlog("End Dead Base Attack TEST")
+	SetLog("End Dead Base Attack TEST")
 EndFunc   ;==>AttackNowLB
 
-; Switch Account - Demen
+; Switch Profiles (IceCube) - Added by NguyenAnhHD
+Func btnRecycle()
+	FileDelete($g_sProfileConfigPath)
+	saveConfig()
+	SetLog("Profile " & $g_sProfileCurrentName & " was recycled with success", $COLOR_GREEN)
+	SetLog("All unused settings were removed", $COLOR_GREEN)
+EndFunc   ;==>btnRecycle
+
+Func setupProfileComboBoxswitch()
+	; Clear the combo box current data in case profiles were deleted
+	GUICtrlSetData($g_hCmbGoldMaxProfile, "", "")
+	; Set the new data of available profiles
+	GUICtrlSetData($g_hCmbGoldMaxProfile, $profileString, "<No Profiles>")
+	; Clear the combo box current data in case profiles were deleted
+	GUICtrlSetData($g_hCmbGoldMinProfile, "", "")
+	; Set the new data of available profiles
+	GUICtrlSetData($g_hCmbGoldMinProfile, $profileString, "<No Profiles>")
+	; Clear the combo box current data in case profiles were deleted
+	GUICtrlSetData($g_hCmbElixirMaxProfile, "", "")
+	; Set the new data of available profiles
+	GUICtrlSetData($g_hCmbElixirMaxProfile, $profileString, "<No Profiles>")
+	; Clear the combo box current data in case profiles were deleted
+	GUICtrlSetData($g_hCmbElixirMinProfile, "", "")
+	; Set the new data of available profiles
+	GUICtrlSetData($g_hCmbElixirMinProfile, $profileString, "<No Profiles>")
+	; Clear the combo box current data in case profiles were deleted
+	GUICtrlSetData($g_hCmbDEMaxProfile, "", "")
+	; Set the new data of available profiles
+	GUICtrlSetData($g_hCmbDEMaxProfile, $profileString, "<No Profiles>")
+	; Clear the combo box current data in case profiles were deleted
+	GUICtrlSetData($g_hCmbDEMinProfile, "", "")
+	; Set the new data of available profiles
+	GUICtrlSetData($g_hCmbDEMinProfile, $profileString, "<No Profiles>")
+	; Clear the combo box current data in case profiles were deleted
+	GUICtrlSetData($g_hCmbTrophyMaxProfile, "", "")
+	; Set the new data of available profiles
+	GUICtrlSetData($g_hCmbTrophyMaxProfile, $profileString, "<No Profiles>")
+	; Clear the combo box current data in case profiles were deleted
+	GUICtrlSetData($g_hCmbTrophyMinProfile, "", "")
+	; Set the new data of available profiles
+	GUICtrlSetData($g_hCmbTrophyMinProfile, $profileString, "<No Profiles>")
+EndFunc   ;==>setupProfileComboBoxswitch
+
+; Switch Account (Demen) - Added by Demen
 Func btnUpdateProfile()
 
 	SaveConfig_SwitchAcc()
@@ -316,7 +359,7 @@ Func btnClearAccLocation()
 	SaveConfig_SwitchAcc()
 EndFunc
 
-; QuickTrainCombo (checkbox) - Demen
+; QuickTrainCombo (Demen) - Added by Demen
 Func chkQuickTrainCombo()
 	If GUICtrlRead($g_ahChkArmy[0]) = $GUI_UNCHECKED And GUICtrlRead($g_ahChkArmy[1]) = $GUI_UNCHECKED And GUICtrlRead($g_ahChkArmy[2]) = $GUI_UNCHECKED Then
 		GUICtrlSetState($g_ahChkArmy[0],$GUI_CHECKED)
@@ -326,7 +369,7 @@ Func chkQuickTrainCombo()
 	EndIf
 EndFunc	;==> QuickTrainCombo
 
-; SimpleTrain - Demen
+; SimpleTrain (Demen) - Added by Demen
 Func chkSimpleTrain()
 	If GUICtrlRead($chkSimpleTrain) = $GUI_CHECKED Then
 		_GUI_Value_STATE("ENABLE", $chkFillArcher & "#" & $chkFillEQ)

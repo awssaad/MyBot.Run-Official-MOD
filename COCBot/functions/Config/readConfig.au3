@@ -218,8 +218,10 @@ Func ReadRegularConfig()
 	; <><><> Attack Plan / Train Army / Options <><><>
 	ReadConfig_641_1()
 
-	; <><><> Team Mod's <><><>
-	ReadConfig_100()
+	; <><><> Team Mod's (NguyenAnhHD, Demen) <><><>
+	ReadConfig_MOD()
+    ; <><><><> Switch Account - Demen <><><><>
+	ReadConfig_SwitchAcc()
 
    ; <><><><> Attack Plan / Strategies <><><><>
    ; <<< nothing here >>>
@@ -232,7 +234,6 @@ Func ReadRegularConfig()
 
    ; <><><><> Bot / Profiles <><><><>
    ; <<< nothing here >>>
-	ReadConfig_SwitchAcc()	;	SwitchAcc - Demen
 
    ; <><><><> Bot / Stats <><><><>
    ; <<< nothing here >>>
@@ -1123,24 +1124,50 @@ Func ReadConfig_641_1()
 	IniReadS($g_iTrainAddRandomDelayMax, $g_sProfileConfigPath, "other", "txtAddDelayIdlePhaseTimeMax", $g_iTrainAddRandomDelayMax, "Int")
 EndFunc
 
-Func ReadConfig_100()
-	; <><><><> Team Mod's <><><><>
-	IniReadS($ichkAutoHide, $g_sProfileConfigPath, "general", "AutoHide", 0, "int") ; Auto Hide
+Func ReadConfig_MOD()
+	; <><><><> Team Mod's (NguyenAnhHD, Demen) <><><><>
+	; Auto Hide (NguyenAnhHD) - Added by NguyenAnhHD
+	IniReadS($ichkAutoHide, $g_sProfileConfigPath, "general", "AutoHide", 0, "int")
 	IniReadS($ichkAutoHideDelay, $g_sProfileConfigPath, "general", "AutoHideDelay", 10, "int")
-	IniReadS($ichkDBMeetCollOutside, $g_sProfileConfigPath, "search", "DBMeetCollOutside", 0, "int") ; Check Collector Outside
+
+	; Check Collector Outside (McSlither) - Added by NguyenAnhHD
+	IniReadS($ichkDBMeetCollOutside, $g_sProfileConfigPath, "search", "DBMeetCollOutside", 0, "int")
 	IniReadS($iDBMinCollOutsidePercent, $g_sProfileConfigPath, "search", "DBMinCollOutsidePercent", 50, "int")
-	$g_iCmbCSVSpeed[$DB] = Int(IniRead($g_sProfileConfigPath, "DeploymentSpeed", "DB", 2)); CSV Deploy Speed
+
+	; CSV Deploy Speed (Roro-Titi) - Added by NguyenAnhHD
+	$g_iCmbCSVSpeed[$DB] = Int(IniRead($g_sProfileConfigPath, "DeploymentSpeed", "DB", 2))
 	$g_iCmbCSVSpeed[$LB] = Int(IniRead($g_sProfileConfigPath, "DeploymentSpeed", "LB", 2))
 
-	;SimpleTrain - Demen
+	; Switch Profile (IceCube) - Added by NguyenAnhHD
+	IniReadS($ichkGoldSwitchMax, $g_sProfileConfigPath, "profiles", "chkGoldSwitchMax", 0, "int")
+	IniReadS($itxtMaxGoldAmount, $g_sProfileConfigPath, "profiles", "txtMaxGoldAmount", 6000000, "int")
+	IniReadS($ichkGoldSwitchMin, $g_sProfileConfigPath, "profiles", "chkGoldSwitchMin", 0, "int")
+	IniReadS($itxtMinGoldAmount, $g_sProfileConfigPath, "profiles", "txtMinGoldAmount", 500000, "int")
+
+	IniReadS($ichkElixirSwitchMax, $g_sProfileConfigPath, "profiles", "chkElixirSwitchMax", 0, "int")
+	IniReadS($itxtMaxElixirAmount, $g_sProfileConfigPath, "profiles", "txtMaxElixirAmount", 6000000, "int")
+	IniReadS($ichkElixirSwitchMin, $g_sProfileConfigPath, "profiles", "chkElixirSwitchMin", 0, "int")
+	IniReadS($itxtMinElixirAmount, $g_sProfileConfigPath, "profiles", "txtMinElixirAmount", 500000, "int")
+
+	IniReadS($ichkDESwitchMax, $g_sProfileConfigPath, "profiles", "chkDESwitchMax", 0, "int")
+	IniReadS($itxtMaxDEAmount, $g_sProfileConfigPath, "profiles", "txtMaxDEAmount", 200000, "int")
+	IniReadS($ichkDESwitchMin, $g_sProfileConfigPath, "profiles", "chkDESwitchMin", 0, "int")
+	IniReadS($itxtMinDEAmount, $g_sProfileConfigPath, "profiles", "txtMinDEAmount", 10000, "int")
+
+	IniReadS($ichkTrophySwitchMax, $g_sProfileConfigPath, "profiles", "chkTrophySwitchMax", 0, "int")
+	IniReadS($itxtMaxTrophyAmount, $g_sProfileConfigPath, "profiles", "txtMaxTrophyAmount", 3000, "int")
+	IniReadS($ichkTrophySwitchMin, $g_sProfileConfigPath, "profiles", "chkTrophySwitchMin", 0, "int")
+	IniReadS($itxtMinTrophyAmount, $g_sProfileConfigPath, "profiles", "txtMinTrophyAmount", 1000, "int")
+
+	; SimpleTrain (Demen) - Added by Demen
 	IniReadS($ichkSimpleTrain, $g_sProfileConfigPath, "troop", "SimpleTrain", 0, "int")
 	IniReadS($ichkFillArcher, $g_sProfileConfigPath, "troop", "ChkFillArcher", 0, "int")
 	IniReadS($iFillArcher, $g_sProfileConfigPath, "troop", "FillArcher", 0, "int")
 	IniReadS($ichkFillEQ, $g_sProfileConfigPath, "troop", "FillEQ", 0, "int")
 EndFunc
 
-Func ReadConfig_SwitchAcc()		;	SwitchAcc - Demen
-   ; <><><><> Bot / Profiles <><><><>
+Func ReadConfig_SwitchAcc()
+   ; <><><><> Switch Account - Demen <><><><>
 	IniReadS($ichkSwitchAcc, $Profile, "Switch Account", "Enable", "0", "int")
 	IniReadS($icmbTotalCoCAcc, $Profile, "Switch Account", "Total Coc Account", "-1", "int")
 	IniReadS($ichkSmartSwitch, $Profile, "Switch Account", "Smart Switch", "0", "int")

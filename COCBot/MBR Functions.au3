@@ -275,12 +275,13 @@
 #include "functions\Other\Api.au3"
 #include "functions\Other\ApiClient.au3"
 
-; Team Mod's
-#include "functions\Mod's\AutoHide.au3" ; Auto Hide - Added By NguyenAnhHD
-#include "functions\Mod's\AreCollectorsOutside.au3" ; Check Collector Outside - Added By NguyenAnhHD
-#include "functions\Mod's\SwitchAcc.au3" ; Switch Account - Added By Demen
-#include "functions\Mod's\UpdateProfileStats.au3" ; Switch Account - Added By Demen
-#include "functions\Mod's\SimpleTrain.au3"		; SimpleTrain - Added By Demen
+; Team Mod's (NguyenAnhHD, Demen)
+#include "functions\Mod's\AutoHide.au3"
+#include "functions\Mod's\AreCollectorsOutside.au3"
+#include "functions\Mod's\ProfileSwitch.au3"
+#include "functions\Mod's\SwitchAcc.au3"
+#include "functions\Mod's\UpdateProfileStats.au3"
+#include "functions\Mod's\SimpleTrain.au3"
 
 
 ; OLD CODE

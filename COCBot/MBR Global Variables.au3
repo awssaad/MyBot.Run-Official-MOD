@@ -1315,36 +1315,4 @@ Global Const $g_aEQSpellDmg[4] = [0.14, 0.17, 0.21, 0.25]
 ; Global Const $drillLevelHold[6] = [120, 225, 405, 630, 960, 1350] ; Total Amount of DE available from Drill at each level (1-6)
 ; Global Const $drillLevelSteal[6] = [59, 102, 172, 251, 343, 479] ; Amount of DE available to steal from Drills at each level (1-6)
 
-; Check Collector Outside - Added by NguyenAnhHD
-#region Check Collectors Outside
-; Collectors outside filter
-Global $ichkDBMeetCollOutside, $iDBMinCollOutsidePercent, $iCollOutsidePercent ; check later if $iCollOutsidePercent obsolete
-
-; constants
-Global Const $THEllipseWidth = 200, $THEllipseHeigth = 150, $CollectorsEllipseWidth = 130, $CollectorsEllipseHeigth = 97.5
-Global Const $centerX = 430, $centerY = 335 ; check later if $THEllipseWidth, $THEllipseHeigth obsolete
-Global $hBitmapFirst
-#endregion
-
-; CSV Speed
-Global $g_hCmbCSVSpeed[2] = [$LB, $DB]
-Global $g_iCmbCSVSpeed[2] = [$LB, $DB]
-Global $g_hDivider
-
-;=========================== Demen's new variables =================
-; SwitchAcc
-Global $profile = $g_sProfilePath & "\Profile.ini"
-Global $ichkSwitchAcc = 0, $icmbTotalCoCAcc, $nTotalCoCAcc = 8, $ichkSmartSwitch, $ichkCloseTraining
-Global $nTotalProfile = 1, $nCurProfile = 1, $nNextProfile
-Global $ProfileList
-Global $aProfileType[8]		; Type of the all Profiles, 1 = active, 2 = donate, 3 = idle
-Global $aMatchProfileAcc[8]	; Accounts match with All Profiles
-Global $aDonateProfile, $aActiveProfile
-Global $iAttackedCountSwitch, $ActiveSwitchCounter = 0, $DonateSwitchCounter = 0
-Global $bReMatchAcc = False
-Global $aTimerStart[8], $aTimerEnd[8]
-Global $aRemainTrainTime[8], $aUpdateRemainTrainTime[8], $nMinRemainTrain
-Global $aLocateAccConfig[8], $aAccPosY[8]
-
-; SimpleTrain
-Global $ichkSimpleTrain, $ichkFillArcher, $iFillArcher, $ichkFillEQ
+#include "functions\Mod's\Misc\MBR Global Variables.au3"
