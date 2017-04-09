@@ -18,9 +18,9 @@ Func CoCStats($starsearned)
 
 	; ==================== Begin CoCStats Mod ====================
 	SetLog("Sending data to CoCStats.com...", $COLOR_BLUE)
-	Local $sPD = 'apikey=' & $MyApiKey & '&ctrophy=' & $iTrophyCurrent & '&cgold=' & $iGoldCurrent & '&celix=' & $iElixirCurrent & '&cdelix=' & $iDarkCurrent & '&search=' & $SearchCount & _
-	'&gold=' & $g_iStatsLastAttack[$CurrentAccount][$eLootGold] & '&elix=' & $g_iStatsLastAttack[$CurrentAccount][$eLootElixir] & '&delix=' & $g_iStatsLastAttack[$CurrentAccount][$eLootDarkElixir] & '&trophy=' & $g_iStatsLastAttack[$CurrentAccount][$eLootTrophy] & _
-	'&bgold=' & $g_iStatsBonusLast[$CurrentAccount][$eLootGold] & '&belix=' & $g_iStatsBonusLast[$CurrentAccount][$eLootElixir] & '&bdelix=' & $g_iStatsBonusLast[$CurrentAccount][$eLootDarkElixir] & '&stars=' & $starsearned & '&thlevel=' & $iTownHallLevel & '&log='
+	Local $sPD = 'apikey=' & $MyApiKey & '&ctrophy=' & $g_aiCurrentLoot[$eLootTrophy] & '&cgold=' & $g_aiCurrentLoot[$eLootGold] & '&celix=' & $g_aiCurrentLoot[$eLootElixir] & '&cdelix=' & $g_aiCurrentLoot[$eLootDarkElixir] & '&search=' & $g_iSearchCount & _
+	'&gold=' & $g_iStatsLastAttack[$eLootGold] & '&elix=' & $g_iStatsLastAttack[$eLootElixir] & '&delix=' & $g_iStatsLastAttack[$eLootDarkElixir] & '&trophy=' & $g_iStatsLastAttack[$eLootTrophy] & _
+	'&bgold=' & $g_iStatsBonusLast[$eLootGold] & '&belix=' & $g_iStatsBonusLast[$eLootElixir] & '&bdelix=' & $g_iStatsBonusLast[$eLootDarkElixir] & '&stars=' & $starsearned & '&thlevel=' & $g_iTownHallLevel & '&log='
 
 	Local  $tempLogText = _GUICtrlRichEdit_GetText($g_hTxtLog, True)
 	For $i = 1 To StringLen($tempLogText)

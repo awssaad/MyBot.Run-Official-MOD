@@ -86,17 +86,16 @@ Func ReadConfig_MOD()
 	IniReadS($iFillArcher, $g_sProfileConfigPath, "SimpleTrain", "FillArcher", 5, "int")
 	IniReadS($ichkFillEQ, $g_sProfileConfigPath, "SimpleTrain", "FillEQ", 0, "int")
 
-#cs
-	; Notify Bot Speep (Kychera) - Added By NguyenAnhHD
-	IniReadS($g_bNotifyAlertBOTSleep, $g_sProfileConfigPath, "notify", "AlertPBSleep", False, "Bool")
-
-	; ClanHop (Rhinoceros) - Added by NguyenAnhHD
-	IniReadS($ichkClanHop, $g_sProfileConfigPath, "Others", "ClanHop", 0, "int")
-
 	; CoC Stats - Added by NguyenAnhHD
 	IniReadS($ichkCoCStats, $g_sProfileConfigPath, "Stats", "chkCoCStats", 0, "int")
 	IniReadS($MyApiKey, $g_sProfileConfigPath, "Stats", "txtAPIKey", "")
-#ce
+
+	; Notify Bot Speep (Kychera) - Added By NguyenAnhHD
+;~	IniReadS($g_bNotifyAlertBOTSleep, $g_sProfileConfigPath, "notify", "AlertPBSleep", False, "Bool")
+
+	; ClanHop (Rhinoceros) - Added by NguyenAnhHD
+;~	IniReadS($ichkClanHop, $g_sProfileConfigPath, "Others", "ClanHop", 0, "int")
+
 EndFunc
 
 ; SwitchAcc (Demen) - Added By Demen

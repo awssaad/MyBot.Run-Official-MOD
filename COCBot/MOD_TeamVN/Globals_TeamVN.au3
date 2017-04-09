@@ -100,16 +100,14 @@ Global $aRemainTrainTime[8], $aUpdateRemainTrainTime[8], $nMinRemainTrain
 Global $aLocateAccConfig[8], $aAccPosY[8]
 
 ; SimpleTrain (Demen) - Added By Demen
-Global $g_bQuickTrainArmy[3] = [True, False, False] ; QuickTrainCombo (Checkbox)
 Global $ichkSimpleTrain, $ichkPreciseTroops, $ichkFillArcher, $iFillArcher, $ichkFillEQ
 Global $bWaitForCCTroopSpell = False	; ForceSwitch while waiting for CC troops - Demen
 Global Enum $g_eFull, $g_eRemained, $g_eNoTrain
 Global $g_abRCheckWrongTroops[2] = [False, False] ; Result of checking wrong troops & spells
-#cs
+
 ; CoCStats - Added by NguyenAnhHD
 Global $ichkCoCStats = 0
 Global $MyApiKey = ""
 
 ; ClanHop (Rhinoceros) - Added by NguyenAnhHD
-Global $ichkClanHop
-#ce
+;Global $ichkClanHop

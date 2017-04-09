@@ -212,6 +212,8 @@ Func AttackReport()
 		EndIf
 	EndIf
 
+	CoCStats($starsearned)
+
 	If $g_iFirstAttack = 0 Then $g_iFirstAttack = 1
 	$g_iStatsTotalGain[$eLootGold] += $g_iStatsLastAttack[$eLootGold] + $g_iStatsBonusLast[$eLootGold]
 	$g_aiTotalGoldGain[$g_iMatchMode] += $g_iStatsLastAttack[$eLootGold] + $g_iStatsBonusLast[$eLootGold]

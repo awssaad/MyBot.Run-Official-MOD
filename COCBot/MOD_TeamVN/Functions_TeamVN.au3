@@ -60,7 +60,7 @@
 #include "functions\Mod's\SimpleTrain.au3"
 
 ; CoCStats - Added by NguyenAnhHD
-;#include "functions\Mod's\CoCStats.com.au3"
+#include "functions\Mod's\CoCStats.com.au3"
 
 ; ClanHop (Rhinoceros) - Added by NguyenAnhHD
 ;#include "functions\Mod's\ClanHop.au3"

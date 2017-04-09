@@ -217,10 +217,10 @@ Func btnBottom()
 EndFunc   ;==>btnBottom
 
 ; CoC Stats - Added by NguyenAnhHD
-;Func chkCoCStats()
-;	GUICtrlSetState($g_hTxtAPIKey, GUICtrlRead($g_hChkCoCStats) = $GUI_CHECKED ? $GUI_ENABLE : $GUI_DISABLE)
-;	IniWrite($g_sProfileConfigPath, "Stats", "chkCoCStats", $ichkCoCStats)
-;EndFunc   ;==>chkCoCStats
+Func chkCoCStats()
+	GUICtrlSetState($g_hTxtAPIKey, GUICtrlRead($g_hChkCoCStats) = $GUI_CHECKED ? $GUI_ENABLE : $GUI_DISABLE)
+	IniWrite($g_sProfileConfigPath, "Stats", "chkCoCStats", $ichkCoCStats)
+EndFunc   ;==>chkCoCStats
 
 ; QuickTrainCombo (Demen) - Added By Demen
 Func chkQuickTrainCombo()

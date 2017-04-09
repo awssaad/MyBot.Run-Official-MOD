@@ -17,6 +17,9 @@
 Global $g_hGUI_MOD = 0
 Global $g_hGUI_MOD_TAB = 0, $g_hGUI_MOD_TAB_ITEM1 = 0 , $g_hGUI_MOD_TAB_ITEM2 = 0 ,$g_hGUI_MOD_TAB_ITEM3 = 0, $g_hGUI_MOD_TAB_ITEM4 = 0, $g_hGUI_MOD_TAB_ITEM5 = 0
 
+; CoC Stats
+Global $g_hChkCoCStats = 0, $g_hTxtAPIKey = 0
+
 #include "MOD GUI Design - Profiles.au3"
 #include "MOD GUI Design - ProfileStats.au3"
 
@@ -40,8 +43,31 @@ Func CreateMODTab()
 EndFunc   ;==>CreateMODTab
 
 Func OptionsGUI()
-	Local $x = 5, $y = 30
 
-	Local $Group1 = GUICtrlCreateGroup(".............", $x, $y, 440, 105)
+	Local $sTxtTip = ""
+	Local $x = 25, $y = 30
+	Local $Group1 = GUICtrlCreateGroup("", $x - 20, $y, 440, 35)
+
+	   $y += 10
+	   $x += -12
+		   $g_hChkCoCStats = GUICtrlCreateCheckbox(GetTranslated(657,1, "CoCStats Activate"), $x, $y, -1, -1)
+		   $sTxtTip = GetTranslated(657,2, "Activate sending raid results to CoCStats.com")
+		   GUICtrlSetTip(-1, $sTxtTip)
+		   GUICtrlSetOnEvent(-1, "chkCoCStats")
+
+	   $x += 135
+		   GUICtrlCreateLabel(GetTranslated(657,3, "API Key:"), $x - 18, $y + 4, -1, 21, $SS_LEFT)
+		   $g_hTxtAPIKey = GUICtrlCreateInput("", $x + 30, $y, 250, 20, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER))
+		   $sTxtTip = GetTranslated(657,4, "Join in CoCStats.com and input API Key here")
+		   GUICtrlSetTip(-1, $sTxtTip)
+
+	GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+	$y += 70
+	$x = 5
+	Local $Group2 = GUICtrlCreateGroup("Not thought out of additional functions....!!", $x, $y, 440, 200)
+	Local $txtHelp = "Wait For The Next Version......!!!!!" & _
+		 @CRLF & "Coming Soon.................!! :P "
+		GUICtrlCreateLabel($txtHelp, $x + 30, $y + 30, 430, 125)
 
 EndFunc   ;==>TreasuryGUI

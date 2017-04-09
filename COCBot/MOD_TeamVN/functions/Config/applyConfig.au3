@@ -99,19 +99,18 @@ Func ApplyConfig_MOD($TypeReadSave)
 			GUICtrlSetState($g_hchkFillEQ, $ichkFillEQ = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			chkSimpleTrain()
 
-#cs
-			; Notify Bot Speep (Kychera) - Added By NguyenAnhHD
-			GUICtrlSetState($g_hChkNotifyBOTSleep, $g_bNotifyAlertBOTSleep ? $GUI_CHECKED : $GUI_UNCHECKED)
-
-
-			; ClanHop (Rhinoceros) - Added by NguyenAnhHD
-			GUICtrlSetState($g_hChkClanHop, $ichkClanHop = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-
 			; CoC Stats - Added by NguyenAnhHD
 			GUICtrlSetState($g_hChkCoCStats, $ichkCoCStats = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetData($g_hTxtAPIKey, $MyApiKey)
 			chkCoCStats()
-#ce
+
+			; Notify Bot Speep (Kychera) - Added By NguyenAnhHD
+;~			GUICtrlSetState($g_hChkNotifyBOTSleep, $g_bNotifyAlertBOTSleep ? $GUI_CHECKED : $GUI_UNCHECKED)
+
+
+			; ClanHop (Rhinoceros) - Added by NguyenAnhHD
+;~			GUICtrlSetState($g_hChkClanHop, $ichkClanHop = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
+
 		Case "Save"
 			; Auto Hide (NguyenAnhHD) - Added by NguyenAnhHD
 			$ichkAutoHide = GUICtrlRead($g_hChkAutohide) = $GUI_CHECKED ? 1 : 0
@@ -185,17 +184,17 @@ Func ApplyConfig_MOD($TypeReadSave)
 			$iFillArcher = GUICtrlRead($g_htxtFillArcher)
 			$ichkFillEQ = GUICtrlRead($g_hchkFillEQ) = $GUI_CHECKED ? 1 : 0
 
-#cs
-			; Notify Bot Speep (Kychera) - Added By NguyenAnhHD
-			$g_bNotifyAlertBOTSleep = (GUICtrlRead($g_hChkNotifyBOTSleep) = $GUI_CHECKED)
-
-			; ClanHop (Rhinoceros) - Added by NguyenAnhHD
-			$ichkClanHop = GUICtrlRead($g_hChkClanHop) = $GUI_CHECKED ? 1 : 0
-
 			; CoC Stats - Added by NguyenAnhHD
 			$ichkCoCStats = GUICtrlRead($g_hChkCoCStats) = $GUI_CHECKED ? 1 : 0
 			$MyApiKey = GUICtrlRead($g_hTxtAPIKey)
-#ce
+
+			; Notify Bot Speep (Kychera) - Added By NguyenAnhHD
+;~			$g_bNotifyAlertBOTSleep = (GUICtrlRead($g_hChkNotifyBOTSleep) = $GUI_CHECKED)
+
+			; ClanHop (Rhinoceros) - Added by NguyenAnhHD
+;~			$ichkClanHop = GUICtrlRead($g_hChkClanHop) = $GUI_CHECKED ? 1 : 0
+
+
 	EndSwitch
 EndFunc
 

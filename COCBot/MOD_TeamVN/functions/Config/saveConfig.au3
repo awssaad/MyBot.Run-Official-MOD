@@ -86,17 +86,16 @@ Func SaveConfig_MOD()
 	_Ini_Add("SimpleTrain", "FillArcher", $iFillArcher)
 	_Ini_Add("SimpleTrain", "FillEQ", $ichkFillEQ)
 
-#cs
+	; CoC Stats - Added by NguyenAnhHD
+	_Ini_Add("Stats", "chkCoCStats", $ichkCoCStats ? 1 : 0)
+	_Ini_Add("Stats", "txtAPIKey", $MyApiKey)
+
 	; Notify Bot Speep (Kychera) - Added By NguyenAnhHD
-	IniWriteS($g_sProfileConfigPath, "notify", "AlertPBSleep", $g_bNotifyAlertBOTSleep ? 1 : 0)
+;~	_Ini_Add("notify", "AlertPBSleep", $g_bNotifyAlertBOTSleep ? 1 : 0)
 
 	; ClanHop (Rhinoceros) - Added by NguyenAnhHD
-	IniWriteS($g_sProfileConfigPath, "Others", "ClanHop", $ichkClanHop ? 1 : 0)
+;~	_Ini_Add("Others", "ClanHop", $ichkClanHop ? 1 : 0)
 
-	; CoC Stats - Added by NguyenAnhHD
-	IniWriteS($g_sProfileConfigPath, "Stats", "chkCoCStats", $ichkCoCStats ? 1 : 0)
-	IniWriteS($g_sProfileConfigPath, "Stats", "txtAPIKey", $MyApiKey)
-#ce
 EndFunc
 
 ; SwitchAcc (Demen) - Added By Demen
