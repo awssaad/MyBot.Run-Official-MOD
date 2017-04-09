@@ -91,12 +91,6 @@ Func ApplyConfig_MOD($TypeReadSave)
 			; Upgrade Management (MMHK) - Added by NguyenAnhHD
 			GUICtrlSetState($g_hChkUpdateNewUpgradesOnly, $g_ibUpdateNewUpgradesOnly ? $GUI_CHECKED : $GUI_UNCHECKED)
 
-			; QuickTrainCombo (Demen) - Added By Demen
-			GUICtrlSetState($g_hChkUseQuickTrain, $g_bQuickTrainEnable ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_ahChkArmy[0], $g_bQuickTrainArmy[0] ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_ahChkArmy[1], $g_bQuickTrainArmy[1] ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetState($g_ahChkArmy[2], $g_bQuickTrainArmy[2] ? $GUI_CHECKED : $GUI_UNCHECKED)
-
 			; SimpleTrain (Demen) - Added By Demen
 			GUICtrlSetState($g_hchkSimpleTrain, $ichkSimpleTrain = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			GUICtrlSetState($g_hchkPreciseTroops, $ichkPreciseTroops = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
@@ -104,35 +98,6 @@ Func ApplyConfig_MOD($TypeReadSave)
 			GUICtrlSetData($g_htxtFillArcher, $iFillArcher)
 			GUICtrlSetState($g_hchkFillEQ, $ichkFillEQ = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
 			chkSimpleTrain()
-
-			; SwitchAcc (Demen) - Added By Demen
-			GUICtrlSetState($chkSwitchAcc, $ichkSwitchAcc = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			chkSwitchAcc()
-			If $ichkSmartSwitch = 1 Then
-				GUICtrlSetState($radSmartSwitch, $GUI_CHECKED)
-			Else
-				GUICtrlSetState($radNormalSwitch, $GUI_CHECKED)
-			EndIf
-			If GUICtrlRead($chkSwitchAcc) = $GUI_CHECKED Then radNormalSwitch()
-			_GUICtrlComboBox_SetCurSel($cmbTotalAccount, $icmbTotalCoCAcc - 1)
-			GUICtrlSetState($g_hChkForceSwitch, $ichkForceSwitch = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			GUICtrlSetData($g_txtForceSwitch, $iForceSwitch)
-			If GUICtrlRead($chkSwitchAcc) = $GUI_CHECKED Then chkForceSwitch()
-			GUICtrlSetState($g_hChkForceStayDonate, $ichkForceStayDonate = 1 ? $GUI_CHECKED : $GUI_UNCHECKED)
-			If $ichkCloseTraining >= 1 Then
-				GUICtrlSetState($chkUseTrainingClose, $GUI_CHECKED)
-				If $ichkCloseTraining = 1 Then
-					GUICtrlSetState($radCloseCoC, $GUI_CHECKED)
-				Else
-					GUICtrlSetState($radCloseAndroid, $GUI_CHECKED)
-				EndIf
-			Else
-				GUICtrlSetState($chkUseTrainingClose, $GUI_UNCHECKED)
-			EndIf
-			For $i = 0 To 7
-				_GUICtrlComboBox_SetCurSel($cmbAccountNo[$i], $aMatchProfileAcc[$i] - 1)
-				_GUICtrlComboBox_SetCurSel($cmbProfileType[$i], $aProfileType[$i] - 1)
-			Next
 
 #cs
 			; Notify Bot Speep (Kychera) - Added By NguyenAnhHD
@@ -212,12 +177,6 @@ Func ApplyConfig_MOD($TypeReadSave)
 
 			; Upgrade Management (MMHK) - Added by NguyenAnhHD
 			$g_ibUpdateNewUpgradesOnly = (GUICtrlRead($g_hChkUpdateNewUpgradesOnly) = $GUI_CHECKED)
-
-			; QuickTrainCombo (Demen) - Added By Demen
-			$g_bQuickTrainEnable = (GUICtrlRead($g_hChkUseQuickTrain) = $GUI_CHECKED)
-			$g_bQuickTrainArmy[0] = (GUICtrlRead($g_ahChkArmy[0]) = $GUI_CHECKED)
-			$g_bQuickTrainArmy[1] = (GUICtrlRead($g_ahChkArmy[1]) = $GUI_CHECKED)
-			$g_bQuickTrainArmy[2] = (GUICtrlRead($g_ahChkArmy[2]) = $GUI_CHECKED)
 
 			; SimpleTrain (Demen) - Added by Demen
 			$ichkSimpleTrain = GUICtrlRead($g_hchkSimpleTrain) = $GUI_CHECKED ? 1 : 0

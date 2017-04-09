@@ -620,31 +620,31 @@ Func CreateTroopsSpellsSubTab()
 ;========== Adding GUI for SimpleTrain - Demen ==============
 	$x = 10
 	$y = 363
-	GUICtrlCreateGroup("Simple Train (do not empty barracks)", $x - 5, $y, $g_iSizeWGrpTab3, 38)
+	GUICtrlCreateGroup(GetTranslated(621, 300, "Simple Train (do not empty barracks)"), $x - 5, $y, $g_iSizeWGrpTab3, 38)
 		$x += 7
 		$y += 16
-			$g_hchkSimpleTrain = GUICtrlCreateCheckbox("Always train queue", $x, $y, -1, 15)
+			$g_hchkSimpleTrain = GUICtrlCreateCheckbox(GetTranslated(621, 301, "Always train queue"), $x, $y, -1, 15)
 				GUICtrlSetOnEvent(-1, "chkSimpleTrain")
-				_GUICtrlSetTip(-1, 	"Train 2 sets of army to make full camp & full queue" _
-									& @CRLF & "Only delete queued troops or spells if the queue is not full" _
-									& @CRLF & "Not delete training troops up to full camp capacity")
+				_GUICtrlSetTip(-1, 	GetTranslated(621, 302, "Train 2 sets of army to make full camp & full queue") _
+									& @CRLF & GetTranslated(621, 303, "Only delete queued troops or spells if the queue is not full") _
+									& @CRLF & GetTranslated(621, 304, "Not delete training troops up to full camp capacity"))
 		$x += 130
-			$g_hchkPreciseTroops = GUICtrlCreateCheckbox("Precise troops", $x, $y, -1, 15)
+			$g_hchkPreciseTroops = GUICtrlCreateCheckbox(GetTranslated(621, 305, "Precise troops"), $x, $y, -1, 15)
 				GUICtrlSetOnEvent(-1, "chkPreciseTroops")
-				_GUICtrlSetTip(-1, 	"Check precision of troops & spells before training." _
-									& @CRLF & "Will remove wrong troops or spells if any")
+				_GUICtrlSetTip(-1, 	GetTranslated(621, 306, "Check precision of troops & spells before training.") _
+									& @CRLF & GetTranslated(621, 307, "Will remove wrong troops or spells if any"))
 		$x += 103
-			$g_hchkFillArcher = GUICtrlCreateCheckbox("Fill Archer:", $x, $y, -1, 15)
+			$g_hchkFillArcher = GUICtrlCreateCheckbox(GetTranslated(621, 308, "Fill Archer:"), $x, $y, -1, 15)
 				GUICtrlSetState(-1, $GUI_DISABLE)
 				GUICtrlSetOnEvent(-1, "chkFillArcher")
-				_GUICtrlSetTip(-1, "Train some archers to top-up the camp or queue if it is nearly full")
+				_GUICtrlSetTip(-1, GetTranslated(621, 309, "Train some archers to top-up the camp or queue if it is nearly full"))
 			$g_htxtFillArcher = GUICtrlCreateInput("5", $x + 70, $y-1, 20, 16, BitOR($GUI_SS_DEFAULT_INPUT, $ES_CENTER, $ES_NUMBER))
 				GUICtrlSetState(-1, $GUI_DISABLE)
 				GUICtrlSetLimit(-1, 2)
 		$x += 110
-			$g_hchkFillEQ = GUICtrlCreateCheckbox("Fill 1 EQ", $x, $y, -1, 15)
+			$g_hchkFillEQ = GUICtrlCreateCheckbox(GetTranslated(621, 310, "Fill 1 EQ"), $x, $y, -1, 15)
 				GUICtrlSetState(-1, $GUI_DISABLE)
-				_GUICtrlSetTip(-1, "Brew 1 EarthQuake Spell to top-up the spell camp or queue")
+				_GUICtrlSetTip(-1, GetTranslated(621, 311, "Brew 1 EarthQuake Spell to top-up the spell camp or queue"))
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
 ;========== Adding GUI for SimpleTrain - Demen ==============
 
