@@ -79,14 +79,20 @@ Func SaveConfig_MOD()
 	; Upgrade Management (MMHK) - Added by NguyenAnhHD
 	_Ini_Add("upgrade", "UpdateNewUpgradesOnly", $g_ibUpdateNewUpgradesOnly ? 1 : 0)
 
-#cs
-	; SimpleTrain (Demen) - Added by Demen
-	IniWriteS($g_sProfileConfigPath, "SimpleTrain", "Enable", $ichkSimpleTrain)
-	IniWriteS($g_sProfileConfigPath, "SimpleTrain", "PreciseTroops", $ichkPreciseTroops)
-	IniWriteS($g_sProfileConfigPath, "SimpleTrain", "ChkFillArcher", $ichkFillArcher)
-	IniWriteS($g_sProfileConfigPath, "SimpleTrain", "FillArcher", $iFillArcher)
-	IniWriteS($g_sProfileConfigPath, "SimpleTrain", "FillEQ", $ichkFillEQ)
+	; QuickTrainCombo (Demen) - Added By Demen
+	_Ini_Add("other", "ChkUseQTrain", $g_bQuickTrainEnable ? 1 : 0)
+	_Ini_Add("troop", "QuickTrainArmy1", $g_bQuickTrainArmy[0] ? 1 : 0)
+	_Ini_Add("troop", "QuickTrainArmy2", $g_bQuickTrainArmy[1] ? 1 : 0)
+	_Ini_Add("troop", "QuickTrainArmy3", $g_bQuickTrainArmy[2] ? 1 : 0)
 
+	; SimpleTrain (Demen) - Added By Demen
+	_Ini_Add("SimpleTrain", "Enable", $ichkSimpleTrain)
+	_Ini_Add("SimpleTrain", "PreciseTroops", $ichkPreciseTroops)
+	_Ini_Add("SimpleTrain", "ChkFillArcher", $ichkFillArcher)
+	_Ini_Add("SimpleTrain", "FillArcher", $iFillArcher)
+	_Ini_Add("SimpleTrain", "FillEQ", $ichkFillEQ)
+
+#cs
 	; Notify Bot Speep (Kychera) - Added By NguyenAnhHD
 	IniWriteS($g_sProfileConfigPath, "notify", "AlertPBSleep", $g_bNotifyAlertBOTSleep ? 1 : 0)
 
@@ -98,23 +104,21 @@ Func SaveConfig_MOD()
 	IniWriteS($g_sProfileConfigPath, "Stats", "txtAPIKey", $MyApiKey)
 #ce
 EndFunc
-#cs
-Func SaveConfig_SwitchAcc($SwitchAcc_Style = False)
-	; <><><> SwitchAcc_Demen_Style <><><>
-	ApplyConfig_SwitchAcc("Save", $SwitchAcc_Style)
-	If $SwitchAcc_Style = True Then IniWriteS($profile, "SwitchAcc_Demen_Style", "SwitchType", $iSwitchAccStyle)	; 1 = DocOc Style, 2 = Demen Style
 
-	IniWriteS($profile, "SwitchAcc_Demen_Style", "Enable", $ichkSwitchAcc ? 1 : 0)
-	IniWriteS($profile, "SwitchAcc_Demen_Style", "Pre-train", $ichkTrain ? 1 : 0)
-	IniWriteS($profile, "SwitchAcc_Demen_Style", "Total Coc Account", $icmbTotalCoCAcc)		; 1 = 1 Acc, 2 = 2 Acc, etc.
-	IniWriteS($profile, "SwitchAcc_Demen_Style", "Smart Switch", $ichkSmartSwitch ? 1 : 0)
-	IniWriteS($profile, "SwitchAcc_Demen_Style", "Force Switch", $ichkForceSwitch ? 1 : 0)
-	IniWriteS($profile, "SwitchAcc_Demen_Style", "Force Switch Search", $iForceSwitch)
-	IniWriteS($profile, "SwitchAcc_Demen_Style", "Force Stay Donate", $ichkForceStayDonate? 1 : 0)
-	IniWriteS($profile, "SwitchAcc_Demen_Style", "Sleep Combo", $ichkCloseTraining)			; 0 = No Sleep, 1 = Close CoC, 2 = Close Android
-	For $i = 1 to 8
-		IniWriteS($profile, "SwitchAcc_Demen_Style", "MatchProfileAcc." & $i, _GUICtrlCombobox_GetCurSel($cmbAccountNo[$i-1])+1)		; 1 = Acc 1, 2 = Acc 2, etc.
-		IniWriteS($profile, "SwitchAcc_Demen_Style", "ProfileType." & $i, _GUICtrlCombobox_GetCurSel($cmbProfileType[$i-1])+1)			; 1 = Active, 2 = Donate, 3 = Idle
+; SwitchAcc (Demen) - Added By Demen
+Func SaveConfig_SwitchAcc()
+	ApplyConfig_SwitchAcc("Save")
+
+	IniWriteS($profile, "SwitchAcc", "Enable", $ichkSwitchAcc ? 1 : 0)
+	IniWriteS($profile, "SwitchAcc", "Pre-train", $ichkTrain ? 1 : 0)
+	IniWriteS($profile, "SwitchAcc", "Total Coc Account", $icmbTotalCoCAcc) ; 1 = 1 Acc, 2 = 2 Acc, etc.
+	IniWriteS($profile, "SwitchAcc", "Smart Switch", $ichkSmartSwitch ? 1 : 0)
+	IniWriteS($profile, "SwitchAcc", "Force Switch", $ichkForceSwitch ? 1 : 0)
+	IniWriteS($profile, "SwitchAcc", "Force Switch Search", $iForceSwitch)
+	IniWriteS($profile, "SwitchAcc", "Force Stay Donate", $ichkForceStayDonate ? 1 : 0)
+	IniWriteS($profile, "SwitchAcc", "Sleep Combo", $ichkCloseTraining) ; 0 = No Sleep, 1 = Close CoC, 2 = Close Android
+	For $i = 1 To 8
+		IniWriteS($profile, "SwitchAcc", "MatchProfileAcc." & $i, _GUICtrlComboBox_GetCurSel($cmbAccountNo[$i - 1]) + 1) ; 1 = Acc 1, 2 = Acc 2, etc.
+		IniWriteS($profile, "SwitchAcc", "ProfileType." & $i, _GUICtrlComboBox_GetCurSel($cmbProfileType[$i - 1]) + 1) ; 1 = Active, 2 = Donate, 3 = Idle
 	Next
-EndFunc
-#ce
+EndFunc   ;==>SaveConfig_SwitchAcc

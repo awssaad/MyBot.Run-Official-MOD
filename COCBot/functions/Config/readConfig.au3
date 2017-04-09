@@ -201,7 +201,7 @@ Func ReadRegularConfig()
 	ReadConfig_600_35()
 	; <><><> Attack Plan / Train Army / Troops/Spells <><><>
 	; Quick train
-	ReadConfig_600_52_1()
+;~	ReadConfig_600_52_1()
 	; troop/spell levels and counts
 	ReadConfig_600_52_2()
 	; <><><> Attack Plan / Train Army / Train Order <><><>
@@ -213,6 +213,7 @@ Func ReadRegularConfig()
 
 	; TeamVN MOD (NguyenAnhHD, Demen)
 	ReadConfig_MOD()
+	ReadConfig_SwitchAcc()
 
 	; <><><><> Attack Plan / Strategies <><><><>
 	; <<< nothing here >>>
@@ -1046,7 +1047,7 @@ Func ReadConfig_600_35()
 	$g_iAutoResumeTime = Int(IniRead($g_sProfileConfigPath, "other", "AutoResumeTime", 5))
 	$g_bForceClanCastleDetection = (IniRead($g_sProfileConfigPath, "other", "ChkFixClanCastle", "0") = "1")
 EndFunc   ;==>ReadConfig_600_35
-
+#cs
 Func ReadConfig_600_52_1()
 	; <><><><> Attack Plan / Train Army / Troops/Spells <><><><>
 	$g_bQuickTrainEnable = (IniRead($g_sProfileConfigPath, "other", "ChkUseQTrain", "0") = "1")
@@ -1065,7 +1066,7 @@ Func ReadConfig_600_52_1()
 		Next
 	EndIf
 EndFunc   ;==>ReadConfig_600_52_1
-
+#ce
 Func ReadConfig_600_52_2()
 	For $T = 0 To $eTroopCount - 1
 		Local $tempTroopCount, $tempTroopLevel

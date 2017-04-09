@@ -1369,6 +1369,8 @@ EndFunc   ;==>ControlRedraw
 Func SetTime($bForceUpdate = False)
 	If $g_hTimerSinceStarted = 0 Then Return ; GIGO, no setTime when timer hasn't started yet
 	Local $day = 0, $hour = 0, $min = 0, $sec = 0
+	Local Static $DisplayLoop = 0		; Showing troops time in ProfileStats - SwitchAcc - Demen
+
 	If GUICtrlRead($g_hGUI_STATS_TAB, 1) = $g_hGUI_STATS_TAB_ITEM2 Or $bForceUpdate = True Then
 		_TicksToDay(Int(__TimerDiff($g_hTimerSinceStarted) + $g_iTimePassed), $day, $hour, $min, $sec)
 		GUICtrlSetData($g_hLblResultRuntime, $day > 0 ? StringFormat("%2u Day(s) %02i:%02i:%02i", $day, $hour, $min, $sec) : StringFormat("%02i:%02i:%02i", $hour, $min, $sec))
@@ -1377,6 +1379,36 @@ Func SetTime($bForceUpdate = False)
 		_TicksToTime(Int(__TimerDiff($g_hTimerSinceStarted) + $g_iTimePassed), $hour, $min, $sec)
 		GUICtrlSetData($g_hLblResultRuntimeNow, StringFormat("%02i:%02i:%02i", $hour, $min, $sec))
 	EndIf
+
+; Showing troops time in ProfileStats - SwitchAcc - Demen
+	If $DisplayLoop >= 10 Then ; Conserve Clock Cycles on Updating times
+		$DisplayLoop = 0
+		;Update Multi Stat Page _ SwitchAcc_Demen_Style
+		If $ichkSwitchAcc = 1 Then
+			If GUICtrlRead($g_hGUI_MOD_TAB, 1) = $g_hGUI_MOD_TAB_ITEM4 Then
+				For $i = 0 To $nTotalProfile - 1 ; Update time for all Accounts
+					If $aProfileType[$i] = 1 And _
+							$i <> $nCurProfile - 1 And _
+							$aTimerStart[$i] <> 0 Then
+						$aTimerEnd[$i] = TimerDiff($aTimerStart[$i])
+						$aUpdateRemainTrainTime[$i] = Round($aRemainTrainTime[$i] * 60 * 1000 - $aTimerEnd[$i], 2)
+						If $aUpdateRemainTrainTime[$i] < 0 Then
+							GUICtrlSetData($g_lblTroopsTime[$i], Round($aUpdateRemainTrainTime[$i] / 60 / 1000, 2))
+							GUICtrlSetBkColor($g_lblTroopsTime[$i], $COLOR_RED)
+							GUICtrlSetColor($g_lblTroopsTime[$i], $COLOR_WHITE)
+						Else
+							GUICtrlSetData($g_lblTroopsTime[$i], Round($aUpdateRemainTrainTime[$i] / 60 / 1000, 2))
+							GUICtrlSetBkColor($g_lblTroopsTime[$i], $COLOR_YELLOW)
+							GUICtrlSetColor($g_lblTroopsTime[$i], $COLOR_BLACK)
+						EndIf
+					EndIf
+				Next
+			EndIf
+		EndIf
+	EndIf
+	$DisplayLoop += 1
+; Showing troops time in ProfileStats - SwitchAcc - Demen
+
 EndFunc   ;==>SetTime
 
 Func tabMain()

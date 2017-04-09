@@ -24,6 +24,7 @@ Global $g_hLblResultDENow = 0, $g_hLblResultDEHourNow = 0, $g_hPicResultDENow = 
 Global $g_hLblResultTrophyNow = 0, $g_hPicResultTrophyNow = 0, $g_hLblResultRuntimeNow = 0, $g_hPicResultRuntimeNow = 0, $g_hLblResultBuilderNow = 0, $g_hPicResultBuilderNow = 0
 Global $g_hLblResultAttackedHourNow = 0, $g_hPicResultAttackedHourNow = 0, $g_hLblResultGemNow = 0, $g_hPicResultGemNow = 0, $g_hLblResultSkippedHourNow = 0, $g_hPicResultSkippedHourNow = 0
 Global $g_hLblVillageReportTemp = 0, $g_hBtnTestVillage = 0
+Global $g_hBtnEnableGUI = 0, $g_hBtnDisableGUI = 0	; Adding button to enable/disable GUI while botting (as requested by YScorpion) - Demen
 
 Func CreateBottomPanel()
    Local $sTxtTip = ""
@@ -70,7 +71,7 @@ Func CreateBottomPanel()
 		   If $g_bBtnColor Then GUICtrlSetBkColor(-1, 0x22C4F5)
 		   GUICtrlSetState(-1, $GUI_DISABLE)
 		   GUICtrlSetOnEvent(-1, "btnEmbed")
-	   $g_hChkBackgroundMode = GUICtrlCreateCheckbox(GetTranslated(602,14, "Background Mode"), $x + 1, $y + 72, 180, 24)
+	   $g_hChkBackgroundMode = GUICtrlCreateCheckbox(GetTranslated(602,14, "Background Mode"), $x + 1, $y + 72, 90, 24)
 		   GUICtrlSetFont(-1, 7)
 		   _GUICtrlSetTip(-1, GetTranslated(602,16, "Check this to ENABLE the Background Mode of the Bot.") & @CRLF & _
 						      GetTranslated(602,17, "With this you can also hide the Android Emulator window out of sight."))
@@ -86,6 +87,20 @@ Func CreateBottomPanel()
 		   GUICtrlSetState(-1, $GUI_HIDE)
 	   $g_hBtnAttackNowTS = GUICtrlCreateButton(GetTranslated(602,20, "TH Snipe!"), $x + 190, $y + 50, 60, -1)
 		   GUICtrlSetState(-1, $GUI_HIDE)
+
+	   ; Adding button to enable/disable GUI while botting (as requested by YScorpion) - Demen
+	   $g_hBtnEnableGUI = GUICtrlCreateButton("Enable GUI", $x + 100, $y + 72, 80, 22)
+		   _GUICtrlSetTip(-1, 	"Enable GUI control while botting" & @CRLF & _
+								"Warning:  USE THIS WITH CAUTION!" & @CRLF & _
+								"This function may create errors that require bot/PC restart" & @CRLF & _
+								"Better to stop the Bot completely if you need to change the setting" )
+		   GUICtrlSetOnEvent(-1, "btnEnableGUI")
+		   GUICtrlSetState(-1, $GUI_HIDE)
+	   $g_hBtnDisableGUI = GUICtrlCreateButton("Disable GUI", $x + 100, $y + 72, 80, 22)
+		   _GUICtrlSetTip(-1, "Enable GUI control while botting")
+		   GUICtrlSetOnEvent(-1, "btnDisableGUI")
+		   GUICtrlSetState(-1, $GUI_HIDE)
+
    GUICtrlCreateGroup("", -99, -99, 1, 1)
 
    If $g_bAndroidAdbScreencap = True Then chkBackground() ; update background mode GUI

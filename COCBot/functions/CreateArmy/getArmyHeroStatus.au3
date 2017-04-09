@@ -22,16 +22,67 @@ Func ArmyHeroStatus($Hero)
 		Case $Hero = "King" Or $Hero = 0 Or $Hero = $eKing
 			$Result = SearchArmy($directory, $aHeroesRect[0][0], $aHeroesRect[0][1], $aHeroesRect[0][2], $aHeroesRect[0][3], "", True)
 			$Status = $Result[0][0]
+			Switch $Status	;	Show on Profile Stats - Demen
+				Case "heal" ; Yellow
+					GUICtrlSetState($g_lblKingStatus[$nCurProfile - 1], $GUI_SHOW)
+					GUICtrlSetBkColor($g_lblKingStatus[$nCurProfile - 1], $COLOR_YELLOW)
+					GUICtrlSetColor($g_lblKingStatus[$nCurProfile - 1], $COLOR_BLACK)
+				Case "upgrade" ; Red
+					GUICtrlSetState($g_lblKingStatus[$nCurProfile - 1], $GUI_SHOW)
+					GUICtrlSetBkColor($g_lblKingStatus[$nCurProfile - 1], $COLOR_RED)
+					GUICtrlSetColor($g_lblKingStatus[$nCurProfile - 1], $COLOR_WHITE)
+				Case "none" ; Hide lbl
+					GUICtrlSetState($g_lblKingStatus[$nCurProfile - 1], $GUI_HIDE)
+				Case Else ; Green
+					GUICtrlSetState($g_lblKingStatus[$nCurProfile - 1], $GUI_SHOW)
+					GUICtrlSetBkColor($g_lblKingStatus[$nCurProfile - 1], $COLOR_GREEN)
+					GUICtrlSetColor($g_lblKingStatus[$nCurProfile - 1], $COLOR_WHITE)
+			EndSwitch
+
 			If $Status = "" Then $Status = "king"
 			Return $Status
 		Case $Hero = "Queen" Or $Hero = 1 Or $Hero = $eQueen
 			$Result = SearchArmy($directory, $aHeroesRect[1][0], $aHeroesRect[1][1], $aHeroesRect[1][2], $aHeroesRect[1][3], "", True)
 			$Status = $Result[0][0]
+			Switch $Status	;	Show on Profile Stats - Demen
+				Case "heal" ; Yellow
+					GUICtrlSetState($g_lblQueenStatus[$nCurProfile - 1], $GUI_SHOW)
+					GUICtrlSetBkColor($g_lblQueenStatus[$nCurProfile - 1], $COLOR_YELLOW)
+					GUICtrlSetColor($g_lblQueenStatus[$nCurProfile - 1], $COLOR_BLACK)
+				Case "upgrade" ; Red
+					GUICtrlSetState($g_lblQueenStatus[$nCurProfile - 1], $GUI_SHOW)
+					GUICtrlSetBkColor($g_lblQueenStatus[$nCurProfile - 1], $COLOR_RED)
+					GUICtrlSetColor($g_lblQueenStatus[$nCurProfile - 1], $COLOR_WHITE)
+				Case "none" ; Hide lbl
+					GUICtrlSetState($g_lblQueenStatus[$nCurProfile - 1], $GUI_HIDE)
+				Case Else ; Green
+					GUICtrlSetState($g_lblQueenStatus[$nCurProfile - 1], $GUI_SHOW)
+					GUICtrlSetBkColor($g_lblQueenStatus[$nCurProfile - 1], $COLOR_GREEN)
+					GUICtrlSetColor($g_lblQueenStatus[$nCurProfile - 1], $COLOR_WHITE)
+			EndSwitch
+
 			If $Status = "" Then $Status = "queen"
 			Return $Status
 		Case $Hero = "Warden" Or $Hero = 2 Or $Hero = $eWarden
 			$Result = SearchArmy($directory, $aHeroesRect[2][0], $aHeroesRect[2][1], $aHeroesRect[2][2], $aHeroesRect[2][3], "", True)
 			$Status = $Result[0][0]
+			Switch $Status	;	Show on Profile Stats - Demen
+					Case "heal" ; Yellow
+					GUICtrlSetState($g_lblWardenStatus[$nCurProfile - 1], $GUI_SHOW)
+					GUICtrlSetBkColor($g_lblWardenStatus[$nCurProfile - 1], $COLOR_YELLOW)
+					GUICtrlSetColor($g_lblWardenStatus[$nCurProfile - 1], $COLOR_BLACK)
+				Case "upgrade" ; Red
+					GUICtrlSetState($g_lblWardenStatus[$nCurProfile - 1], $GUI_SHOW)
+					GUICtrlSetBkColor($g_lblWardenStatus[$nCurProfile - 1], $COLOR_RED)
+					GUICtrlSetColor($g_lblWardenStatus[$nCurProfile - 1], $COLOR_WHITE)
+				Case "none" ; Hide lbl
+					GUICtrlSetState($g_lblWardenStatus[$nCurProfile - 1], $GUI_HIDE)
+				Case Else ; Green
+					GUICtrlSetState($g_lblWardenStatus[$nCurProfile - 1], $GUI_SHOW)
+					GUICtrlSetBkColor($g_lblWardenStatus[$nCurProfile - 1], $COLOR_GREEN)
+					GUICtrlSetColor($g_lblWardenStatus[$nCurProfile - 1], $COLOR_WHITE)
+			EndSwitch
+
 			If $Status = "" Then $Status = "warden"
 			Return $Status
 	EndSelect

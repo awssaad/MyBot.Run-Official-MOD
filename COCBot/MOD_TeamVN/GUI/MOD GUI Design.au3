@@ -18,6 +18,7 @@ Global $g_hGUI_MOD = 0
 Global $g_hGUI_MOD_TAB = 0, $g_hGUI_MOD_TAB_ITEM1 = 0 , $g_hGUI_MOD_TAB_ITEM2 = 0 ,$g_hGUI_MOD_TAB_ITEM3 = 0, $g_hGUI_MOD_TAB_ITEM4 = 0, $g_hGUI_MOD_TAB_ITEM5 = 0
 
 #include "MOD GUI Design - Profiles.au3"
+#include "MOD GUI Design - ProfileStats.au3"
 
 Func CreateMODTab()
 
@@ -31,10 +32,10 @@ Func CreateMODTab()
 			CreateSwitchAccount()
 		$g_hGUI_MOD_TAB_ITEM3 = GUICtrlCreateTabItem(GetTranslated(600, 60, "Switch Profile"))
 			CreateModSwitchProfile()
-		$g_hGUI_MOD_TAB_ITEM4 = GUICtrlCreateTabItem(GetTranslated(600, 61, "MultiStat's")) ; Has to be outside of the Last Control to hide
+		$g_hGUI_MOD_TAB_ITEM4 = GUICtrlCreateTabItem(GetTranslated(600, 61, "Profile Stat's")) ; Has to be outside of the Last Control to hide
 			$g_hLastControlToHide = GUICtrlCreateDummy()
 			ReDim $g_aiControlPrevState[$g_hLastControlToHide + 1]
-;			CreateMultiStatsGUI()
+			CreateProfileStats()
 	GUICtrlCreateTabItem("")
 EndFunc   ;==>CreateMODTab
 

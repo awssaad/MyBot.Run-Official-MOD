@@ -79,14 +79,20 @@ Func ReadConfig_MOD()
 	; Upgrade Management (MMHK) - Added by NguyenAnhHD
 	$g_ibUpdateNewUpgradesOnly = (IniRead($g_sProfileConfigPath, "upgrade", "UpdateNewUpgradesOnly", 0) = 1)
 
-#cs
-	; SimpleTrain (Demen) - Added by Demen
+	; QuickTrainCombo (Demen) - Added By Demen
+	$g_bQuickTrainEnable = (IniRead($g_sProfileConfigPath, "other", "ChkUseQTrain", "0") = "1")
+	$g_bQuickTrainArmy[0] = (IniRead($g_sProfileConfigPath, "troop", "QuickTrainArmy1", "0") = "1")
+	$g_bQuickTrainArmy[1] = (IniRead($g_sProfileConfigPath, "troop", "QuickTrainArmy2", "0") = "1")
+	$g_bQuickTrainArmy[2] = (IniRead($g_sProfileConfigPath, "troop", "QuickTrainArmy3", "0") = "1")
+
+	; SimpleTrain (Demen) - Added By Demen
 	IniReadS($ichkSimpleTrain, $g_sProfileConfigPath, "SimpleTrain", "Enable", 0, "int")
 	IniReadS($ichkPreciseTroops, $g_sProfileConfigPath, "SimpleTrain", "PreciseTroops", 0, "int")
 	IniReadS($ichkFillArcher, $g_sProfileConfigPath, "SimpleTrain", "ChkFillArcher", 0, "int")
 	IniReadS($iFillArcher, $g_sProfileConfigPath, "SimpleTrain", "FillArcher", 5, "int")
 	IniReadS($ichkFillEQ, $g_sProfileConfigPath, "SimpleTrain", "FillEQ", 0, "int")
 
+#cs
 	; Notify Bot Speep (Kychera) - Added By NguyenAnhHD
 	IniReadS($g_bNotifyAlertBOTSleep, $g_sProfileConfigPath, "notify", "AlertPBSleep", False, "Bool")
 
@@ -98,23 +104,20 @@ Func ReadConfig_MOD()
 	IniReadS($MyApiKey, $g_sProfileConfigPath, "Stats", "txtAPIKey", "")
 #ce
 EndFunc
-#cs
-Func ReadConfig_SwitchAcc($SwitchAcc_Style = False)
-	; <><><> SwitchAcc_Demen_Style <><><>
-	If $SwitchAcc_Style = True Then IniReadS($iSwitchAccStyle, $Profile, "SwitchAcc_Demen_Style", "SwitchType", 1, "int")
 
-	IniReadS($ichkSwitchAcc, $profile, "SwitchAcc_Demen_Style", "Enable", 0, "int")
-	IniReadS($ichkTrain, $profile, "SwitchAcc_Demen_Style", "Pre-train", 0, "int")
-	IniReadS($icmbTotalCoCAcc, $profile, "SwitchAcc_Demen_Style", "Total Coc Account", -1, "int")
-	IniReadS($ichkSmartSwitch, $profile, "SwitchAcc_Demen_Style", "Smart Switch", 0, "int")
-	IniReadS($ichkForceSwitch, $profile, "SwitchAcc_Demen_Style", "Force Switch", 0, "int")
-	IniReadS($iForceSwitch, $profile, "SwitchAcc_Demen_Style", "Force Switch Search", 100, "int")
-	IniReadS($ichkForceStayDonate, $profile, "SwitchAcc_Demen_Style", "Force Stay Donate", 0, "int")
-	IniReads($ichkCloseTraining, $profile, "SwitchAcc_Demen_Style", "Sleep Combo", 0, "int")	; Sleep Combo, 1 = Close CoC, 2 = Close Android, 0 = No sleep
-	For $i = 0 to 7
-		IniReadS($aMatchProfileAcc[$i], $profile, "SwitchAcc_Demen_Style", "MatchProfileAcc." & $i+1, "-1")
-		IniReadS($aProfileType[$i], $profile, "SwitchAcc_Demen_Style", "ProfileType." & $i+1, "-1")
-		IniReadS($aAccPosY[$i], $profile, "SwitchAcc_Demen_Style", "AccLocation." & $i+1, "-1")
+; SwitchAcc (Demen) - Added By Demen
+Func ReadConfig_SwitchAcc()
+	IniReadS($ichkSwitchAcc, $profile, "SwitchAcc", "Enable", 0, "int")
+	IniReadS($ichkTrain, $profile, "SwitchAcc", "Pre-train", 0, "int")
+	IniReadS($icmbTotalCoCAcc, $profile, "SwitchAcc", "Total Coc Account", -1, "int")
+	IniReadS($ichkSmartSwitch, $profile, "SwitchAcc", "Smart Switch", 0, "int")
+	IniReadS($ichkForceSwitch, $profile, "SwitchAcc", "Force Switch", 0, "int")
+	IniReadS($iForceSwitch, $profile, "SwitchAcc", "Force Switch Search", 100, "int")
+	IniReadS($ichkForceStayDonate, $profile, "SwitchAcc", "Force Stay Donate", 0, "int")
+	IniReads($ichkCloseTraining, $profile, "SwitchAcc", "Sleep Combo", 0, "int") ; Sleep Combo, 1 = Close CoC, 2 = Close Android, 0 = No sleep
+	For $i = 0 To 7
+		IniReadS($aMatchProfileAcc[$i], $profile, "SwitchAcc", "MatchProfileAcc." & $i + 1, "-1")
+		IniReadS($aProfileType[$i], $profile, "SwitchAcc", "ProfileType." & $i + 1, "-1")
+		IniReadS($aAccPosY[$i], $profile, "SwitchAcc", "AccLocation." & $i + 1, "-1")
 	Next
-EndFunc
-#ce
+EndFunc   ;==>ReadConfig_SwitchAcc

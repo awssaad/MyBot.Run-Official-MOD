@@ -82,18 +82,16 @@ Global $canContinueLoop = True
 Global $g_ibUpdateNewUpgradesOnly = False
 Global Const $UP = True, $DOWN = False, $TILL_END = True
 
-#cs
-; SwitchAcc_Demen_Style
+; SwitchAcc (Demen) - Added By Demen
 Global $profile = $g_sProfilePath & "\Profile.ini"
-Global $iSwitchAccStyle = 1	; 1 = DocOc, 2 = Demen
 Global $ichkSwitchAcc = 0, $ichkTrain = 0, $icmbTotalCoCAcc, $nTotalCoCAcc = 8, $ichkSmartSwitch, $ichkCloseTraining
-Global Enum $eNull, $eActive, $eDonate, $eIdle, $eStay, $eContinuous	; Enum for Profile Type & Switch Case & ForceSwitch
+Global Enum $eNull, $eActive, $eDonate, $eIdle, $eStay, $eContinuous ; Enum for Profile Type & Switch Case & ForceSwitch
 Global $ichkForceSwitch, $iForceSwitch, $eForceSwitch = 0, $iProfileBeforeForceSwitch
 Global $ichkForceStayDonate
 Global $nTotalProfile = 1, $nCurProfile = 1, $nNextProfile
 Global $ProfileList
-Global $aProfileType[8]		; Type of the all Profiles, 1 = active, 2 = donate, 3 = idle
-Global $aMatchProfileAcc[8]	; Accounts match with All Profiles
+Global $aProfileType[8] ; Type of the all Profiles, 1 = active, 2 = donate, 3 = idle
+Global $aMatchProfileAcc[8] ; Accounts match with All Profiles
 Global $aDonateProfile, $aActiveProfile
 Global $aAttackedCountSwitch[8], $ActiveSwitchCounter = 0, $DonateSwitchCounter = 0
 Global $bReMatchAcc = False
@@ -101,9 +99,13 @@ Global $aTimerStart[8], $aTimerEnd[8]
 Global $aRemainTrainTime[8], $aUpdateRemainTrainTime[8], $nMinRemainTrain
 Global $aLocateAccConfig[8], $aAccPosY[8]
 
-; SimpleTrain (Demen) - Added by Demen
-Global $ichkSimpleTrain,  $ichkPreciseTroops, $ichkFillArcher, $iFillArcher, $ichkFillEQ
-
+; SimpleTrain (Demen) - Added By Demen
+Global $g_bQuickTrainArmy[3] = [True, False, False] ; QuickTrainCombo (Checkbox)
+Global $ichkSimpleTrain, $ichkPreciseTroops, $ichkFillArcher, $iFillArcher, $ichkFillEQ
+Global $bWaitForCCTroopSpell = False	; ForceSwitch while waiting for CC troops - Demen
+Global Enum $g_eFull, $g_eRemained, $g_eNoTrain
+Global $g_abRCheckWrongTroops[2] = [False, False] ; Result of checking wrong troops & spells
+#cs
 ; CoCStats - Added by NguyenAnhHD
 Global $ichkCoCStats = 0
 Global $MyApiKey = ""

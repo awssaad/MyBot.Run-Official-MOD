@@ -95,7 +95,7 @@ Func applyConfig($bRedrawAtExit = True, $TypeReadSave = "Read") ;Applies the dat
 	ApplyConfig_600_35($TypeReadSave)
 	; <><><> Attack Plan / Train Army / Troops/Spells <><><>
 	; Quick train
-	ApplyConfig_600_52_1($TypeReadSave)
+;~	ApplyConfig_600_52_1($TypeReadSave)
 	; troop/spell levels and counts
 	ApplyConfig_600_52_2($TypeReadSave)
 	; <><><> Attack Plan / Train Army / Train Order <><><>
@@ -107,6 +107,7 @@ Func applyConfig($bRedrawAtExit = True, $TypeReadSave = "Read") ;Applies the dat
 
 	; TeamVN MOD (NguyenAnhHD, Demen)
 	ApplyConfig_MOD($TypeReadSave)
+	ApplyConfig_SwitchAcc($TypeReadSave)
 
 	; <><><><> Attack Plan / Strategies <><><><>
 	; <<< nothing here >>>
@@ -1727,7 +1728,7 @@ Func ApplyConfig_600_35($TypeReadSave)
 			$g_bForceClanCastleDetection = (GUICtrlRead($g_hChkFixClanCastle) = $GUI_CHECKED)
 	EndSwitch
 EndFunc   ;==>ApplyConfig_600_35
-
+#cs
 Func ApplyConfig_600_52_1($TypeReadSave)
 	; <><><> Attack Plan / Train Army / Troops/Spells <><><>
 	; Quick train
@@ -1748,7 +1749,7 @@ Func ApplyConfig_600_52_1($TypeReadSave)
 			EndIf
 	EndSwitch
 EndFunc   ;==>ApplyConfig_600_52_1
-
+#ce
 Func ApplyConfig_600_52_2($TypeReadSave)
 	; troop/spell levels and counts
 	Switch $TypeReadSave

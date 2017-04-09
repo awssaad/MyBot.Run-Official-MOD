@@ -24,6 +24,8 @@ Global $g_hChkGoldSwitchMax = 0, $g_hCmbGoldMaxProfile = 0, $g_hTxtMaxGoldAmount
 	   $g_hChkDESwitchMax = 0, $g_hCmbDEMaxProfile = 0, $g_hTxtMaxDEAmount = 0, $g_hChkDESwitchMin = 0, $g_hCmbDEMinProfile = 0, $g_hTxtMinDEAmount = 0, _
 	   $g_hChkTrophySwitchMax = 0, $g_hCmbTrophyMaxProfile = 0, $g_hTxtMaxTrophyAmount = 0, $g_hChkTrophySwitchMin = 0, $g_hCmbTrophyMinProfile = 0, $g_hTxtMinTrophyAmount = 0
 
+#include "MOD GUI Design - SwitchAcc.au3"
+
 #Region Profiles Subtab
 Func CreateSwitchAccount()
 
@@ -127,6 +129,8 @@ Func CreateSwitchAccount()
 		; IceCube (Misc v1.0)
 
 	GUICtrlCreateGroup("", -99, -99, 1, 1)
+
+	CreateBotSwitchAcc()
 
 EndFunc
 #EndRegion
