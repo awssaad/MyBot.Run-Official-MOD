@@ -15,22 +15,27 @@
 
 ; <><><><><><><><><><><><><><><> TeamVN MOD (NguyenAnhHD, Demen) <><><><><><><><><><><><><><><>
 
-#include "functions\Attack\Troops\ReadTroopQuantity.au3"
-#include "functions\Attack\Troops\GetXPosOfArmySlot.au3"
-#include "functions\Attack\AttackCSV\ParseAttackCSV.au3"
-#include "functions\Attack\AttackCSV\ZapCmd.au3"
-#include "functions\Attack\AttackCSV\SideP.au3"
-#include "functions\Attack\AttackCSV\UpdateTroopQuantity.au3"
-#include "functions\Attack\AttackCSV\DropSpellFromINIOnDefense.au3"
-#include "functions\Attack\AttackCSV\ParseAttackCSV_Read_SIDE_variables.au3"
-
-#include "functions\Other\ArrayFunctions.au3"
-#include "functions\Search\multiSearch.au3"
-
 ; Config (NguyenAnhHD, Demen)
 #include "functions\Config\saveConfig.au3"
 #include "functions\Config\readConfig.au3"
 #include "functions\Config\applyConfig.au3"
+
+; CSV Command DropS, SideP, Zap, Remain (Mr.Viper) - Added by NguyenAnhHD
+#include "functions\Attack\AttackCSV\DropSpellFromINIOnDefense.au3"
+#include "functions\Attack\AttackCSV\DropTroopFromINI.au3"
+#include "functions\Attack\AttackCSV\ParseAttackCSV.au3"
+#include "functions\Attack\AttackCSV\ParseAttackCSV_Read_SIDE_variables.au3"
+#include "functions\Attack\AttackCSV\SideP.au3"
+#include "functions\Attack\AttackCSV\UpdateTroopQuantity.au3"
+#include "functions\Attack\AttackCSV\ZapCmd.au3"
+
+#include "functions\Attack\RedArea\_GetRedArea.au3"
+
+#include "functions\Attack\Troops\GetXPosOfArmySlot.au3"
+#include "functions\Attack\Troops\ReadTroopQuantity.au3"
+
+#include "functions\Other\ArrayFunctions.au3"
+#include "functions\Search\multiSearch.au3"
 
 ; Auto Hide (NguyenAnhHD) - Added by NguyenAnhHD
 #include "functions\Mod's\AutoHide.au3"

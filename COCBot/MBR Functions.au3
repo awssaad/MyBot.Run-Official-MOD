@@ -40,14 +40,14 @@
 #include "functions\Attack\AttackCSV\AttackCSVDebugImage.au3"
 #include "functions\Attack\AttackCSV\CheckCSVValues.au3"
 #include "functions\Attack\AttackCSV\DebugAttackCSV.au3"
-#include "functions\Attack\AttackCSV\DropTroopFromINI.au3"
+;~ #include "functions\Attack\AttackCSV\DropTroopFromINI.au3" ; Move for CSV Command (Mr.Viper)
 #include "functions\Attack\AttackCSV\GetListPixel3.au3"
 #include "functions\Attack\AttackCSV\IsInsideDiamondRedArea.au3"
 #include "functions\Attack\AttackCSV\Line2Points.au3"
 #include "functions\Attack\AttackCSV\MakeDropLine.au3"
 #include "functions\Attack\AttackCSV\MakeDropPoints.au3"
-;#include "functions\Attack\AttackCSV\ParseAttackCSV.au3"
-;#include "functions\Attack\AttackCSV\ParseAttackCSV_Read_SIDE_variables.au3"
+;~ #include "functions\Attack\AttackCSV\ParseAttackCSV.au3" ; Move for CSV Command (Mr.Viper)
+;~ #include "functions\Attack\AttackCSV\ParseAttackCSV_Read_SIDE_variables.au3" ; Move for CSV Command (Mr.Viper)
 #include "functions\Attack\AttackCSV\Slice8.au3"
 #include "functions\Attack\AttackCSV\CleanRedArea.au3"
 #include "functions\Attack\AttackCSV\ChkAttackCSVConfig.au3"
@@ -71,7 +71,7 @@
 
 #include "functions\Attack\RedArea\_FindPixelCloser.au3"
 #include "functions\Attack\RedArea\_GetOffsetTroopFurther.au3"
-#include "functions\Attack\RedArea\_GetRedArea.au3"
+;~ #include "functions\Attack\RedArea\_GetRedArea.au3" ; Move for CSV Command (Mr.Viper)
 #include "functions\Attack\RedArea\_GetVectorOutZone.au3"
 #include "functions\Attack\RedArea\DebugRedArea.au3"
 #include "functions\Attack\RedArea\DropOnPixel.au3"
@@ -89,12 +89,12 @@
 #include "functions\Attack\Troops\dropHeroes.au3"
 #include "functions\Attack\Troops\DropOnEdge.au3"
 #include "functions\Attack\Troops\DropOnEdges.au3"
-;#include "functions\Attack\Troops\GetXPosOfArmySlot.au3"
+;~ #include "functions\Attack\Troops\GetXPosOfArmySlot.au3" ; Move for CSV Command (Mr.Viper)
 #include "functions\Attack\Troops\GetSlotIndexFromXPos.au3"
 #include "functions\Attack\Troops\LauchTroop.au3"
 #include "functions\Attack\Troops\NameOfTroop.au3"
 #include "functions\Attack\Troops\OldDropTroop.au3"
-;#include "functions\Attack\Troops\ReadTroopQuantity.au3"
+;~ #include "functions\Attack\Troops\ReadTroopQuantity.au3" ; Move for CSV Command (Mr.Viper)
 #include "functions\Attack\Troops\SelectDropTroop.au3"
 #include "functions\Attack\Troops\SetSleep.au3"
 
