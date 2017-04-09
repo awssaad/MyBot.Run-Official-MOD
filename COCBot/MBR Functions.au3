@@ -12,12 +12,13 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
-
+;#include-once
 #include "functions\Other\SetLog.au3"
-#include "functions\Other\Synchronization.au3"
+;#include "functions\Other\Synchronization.au3" ; now included in LaunchConsole.au3
 #include "functions\Other\OnAutoItErrorRegisterBot.au3"
 
 #include "functions\Config\profileFunctions.au3"
+#include "functions\Config\_Ini_Table.au3"
 #include "functions\Config\applyConfig.au3"
 #include "functions\Config\readConfig.au3"
 #include "functions\Config\saveConfig.au3"
@@ -28,7 +29,6 @@
 #include "functions\Attack\GoldElixirChangeEBO.au3"
 #include "functions\Attack\PrepareAttack.au3"
 #include "functions\Attack\ReturnHome.au3"
-#include "functions\Attack\SnipeWhileTrain.au3"
 #include "functions\Attack\Unbreakable.au3"
 
 #include "functions\Attack\Attack Algorithms\algorithm_AllTroops.au3"
@@ -46,8 +46,8 @@
 #include "functions\Attack\AttackCSV\Line2Points.au3"
 #include "functions\Attack\AttackCSV\MakeDropLine.au3"
 #include "functions\Attack\AttackCSV\MakeDropPoints.au3"
-#include "functions\Attack\AttackCSV\ParseAttackCSV.au3"
-#include "functions\Attack\AttackCSV\ParseAttackCSV_Read_SIDE_variables.au3"
+;#include "functions\Attack\AttackCSV\ParseAttackCSV.au3"
+;#include "functions\Attack\AttackCSV\ParseAttackCSV_Read_SIDE_variables.au3"
 #include "functions\Attack\AttackCSV\Slice8.au3"
 #include "functions\Attack\AttackCSV\CleanRedArea.au3"
 #include "functions\Attack\AttackCSV\ChkAttackCSVConfig.au3"
@@ -89,12 +89,12 @@
 #include "functions\Attack\Troops\dropHeroes.au3"
 #include "functions\Attack\Troops\DropOnEdge.au3"
 #include "functions\Attack\Troops\DropOnEdges.au3"
-#include "functions\Attack\Troops\GetXPosOfArmySlot.au3"
+;#include "functions\Attack\Troops\GetXPosOfArmySlot.au3"
 #include "functions\Attack\Troops\GetSlotIndexFromXPos.au3"
 #include "functions\Attack\Troops\LauchTroop.au3"
 #include "functions\Attack\Troops\NameOfTroop.au3"
 #include "functions\Attack\Troops\OldDropTroop.au3"
-#include "functions\Attack\Troops\ReadTroopQuantity.au3"
+;#include "functions\Attack\Troops\ReadTroopQuantity.au3"
 #include "functions\Attack\Troops\SelectDropTroop.au3"
 #include "functions\Attack\Troops\SetSleep.au3"
 
@@ -161,7 +161,6 @@
 #include "functions\Other\WerFaultClose.au3"
 #include "functions\Other\_NumberFormat.au3"
 #include "functions\Other\_PadStringCenter.au3"
-#include "functions\Other\_ReduceMemory.au3"
 #include "functions\Other\_ProcessSuspendResume2.au3"
 #include "functions\Other\_Sleep.au3"
 #include "functions\Other\_SleepStatus.au3"
@@ -178,7 +177,6 @@
 #include "functions\Other\StringSize.au3"
 #include "functions\Other\Tab.au3"
 #include "functions\Other\Time.au3"
-#include "functions\Other\BlockInputEx.au3"
 #include "functions\Other\TogglePause.au3"
 #include "functions\Other\CheckPrerequisites.au3"
 #include "functions\Other\CheckDisplay.au3"
@@ -195,7 +193,6 @@
 #include "functions\Other\WindowSystemMenu.au3"
 #include "functions\Other\image_get_info.au3"
 
-#include "functions\Other\ComError.au3"
 #include "functions\Other\IsPage.au3"
 #include "functions\Other\MoveMouseOutBS.au3"
 #include "functions\Other\KillProcess.au3"
@@ -210,7 +207,6 @@
 #include "functions\Pixels\_GetPixelColor.au3"
 #include "functions\Pixels\_PixelSearch.au3"
 #include "functions\Pixels\_MultiPixelSearch.au3"
-#include "functions\Pixels\boolPixelSearch.au3"
 #include "functions\Pixels\isInsideDiamond.au3"
 
 #include "functions\Read Text\getBuilderCount.au3"
@@ -241,10 +237,12 @@
 #include "functions\Village\CheckBaseQuick.au3"
 #include "functions\Village\chkShieldStatus.au3"
 #include "functions\Village\Collect.au3"
+#include "functions\Village\TreasuryCollect.au3"
 #include "functions\Village\DonateCC.au3"
 #include "functions\Village\DonateCCWBL.au3"
 #include "functions\Village\DropTrophy.au3"
 #include "functions\Village\GetTownHallLevel.au3"
+#include "functions\Village\isAtkDarkElixirFull.au3"
 #include "functions\Village\isDarkElixirFull.au3"
 #include "functions\Village\isGoldFull.au3"
 #include "functions\Village\isElixirFull.au3"
@@ -275,14 +273,8 @@
 #include "functions\Other\Api.au3"
 #include "functions\Other\ApiClient.au3"
 
-; Team Mod's (NguyenAnhHD, Demen)
-#include "functions\Mod's\AutoHide.au3"
-#include "functions\Mod's\AreCollectorsOutside.au3"
-#include "functions\Mod's\ProfileSwitch.au3"
-#include "functions\Mod's\SwitchAcc.au3"
-#include "functions\Mod's\UpdateProfileStats.au3"
-#include "functions\Mod's\SimpleTrain.au3"
-
+; TeamVN MOD (NguyenAnhHD, Demen)
+#include "MOD_TeamVN\Functions_TeamVN.au3"
 
 ; OLD CODE
 

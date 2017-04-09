@@ -22,13 +22,13 @@ Global $g_hLblSmartDeployAB = 0, $g_hPicAttackNearDarkElixirDrillAB = 0
 
 Func CreateAttackSearchActiveBaseStandard()
 
-   $g_hGUI_ACTIVEBASE_ATTACK_STANDARD = GUICreate("", $_GUI_MAIN_WIDTH - 195, $_GUI_MAIN_HEIGHT - 344, 150, 25, BitOR($WS_CHILD, $WS_TABSTOP), -1, $g_hGUI_ACTIVEBASE)
+   $g_hGUI_ACTIVEBASE_ATTACK_STANDARD = _GUICreate("", $_GUI_MAIN_WIDTH - 195, $g_iSizeHGrpTab4, 150, 25, BitOR($WS_CHILD, $WS_TABSTOP), -1, $g_hGUI_ACTIVEBASE)
    ;GUISetBkColor($COLOR_WHITE, $g_hGUI_ACTIVEBASE_ATTACK_STANDARD)
 
    Local $sTxtTip = ""
    Local $x = 25, $y = 20
 
-   GUICtrlCreateGroup(GetTranslated(608,1, -1), $x - 20, $y - 20, 270, 306)
+   GUICtrlCreateGroup(GetTranslated(608,1, -1), $x - 20, $y - 20, 270, $g_iSizeHGrpTab4)
    ;$x -= 15
 	  GUICtrlCreateLabel(GetTranslated(608,2, -1),$x, $y, 143,18,$SS_LEFT)
    $y += 15
@@ -39,13 +39,13 @@ Func CreateAttackSearchActiveBaseStandard()
 	   ;95)
 		   GUICtrlCreateLabel(GetTranslated(608,3, "Attack on")&":", $x, $y + 5, -1, -1)
 		   $g_hCmbStandardDropSidesAB = GUICtrlCreateCombo("", $x + 55, $y, 120, 25, BitOR($CBS_DROPDOWNLIST, $CBS_AUTOHSCROLL))
-			   _GUICtrlSetTip(-1, GetTranslated(608,4, -1) & @CRLF & GetTranslated(608,5, -1) & @CRLF & GetTranslated(608,6, -1) & @CRLF & GetTranslated(608,41, -1) & @CRLF & _
+			   _GUICtrlSetTip(-1, GetTranslated(608,4, -1) & @CRLF & GetTranslated(608,5, -1) & @CRLF & GetTranslated(608,6, -1) & @CRLF & GetTranslated(608,40, -1) & @CRLF & _
 								  GetTranslated(608,29, "Attack on the single side closest to the Dark Elixir Storage") & @CRLF & _
 								  GetTranslated(608,30, "Attack on the single side closest to the Townhall"), GetTranslated(608,7, -1))
 			   GUICtrlSetData(-1, GetTranslated(608,8, -1) & "|" & GetTranslated(608,9, -1) & "|" & GetTranslated(608,10, -1) & "|" & _
-							      GetTranslated(608,11, -1) & "|" & GetTranslated(608,40, -1) & "|" & GetTranslated(608,31, "DE Side Attack") & "|" & GetTranslated(608,32, "TH Side Attack"), _
+							      GetTranslated(608,11, -1) & "|" & GetTranslated(608,41, -1) & "|" & GetTranslated(608,31, "DE Side Attack") & "|" & GetTranslated(608,32, "TH Side Attack"), _
 								  GetTranslated(608,11, -1))
-			   GUICtrlSetOnEvent(-1,"cmbStandardDropSidesAB") ; Uncheck SmartAttack Red Area when enable FourFinger to avoid conflict
+			   GUICtrlSetOnEvent(-1, "cmbStandardDropSidesAB") ; Uncheck SmartAttack Red Area when enable FourFinger to avoid conflict
 
 		   $y += 25
 		   GUICtrlCreateLabel(GetTranslated(608,12, -1) & ":", $x, $y + 5, -1, -1)

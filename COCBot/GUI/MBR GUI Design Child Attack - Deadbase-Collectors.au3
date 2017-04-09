@@ -18,7 +18,7 @@ Global $g_hChkDBDisableCollectorsFilter = 0
 Global $g_ahChkDBCollectorLevel[13] = [-1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0] ; elements 0 thru 5 are never referenced
 Global $g_ahCmbDBCollectorLevel[13] = [-1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0] ; elements 0 thru 5 are never referenced
 Global $g_hCmbMinCollectorMatches = 0, $g_hSldCollectorTolerance = 0, $g_hLblCollectorWarning = 0
-Global $g_hChkDBMeetCollOutside = 0, $g_hTxtDBMinCollOutsidePercent
+Global $g_hChkDBMeetCollOutside = 0, $g_hTxtDBMinCollOutsidePercent ; Check Collector Outside - Added By NguyenAnhHD
 
 Func CreateAttackSearchDeadBaseCollectors()
    Local $x = 10, $y = 45
@@ -26,12 +26,13 @@ Func CreateAttackSearchDeadBaseCollectors()
    Local $g_hTxtFull = GetTranslated(626,30, "Full")
    Local $sTxtTip = ""
 
-   GUICtrlCreateGroup(GetTranslated(626,1,"Collectors"), $x - 5, $y - 20, 420, 305)
+   GUICtrlCreateGroup(GetTranslated(626,1,"Collectors"), $x - 5, $y - 20, $g_iSizeWGrpTab4, $g_iSizeHGrpTab4)
 		GUICtrlCreateLabel(GetTranslated(626,2, "Choose which collectors to search for while looking for a dead base. Also, choose how full they must be."), $x, $y, 250, 28)
 		$g_hChkDBDisableCollectorsFilter = GUICtrlCreateCheckbox(GetTranslated(626,32,"Disable Collector Filter"), $x+250, $y+60, 150, 18)
 			GUICtrlSetState(-1, $GUI_UNCHECKED)
-			_GUICtrlSetTip(-1, GetTranslated(626,33, "Excluding Collector Filter the bot consider DeadBase as ActiveBase"))
+			_GUICtrlSetTip(-1, GetTranslated(626,33, "Disable Collector Filter CHANGES DeadBase into another ActiveBase search"))
 
+		; Check Collector Outside - Added By NguyenAnhHD
 		$g_hChkDBMeetCollOutside = GUICtrlCreateCheckbox(GetTranslated(626,40, "Check Collectors Outside"), $x+250, $y+90, -1, -1)
 			$sTxtTip = GetTranslated(626,41, "Search for bases that has their collectors outside.")
 			GUICtrlSetOnEvent(-1, "chkDBMeetCollOutside")

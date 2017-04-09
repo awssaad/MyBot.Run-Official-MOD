@@ -24,7 +24,6 @@ Global $g_hLblResultDENow = 0, $g_hLblResultDEHourNow = 0, $g_hPicResultDENow = 
 Global $g_hLblResultTrophyNow = 0, $g_hPicResultTrophyNow = 0, $g_hLblResultRuntimeNow = 0, $g_hPicResultRuntimeNow = 0, $g_hLblResultBuilderNow = 0, $g_hPicResultBuilderNow = 0
 Global $g_hLblResultAttackedHourNow = 0, $g_hPicResultAttackedHourNow = 0, $g_hLblResultGemNow = 0, $g_hPicResultGemNow = 0, $g_hLblResultSkippedHourNow = 0, $g_hPicResultSkippedHourNow = 0
 Global $g_hLblVillageReportTemp = 0, $g_hBtnTestVillage = 0
-Global $ModSupportConfig = 0
 
 Func CreateBottomPanel()
    Local $sTxtTip = ""
@@ -70,16 +69,13 @@ Func CreateBottomPanel()
 		   _GUICtrlSetTip(-1, GetTranslated(602,29, "Use this to embed the Android Window into Bot."))
 		   If $g_bBtnColor Then GUICtrlSetBkColor(-1, 0x22C4F5)
 		   GUICtrlSetState(-1, $GUI_DISABLE)
-	   $g_hChkBackgroundMode = GUICtrlCreateCheckbox(GetTranslated(602,14, "Background Mode"), $x + 1, $y + 72, 90, 24)
+		   GUICtrlSetOnEvent(-1, "btnEmbed")
+	   $g_hChkBackgroundMode = GUICtrlCreateCheckbox(GetTranslated(602,14, "Background Mode"), $x + 1, $y + 72, 180, 24)
 		   GUICtrlSetFont(-1, 7)
 		   _GUICtrlSetTip(-1, GetTranslated(602,16, "Check this to ENABLE the Background Mode of the Bot.") & @CRLF & _
 						      GetTranslated(602,17, "With this you can also hide the Android Emulator window out of sight."))
 		   GUICtrlSetOnEvent(-1, "chkBackground")
 		   GUICtrlSetState(-1, (($g_bAndroidAdbScreencap = True) ? ($GUI_CHECKED) : ($GUI_UNCHECKED)))
-	   $ModSupportConfig = GUICtrlCreateButton(GetTranslated(602,34, "Support"), $x + 93, $y + 70, 87, -1)
-		   $sTxtTip = GetTranslated(602,35, "Support Mod Mybot All Versions.")
-		   _GUICtrlSetTip(-1, $sTxtTip)
-		   If $g_bBtnColor Then GUICtrlSetBkColor(-1, 0x22C4F5)
 	   $g_hLblDonate = GUICtrlCreateLabel(GetTranslated(601,19,"Support the development"), $x + 224, $y + 80, 220, 24, $SS_RIGHT)
 		   GUICtrlSetCursor(-1, 0) ; https://www.autoitscript.com/autoit3/docs/functions/MouseGetCursor.htm
 		   GUICtrlSetFont(-1, 8.5, $FW_BOLD) ;, $GUI_FONTITALIC + $GUI_FONTUNDER)
