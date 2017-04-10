@@ -13,6 +13,12 @@
 ; Example .......: No
 ; ===============================================================================================================================
 
+; Check Version
+Global $g_sLastModversion = "" ;latest version from GIT
+Global $g_sLastModmessage = "" ;message for last version
+Global $g_sOldModversmessage = "" ;warning message for old bot
+
+; CSV Command DropS, SideP, Zap, Remain (Mr.Viper) - Added by NguyenAnhHD
 Global $CurBaseRedLine[2] = ["", ""]
 Global $DCD = "440,70|825,344|440,640|55,344"
 Global $ECD = "440,22|860,344|440,670|2,344"
@@ -29,8 +35,6 @@ Global $storedADefensePos = ""
 Global $DebugSideP = 0
 Global $dGoldMines = @ScriptDir & "\imgxml\Storages\SideP\GoldMines", $dDarkDrills = @ScriptDir & "\imgxml\Storages\SideP\Drills", $dElixirCollectors = @ScriptDir & "\imgxml\Storages\SideP\Collectors"
 Global $allMinesFound[7][3], $allCollectorsFound[7][3], $allDrillsFound[3][3]
-
-Global $isModeActive[$g_iModeCount] ; From Vilage Search in Middle of code. Moved here
 
 ; Attack Settings [Dec 2016] used on Classic Attack
 Global Const $g_aaiTopLeftDropPoints[5][2] = [[62, 306], [156, 238], [221, 188], [288, 142], [383, 76]]
