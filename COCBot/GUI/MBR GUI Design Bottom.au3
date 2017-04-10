@@ -25,6 +25,7 @@ Global $g_hLblResultTrophyNow = 0, $g_hPicResultTrophyNow = 0, $g_hLblResultRunt
 Global $g_hLblResultAttackedHourNow = 0, $g_hPicResultAttackedHourNow = 0, $g_hLblResultGemNow = 0, $g_hPicResultGemNow = 0, $g_hLblResultSkippedHourNow = 0, $g_hPicResultSkippedHourNow = 0
 Global $g_hLblVillageReportTemp = 0, $g_hBtnTestVillage = 0
 Global $g_hBtnEnableGUI = 0, $g_hBtnDisableGUI = 0	; Adding button to enable/disable GUI while botting (as requested by YScorpion) - Demen
+Global $g_hModSupportConfig = 0
 
 Func CreateBottomPanel()
    Local $sTxtTip = ""
@@ -88,16 +89,21 @@ Func CreateBottomPanel()
 	   $g_hBtnAttackNowTS = GUICtrlCreateButton(GetTranslated(602,20, "TH Snipe!"), $x + 190, $y + 50, 60, -1)
 		   GUICtrlSetState(-1, $GUI_HIDE)
 
+	   $g_hModSupportConfig = GUICtrlCreateButton(GetTranslated(602,50, "Support"), $x + 100, $y + 70, 80, -1)
+		   $sTxtTip = GetTranslated(602,51, "Support Mod Mybot All Versions.")
+		   _GUICtrlSetTip(-1, $sTxtTip)
+		   GUICtrlSetBkColor(-1, 0x00FF2F)
+
 	   ; Adding button to enable/disable GUI while botting (as requested by YScorpion) - Demen
-	   $g_hBtnEnableGUI = GUICtrlCreateButton("Enable GUI", $x + 100, $y + 72, 80, 22)
-		   _GUICtrlSetTip(-1, 	"Enable GUI control while botting" & @CRLF & _
-								"Warning:  USE THIS WITH CAUTION!" & @CRLF & _
-								"This function may create errors that require bot/PC restart" & @CRLF & _
-								"Better to stop the Bot completely if you need to change the setting" )
+	   $g_hBtnEnableGUI = GUICtrlCreateButton(GetTranslated(602,52, "Enable GUI"), $x + 100, $y + 70, 80, -1)
+		   _GUICtrlSetTip(-1, 	GetTranslated(602,53, "Enable GUI control while botting") & @CRLF & _
+								GetTranslated(602,54, "Warning:  USE THIS WITH CAUTION!") & @CRLF & _
+								GetTranslated(602,55, "This function may create errors that require bot/PC restart") & @CRLF & _
+								GetTranslated(602,56, "Better to stop the Bot completely if you need to change the setting"))
 		   GUICtrlSetOnEvent(-1, "btnEnableGUI")
 		   GUICtrlSetState(-1, $GUI_HIDE)
-	   $g_hBtnDisableGUI = GUICtrlCreateButton("Disable GUI", $x + 100, $y + 72, 80, 22)
-		   _GUICtrlSetTip(-1, "Enable GUI control while botting")
+	   $g_hBtnDisableGUI = GUICtrlCreateButton("Disable GUI", $x + 100, $y + 70, 80, -1)
+		   _GUICtrlSetTip(-1, GetTranslated(602,57, "Enable GUI control while botting"))
 		   GUICtrlSetOnEvent(-1, "btnDisableGUI")
 		   GUICtrlSetState(-1, $GUI_HIDE)
 
