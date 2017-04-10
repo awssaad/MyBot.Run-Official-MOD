@@ -12,79 +12,39 @@
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
 ; Example .......: No
 ; ===============================================================================================================================
+#include-once
+
+;~ Global $g_sLastVersion = "" ;latest version from GIT
+;~ Global $g_sLastMessage = "" ;message for last version
+;~ Global $g_sOldVersionMessage = "" ;warning message for old bot
 
 Func CheckVersion()
-	If $ichkVersion = 1 Then
+	If $g_bCheckVersion Then
 		CheckVersionHTML()
-;~		If $lastversion = "" Then
-;~			SetLog("WE CANNOT OBTAIN PRODUCT VERSION AT THIS TIME", $COLOR_ACTION)
-;~		ElseIf VersionNumFromVersionTXT($g_sBotVersion) < VersionNumFromVersionTXT($lastversion) Then
-;~			SetLog("WARNING, YOUR BOT VERSION (" & $g_sBotVersion & ") IS OUT OF DATE.", $COLOR_ERROR)
-;~			SetLog("PLEASE DOWNLOAD THE LATEST(" & $lastversion & ") FROM https://MyBot.run               ", $COLOR_ERROR)
-;~			SetLog(" ")
-;~			_PrintLogVersion($oldversmessage)
-;~			PushMsg("Update")
-;~		ElseIf VersionNumFromVersionTXT($g_sBotVersion) > VersionNumFromVersionTXT($lastversion) Then
-;~			SetLog("YOU ARE USING A FUTURE VERSION OF MYBOT CHIEF!", $COLOR_SUCCESS)
-;~			SetLog("YOUR VERSION: " & $g_sBotVersion, $COLOR_SUCCESS)
-;~			SetLog("OFFICIAL VERSION: " & $lastversion, $COLOR_SUCCESS)
-;~			SetLog(" ")
-;~		Else
-;~			SetLog("WELCOME CHIEF, YOU HAVE THE LATEST VERSION OF THE BOT", $COLOR_SUCCESS)
-;~			SetLog(" ")
-;~			_PrintLogVersion($lastmessage)
-;~		EndIf
-
-		If $lastModversion = "" Then
+		If $g_sLastModversion = "" Then
 			SetLog("WE CANNOT OBTAIN MOD VERSION AT THIS TIME", $COLOR_ACTION)
 			CheckModVersion()
-		ElseIf VersionNumFromVersionTXT($sModversion) < VersionNumFromVersionTXT($lastModversion) Then
-			SetLog("WARNING, YOUR MOD VERSION (" & $sModversion & ") IS OUT OF DATE.", $COLOR_ERROR)
-			SetLog("CHIEF, PLEASE DOWNLOAD THE LATEST (" & $lastModversion & ")", $COLOR_ERROR)
+		ElseIf VersionNumFromVersionTXT($g_sModversion) < VersionNumFromVersionTXT($g_sLastModversion) Then
+			SetLog("WARNING, YOUR MOD VERSION (" & $g_sModversion & ") IS OUT OF DATE.", $COLOR_ERROR)
+			SetLog("CHIEF, PLEASE DOWNLOAD THE LATEST (" & $g_sLastModversion & ")", $COLOR_ERROR)
 			SetLog("FROM https://MyBot.run               ", $COLOR_ERROR)
 			SetLog(" ")
-			_PrintLogVersion($oldModversmessage)
+			_PrintLogVersion($g_sOldModversmessage)
 			CheckModVersion()
-		ElseIf VersionNumFromVersionTXT($sModversion) > VersionNumFromVersionTXT($lastModversion) Then
-			SetLog("YOU ARE USING A FUTURE MOD BY TEAM MOD MBR VERSION CHIEF!", $COLOR_SUCCESS)
-			SetLog("YOUR MOD VERSION: " & $sModversion, $COLOR_SUCCESS)
-			SetLog("OFFICIAL MOD VERSION: " & $lastModversion, $COLOR_SUCCESS)
+		ElseIf VersionNumFromVersionTXT($g_sModversion) > VersionNumFromVersionTXT($g_sLastModversion) Then
+			SetLog("YOU ARE USING A FUTURE AIO MOD BY TEAM.VN VERSION CHIEF!", $COLOR_SUCCESS)
+			SetLog("YOUR MOD VERSION: " & $g_sModversion, $COLOR_SUCCESS)
+			SetLog("OFFICIAL MOD VERSION: " & $g_sLastModversion, $COLOR_SUCCESS)
 			SetLog(" ")
 		Else
 			SetLog("WELCOME CHIEF, YOU HAVE THE LATEST MOD VERSION", $COLOR_SUCCESS)
 			SetLog(" ")
-			SetLog("TEAM MOD MBR: NguyenAnhHD, Demen", $COLOR_SUCCESS)
-			_PrintLogVersion($lastModmessage)
+			SetLog("TEAM.VN MOD: NguyenAnhHD & Demen", $COLOR_SUCCESS)
+			SetLog("CHEEERS..")
+			_PrintLogVersion($g_sLastModmessage)
 		EndIf
 	EndIf
 EndFunc   ;==>CheckVersion
-
-;~ Func CheckVersionTXT()
-;~ 	;download page from site contains last bot version
-;~ 	$hLastVersion = InetGet("https://mybot.run/lastversion.txt", @ScriptDir & "\LastVersion.txt")
-;~ 	InetClose($hLastVersion)
-
-;~ 	;search version into downloaded page
-;~ 	Local $f, $line, $Casesense = 0
-;~ 	$lastversion = ""
-;~ 	If FileExists(@ScriptDir & "\LastVersion.txt") Then
-;~ 		$f = FileOpen(@ScriptDir & "\LastVersion.txt", 0)
-;~ 		; Read in lines of text until the EOF is reached
-;~ 		While 1
-;~ 			$line = FileReadLine($f)
-;~ 			If @error = -1 Then ExitLoop
-;~ 			If StringInStr($line, "version=", $Casesense) Then
-;~ 				$lastversion = StringMid($line, 9, -1)
-;~ 			EndIf
-;~ 			If StringInStr($line, "message=", $Casesense) Then
-;~ 				$lastmessage = StringMid($line, 9, -1)
-;~ 			EndIf
-;~ 		WEnd
-;~ 		FileClose($f)
-;~ 		FileDelete(@ScriptDir & "\LastVersion.txt")
-;~ 	EndIf
-;~ EndFunc   ;==>CheckVersionTXT
-
 
 Func CheckVersionHTML()
 	Local $versionfile = @ScriptDir & "\LastVersion.txt"
@@ -92,12 +52,12 @@ Func CheckVersionHTML()
 		FileCopy(@ScriptDir & "\TestVersion.txt", $versionfile, 1)
 	Else
 		;download page from site contains last bot version
-		Local $hDownload = InetGet("https://raw.githubusercontent.com/NguyenAnhHD/MyBot-Official-Release/master/LastVersion.txt", $versionfile, 0, 1)
+		Local $hDownload = InetGet("https://raw.githubusercontent.com/NguyenAnhHD/MyBot.Run-Official-Release/master/LastVersion.txt", $versionfile, 0, 1)
 
 		; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
 		Local $i = 0
 		Do
-			Sleep($iDelayCheckVersionHTML1)
+			Sleep($DELAYCHECKVERSIONHTML1)
 			$i += 1
 		Until InetGetInfo($hDownload, $INET_DOWNLOADCOMPLETE) Or $i > 25
 
@@ -106,39 +66,39 @@ Func CheckVersionHTML()
 
 	;search version into downloaded page
 	Local $line, $line2, $Casesense = 0, $chkvers = False, $chkmsg = False, $chkmsg2 = False, $i = 0
-	;$lastversion = ""
-	$lastModversion = ""
+	;$g_sLastVersion = ""
+	$g_sLastModversion = ""
 	If FileExists($versionfile) Then
-		;$lastversion = IniRead($versionfile, "general", "version", "")
-		$lastModversion = IniRead($versionfile, "mod", "version", "")
+		;$g_sLastVersion = IniRead($versionfile, "general", "version", "")
+		$g_sLastModversion = IniRead($versionfile, "mod", "version", "")
 		;look for localized messages for the new and old versions
-		Local $versionfilelocalized = @ScriptDir & "\LastVersion_" & $sLanguage & ".txt";
-		If FileExists(@ScriptDir & "\TestVersion_" & $sLanguage & ".txt") Then
-			FileCopy(@ScriptDir & "\TestVersion_" & $sLanguage & ".txt", $versionfilelocalized, 1)
+		Local $versionfilelocalized = @ScriptDir & "\LastVersion_" & $g_sLanguage & ".txt" ;
+		If FileExists(@ScriptDir & "\TestVersion_" & $g_sLanguage & ".txt") Then
+			FileCopy(@ScriptDir & "\TestVersion_" & $g_sLanguage & ".txt", $versionfilelocalized, 1)
 		Else
 			;download page from site contains last bot version localized messages
-			$hDownload = InetGet("https://raw.githubusercontent.com/NguyenAnhHD/MyBot-Official-Release/master/LastVersion_" & $sLanguage & ".txt", $versionfilelocalized, 0, 1)
+			$hDownload = InetGet("https://raw.githubusercontent.com/NguyenAnhHD/MyBot.Run-Official-Release/master/LastVersion_" & $g_sLanguage & ".txt", $versionfilelocalized, 0, 1)
 
 			; Wait for the download to complete by monitoring when the 2nd index value of InetGetInfo returns True.
 			Local $i = 0
 			Do
-				Sleep($iDelayCheckVersionHTML1)
+				Sleep($DELAYCHECKVERSIONHTML1)
 				$i += 1
 			Until InetGetInfo($hDownload, $INET_DOWNLOADCOMPLETE) Or $i > 25
 
 			InetClose($hDownload)
 		EndIf
 		If FileExists($versionfilelocalized) Then
-			;$lastmessage = IniRead($versionfilelocalized, "general", "messagenew", "")
-			;$oldversmessage = IniRead($versionfilelocalized, "general", "messageold", "")
-			$lastModmessage = IniRead($versionfilelocalized, "mod", "messagenew", "")
-			$oldModversmessage = IniRead($versionfilelocalized, "mod", "messageold", "")
+			;$g_sLastMessage = IniRead($versionfilelocalized, "general", "messagenew", "")
+			;$g_sOldVersionMessage = IniRead($versionfilelocalized, "general", "messageold", "")
+			$g_sLastModmessage = IniRead($versionfilelocalized, "mod", "messagenew", "")
+			$g_sOldModversmessage = IniRead($versionfilelocalized, "mod", "messageold", "")
 			FileDelete($versionfilelocalized)
 		Else
-			;$lastmessage = IniRead($versionfile, "general", "messagenew", "")
-			;$oldversmessage = IniRead($versionfile, "general", "messageold", "")
-			$lastModmessage = IniRead($versionfilelocalized, "mod", "messagenew", "")
-			$oldModversmessage = IniRead($versionfilelocalized, "mod", "messageold", "")
+			;$g_sLastMessage = IniRead($versionfile, "general", "messagenew", "")
+			;$g_sOldVersionMessage = IniRead($versionfile, "general", "messageold", "")
+			$g_sLastModmessage = IniRead($versionfilelocalized, "mod", "messagenew", "")
+			$g_sOldModversmessage = IniRead($versionfilelocalized, "mod", "messageold", "")
 		EndIf
 		FileDelete($versionfile)
 	EndIf
@@ -211,18 +171,18 @@ Func GetVersionNormalized($VersionString, $Chars = 5)
 EndFunc   ;==>GetVersionNormalized
 
 Func CheckModVersion()
-	If $lastModversion = "" Then
-		MsgBox($MB_ICONWARNING, "", "WE CANNOT OBTAIN MOD VERSION AT THIS TIME" &  @CRLF & _
+	If $g_sLastModversion = "" Then
+		MsgBox($MB_ICONWARNING, "", "WE CANNOT OBTAIN MOD VERSION AT THIS TIME" & @CRLF & _
 				"BAD CONNECTION", 10) ;10s timeout
-	ElseIf VersionNumFromVersionTXT($sModversion) < VersionNumFromVersionTXT($lastModversion) Then
+	ElseIf VersionNumFromVersionTXT($g_sModversion) < VersionNumFromVersionTXT($g_sLastModversion) Then
 		PushMsg("Update")
-		If MsgBox(BitOr($MB_ICONWARNING, $MB_YESNO), "BOT Update Detected", "Chief, there is a new version of the bot available (" & $lastModversion & ")" & @CRLF &  @CRLF & _
-			"Do you want to download the latest version ?", 30) = $IDYES Then ;30s timeout
-			ShellExecute($sModDownloadUrl)
+		If MsgBox(BitOR($MB_ICONWARNING, $MB_YESNO), "BOT Update Detected", "Chief, there is a new version of the bot available (" & $g_sLastModversion & ")" & @CRLF & @CRLF & _
+				"Do you want to download the latest version ?", 30) = $IDYES Then ;30s timeout
+			ShellExecute($g_sModDownloadUrl)
 			Return False
 		EndIf
 	Else
-		MsgBox($MB_ICONINFORMATION, "Notify", "You Are Using The Latest Version Of Mod By Team MOD MBR (NguyenAnhHD, Demen)" &  @CRLF & _
+		MsgBox($MB_ICONINFORMATION, "Notify", "You Are Using The Latest Version Of AIO MOD By TeamVN" & @CRLF & _
 				"Thanks..", 15) ;15s timeout
 	EndIf
 EndFunc   ;==>CheckModVersion

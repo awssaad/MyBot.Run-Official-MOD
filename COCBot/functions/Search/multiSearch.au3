@@ -6,7 +6,7 @@
 ; Return values .: An array of values of detected defense levels and information
 ; Author ........: LunaEclipse(April 2016)
 ; Modified ......:
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -54,7 +54,7 @@ Func captureDebugImage($aResult, $subDirectory)
 		DirCreate($g_sProfileTempDebugPath & $subDirectory)
 
 		; Store a copy of the image handle
-		Local $editedImage = _GDIPlus_BitmapCreateFromHBITMAP($hHBitmap2)
+		Local $editedImage = _GDIPlus_BitmapCreateFromHBITMAP($g_hHBitmap2)
 
 		; Create the timestamp and filename
 		Local $Date = @YEAR & "-" & @MON & "-" & @MDAY
@@ -97,7 +97,7 @@ Func returnPropertyValue($key, $property)
 	Local $aValue = DllCall($g_hLibImgLoc, "str", "GetProperty", "str", $key, "str", $property)
 	If @error Then _logErrorDLLCall($g_sLibImgLocPath, @error)
 	Return $aValue[0]
-EndFunc   ;==>getProperty
+EndFunc   ;==>returnPropertyValue
 
 Func updateResultsRow(ByRef $aResult, $redLines = "")
 	; Create the local variable to do the counting
@@ -107,7 +107,7 @@ Func updateResultsRow(ByRef $aResult, $redLines = "")
 		; Loop through the results to get the total number of objects found
 		If UBound($aResult) > 1 Then
 			For $j = 1 To UBound($aResult) - 1
-				$numberFound +=	Number($aResult[$j][4])
+				$numberFound += Number($aResult[$j][4])
 			Next
 		EndIf
 
@@ -127,7 +127,7 @@ Func multiMatches($directory, $maxReturnPoints = 0, $fullCocAreas = "DCD", $redL
 	If $forceCaptureRegion = True Then _CaptureRegion2()
 
 	; Perform the search
-	Local $res = DllCall($g_hLibImgLoc, "str", "SearchMultipleTilesBetweenLevels", "handle", $hHBitmap2, "str", $directory, "str", $fullCocAreas, "Int", $maxReturnPoints, "str", $redLines, "Int", $minLevel, "Int", $maxLevel)
+	Local $res = DllCall($g_hLibImgLoc, "str", "SearchMultipleTilesBetweenLevels", "handle", $g_hHBitmap2, "str", $directory, "str", $fullCocAreas, "Int", $maxReturnPoints, "str", $redLines, "Int", $minLevel, "Int", $maxLevel)
 	If @error Then _logErrorDLLCall($g_sLibImgLocPath, @error)
 
 	; Get the redline data
@@ -276,3 +276,17 @@ Func returnSingleMatch($directory, $redLines = "DCD", $statFile = "", $minLevel 
 
 	Return $aResult
 EndFunc   ;==>returnSingleMatch
+
+Func returnAllMatchesDefense($directory, $statFile = "", $minLevel = 0, $maxLevel = 1000, $x1 = 0, $y1 = 0, $x2 = $g_iGAME_WIDTH, $y2 = $g_iGAME_HEIGHT, $bCaptureNew = True, $xDiff = Default, $yDiff = Default)
+	; This is simple, just do a multiMatches search with 0 for the Max return points parameter
+
+	;Local $aResult = multiMatches2($directory, 0, $DCD, $CurBaseRedLine, $statFile, $minLevel, $maxLevel)
+	Local $aResult = multiMatchesPixelOnly($directory, 0, $DCD, $CurBaseRedLine, $statFile, $minLevel, $maxLevel, $x1, $y1, $x2, $y2, $bCaptureNew, $xDiff, $yDiff, True, False)
+
+	Return $aResult
+EndFunc   ;==>returnAllMatchesDefense
+
+Func VerifyMMPOResult($Result)
+	If StringLen($Result) > 2 And StringInStr($Result, ",") > 0 Then Return True
+	Return False
+EndFunc   ;==>VerifyMMPOResult

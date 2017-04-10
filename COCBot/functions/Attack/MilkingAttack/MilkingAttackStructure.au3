@@ -6,7 +6,7 @@
 ; Return values .:None
 ; Author ........: Sardo (2016)
 ; Modified ......:
-; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2016
+; Remarks .......: This file is part of MyBot, previously known as ClashGameBot. Copyright 2015-2017
 ;                  MyBot is distributed under the terms of the GNU GPL
 ; Related .......:
 ; Link ..........: https://github.com/MyBotRun/MyBot/wiki
@@ -72,7 +72,7 @@ Func MilkingAttackStructure($vectstr)
 					Else
 						Local $rndpos = Random(3, UBound($vect) - 1, 1)
 					EndIf
-					Local $pixel = StringSplit($vect[$rndpos], "-", 2)
+					$pixel = StringSplit($vect[$rndpos], "-", 2)
 
 					If UBound($pixel) = 2 Then
 						;If $g_iDebugSetlog=1 Then Setlog("Click( " & $pixel[0] & ", " & $pixel[1] & " ," &  $troopxwave& ", "0,#0778)")
