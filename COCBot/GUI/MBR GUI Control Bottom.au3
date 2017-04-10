@@ -165,7 +165,7 @@ Func btnStart()
 		$g_iBotAction = $eBotStart
 	EndIf
 			$g_iActualTrainSkip = 0
-	GUICtrlSetState($g_hModSupportConfig, $GUI_SHOW)
+
 EndFunc   ;==>btnStart
 
 Func btnStop()
@@ -176,7 +176,6 @@ Func btnStop()
 		$g_iBotAction = $eBotStop
 		ReduceBotMemory()
 	EndIf
-	GUICtrlSetState($g_hModSupportConfig, $GUI_SHOW)
 EndFunc   ;==>btnStop
 
 Func btnSearchMode()
@@ -195,7 +194,6 @@ Func btnPause($RunNow = True)
 	TogglePause()
 	GUICtrlSetState($g_hBtnDisableGUI, $GUI_HIDE)	; Manually enable/disable GUI while botting (as requested by YScorpion) - Demen
 	GUICtrlSetState($g_hBtnEnableGUI, $GUI_SHOW)	; Manually enable/disable GUI while botting (as requested by YScorpion) - Demen
-	GUICtrlSetState($g_hModSupportConfig, $GUI_HIDE)
 EndFunc   ;==>btnPause
 
 Func btnResume()
@@ -203,7 +201,6 @@ Func btnResume()
 	TogglePause()
 	GUICtrlSetState($g_hBtnDisableGUI, $GUI_HIDE)	; Manually enable/disable GUI while botting (as requested by YScorpion) - Demen
 	GUICtrlSetState($g_hBtnEnableGUI, $GUI_HIDE)	; Manually enable/disable GUI while botting (as requested by YScorpion) - Demen
-	GUICtrlSetState($g_hModSupportConfig, $GUI_SHOW)
 EndFunc   ;==>btnResume
 
 Func btnEnableGUI() 	; Manually enable/disable GUI while botting (as requested by YScorpion) - Demen

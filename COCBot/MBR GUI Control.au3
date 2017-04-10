@@ -463,8 +463,6 @@ Func GUIControl_WM_COMMAND($hWind, $iMsg, $wParam, $lParam)
 			btnAttackNowLB()
 		Case $g_hBtnAttackNowTS
 			btnAttackNowTS()
-		Case $g_hModSupportConfig
-			ShellExecute($g_sModSupportUrl)
 		;Case $idMENU_DONATE_SUPPORT
 		;	ShellExecute("https://mybot.run/forums/index.php?/donate/make-donation/")
 		Case $g_hBtnNotifyDeleteMessages
